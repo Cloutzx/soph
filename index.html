@@ -12,11 +12,6 @@
 
     <title>for soph ♡</title>
 
-    <meta
-        name="description"
-        content="a little something i made for soph ♡"
-    >
-
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -31,7 +26,6 @@
         rel="stylesheet"
     >
 
-    <!-- Your CSS -->
     <link
         rel="stylesheet"
         href="style.css"
@@ -55,23 +49,6 @@
 
     <div class="glow glow-three"></div>
 
-    <div class="stars-background">
-
-        <span>✦</span>
-        <span>·</span>
-        <span>✧</span>
-        <span>✦</span>
-        <span>·</span>
-        <span>✧</span>
-        <span>✦</span>
-        <span>·</span>
-        <span>✧</span>
-        <span>✦</span>
-        <span>·</span>
-        <span>✧</span>
-
-    </div>
-
 </div>
 
 
@@ -80,7 +57,7 @@
      OPENING SCREEN
 ===================================================== -->
 
-<section
+<div
     class="opening"
     id="opening"
 >
@@ -91,17 +68,15 @@
             i made something for you
         </p>
 
-
         <h1>
             soph
         </h1>
 
-
         <p class="opening-subtitle">
-            i don't really know how to explain this,
-            so i made you a little place instead.
+            this is a little collection of
+            memories, moments, and things
+            i've never really known how to say.
         </p>
-
 
         <button
             class="open-button"
@@ -110,9 +85,8 @@
             open this ♡
         </button>
 
-
         <p class="opening-note">
-            turn your volume up a little
+            take your time
         </p>
 
     </div>
@@ -122,12 +96,12 @@
         ↓
     </div>
 
-</section>
+</div>
 
 
 
 <!-- =====================================================
-     MAIN WEBSITE
+     MAIN
 ===================================================== -->
 
 <main id="main">
@@ -142,23 +116,23 @@
     <div class="hero-content">
 
         <p class="eyebrow">
-            something i wanted you to have
+            for soph
         </p>
-
 
         <h2>
-            for the girl who became
-            so much more than a friend.
+            somehow,
+            <br>
+            out of everyone,
+            <br>
+            it became you.
         </h2>
 
-
         <p>
-            there's a lot i could say,
-            but i thought maybe making
-            you a whole little website
-            would say it better.
+            I don't think I could've ever guessed
+            that the girl I knew all those years ago
+            would eventually become someone this
+            important to me.
         </p>
-
 
         <div class="hero-heart">
             ♡
@@ -171,7 +145,7 @@
 
 
 <!-- =====================================================
-     REASONS
+     WHY YOU
 ===================================================== -->
 
 <section class="section">
@@ -179,18 +153,16 @@
     <div class="section-title">
 
         <span>
-            just a few things
+            somewhere along the way
         </span>
 
-
         <h2>
-            why you mean so much to me
+            you became really important to me
         </h2>
 
-
         <p>
-            i could probably make this list
-            way longer, but we'd be here forever.
+            Maybe it wasn't one specific moment.
+            Maybe it was all the little ones.
         </p>
 
     </div>
@@ -214,9 +186,10 @@
             </h3>
 
             <p>
-                You have this way of making me
-                feel important and cared about
-                without even trying.
+                You've made me feel important,
+                heard, and cared about in a way
+                that means more to me than I
+                probably say enough.
             </p>
 
         </div>
@@ -234,13 +207,13 @@
             </div>
 
             <h3>
-                you make things feel different
+                you make things feel real
             </h3>
 
             <p>
-                Somehow even the smallest
-                conversations or random moments
-                with you mean a lot to me.
+                Even with five hours between us,
+                somehow you still feel closer than
+                people who are right next to me.
             </p>
 
         </div>
@@ -258,12 +231,13 @@
             </div>
 
             <h3>
-                you're you
+                you're still you
             </h3>
 
             <p>
-                Honestly, I don't think I need
-                a better reason than that.
+                You've always been someone I loved
+                having around. Now I just understand
+                a little more why.
             </p>
 
         </div>
@@ -284,18 +258,17 @@
     <div class="section-title">
 
         <span>
-            songs that remind me of you
+            our little soundtrack
         </span>
 
-
         <h2>
-            press play ♫
+            songs that remind me of you
         </h2>
 
-
         <p>
-            I put a few songs here that I wanted
-            to have in our little corner of the internet.
+            I don't know if these songs were
+            meant for our story, but they feel
+            like they are.
         </p>
 
     </div>
@@ -310,11 +283,9 @@
         <div class="music-wheel">
 
 
-            <!-- SONG 1 -->
-
             <button
                 class="music-song song-left"
-                onclick="selectSong(0)"
+                data-index="0"
             >
 
                 <div class="song-art">
@@ -329,11 +300,9 @@
 
 
 
-            <!-- SONG 2 -->
-
             <button
                 class="music-song song-main"
-                onclick="selectSong(1)"
+                data-index="1"
             >
 
                 <div class="song-art">
@@ -348,11 +317,9 @@
 
 
 
-            <!-- SONG 3 -->
-
             <button
                 class="music-song song-right"
-                onclick="selectSong(2)"
+                data-index="2"
             >
 
                 <div class="song-art">
@@ -378,11 +345,9 @@
                 NOW PLAYING
             </p>
 
-
             <h3 id="currentSongTitle">
                 You'll Be Mine Tonight
             </h3>
-
 
             <p id="currentSongArtist">
                 Freddie
@@ -401,10 +366,7 @@
             </span>
 
 
-            <div
-                class="progress-track"
-                onclick="seekMusic(event)"
-            >
+            <div class="progress-track">
 
                 <div
                     class="progress-bar"
@@ -428,17 +390,16 @@
 
 
             <button
-                onclick="previousSong()"
+                id="previousButton"
                 aria-label="Previous song"
             >
-                ↶
+                ‹‹
             </button>
 
 
             <button
                 class="play-button"
                 id="playButton"
-                onclick="toggleMusic()"
                 aria-label="Play or pause"
             >
                 ▶
@@ -446,10 +407,10 @@
 
 
             <button
-                onclick="nextSong()"
+                id="nextButton"
                 aria-label="Next song"
             >
-                ↷
+                ››
             </button>
 
 
@@ -463,12 +424,29 @@
 
     </div>
 
+
+
+    <!-- SOUNDCLOUD -->
+
+    <iframe
+        id="soundcloud-player"
+        width="1"
+        height="1"
+        scrolling="no"
+        frameborder="no"
+        allow="autoplay"
+        style="position:absolute; opacity:0; pointer-events:none;"
+        src="https://w.soundcloud.com/player/api.html?url=https%3A//soundcloud.com/user-101510492/youll-be-mine-tonight-freddie&color=%23a998c4&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false"
+    >
+    </iframe>
+
+
 </section>
 
 
 
 <!-- =====================================================
-     STAR MEMORY SECTION
+     STARS
 ===================================================== -->
 
 <section class="section">
@@ -476,18 +454,16 @@
     <div class="section-title">
 
         <span>
-            little pieces of us
+            little things
         </span>
-
 
         <h2>
             click the stars
         </h2>
 
-
         <p>
-            I hid a few little memories
-            in here for you.
+            I hid a few little thoughts in here.
+            You might have to look around.
         </p>
 
     </div>
@@ -496,138 +472,93 @@
 
     <div class="sky-container">
 
-        <div class="sky-title">
-            our little universe
-        </div>
+        <p class="sky-title">
+            some things i want you to know
+        </p>
 
 
-
-        <!-- STAR 1 -->
 
         <button
             class="star star-one"
-            onclick="showStarMessage(
-                'Remember when we would just randomly play games together for hours? ♡'
-            )"
+            onclick="showStarMessage('I hope you know how much you mean to me.')"
         >
-
             <span>
                 ✦
             </span>
-
         </button>
 
 
-
-        <!-- STAR 2 -->
 
         <button
             class="star star-two"
-            onclick="showStarMessage(
-                'Some of my favorite memories are honestly the completely random ones.'
-            )"
+            onclick="showStarMessage('You make even the most random days feel special.')"
         >
-
             <span>
-                ✦
+                ✧
             </span>
-
         </button>
 
 
-
-        <!-- STAR 3 -->
 
         <button
             class="star star-three"
-            onclick="showStarMessage(
-                'It is crazy thinking about how long we have known each other.'
-            )"
+            onclick="showStarMessage('Five hours away still somehow feels worth it.')"
         >
-
             <span>
                 ✦
             </span>
-
         </button>
 
 
-
-        <!-- STAR 4 -->
 
         <button
             class="star star-four"
-            onclick="showStarMessage(
-                'Even being 5 hours away does not change how important you are to me.'
-            )"
+            onclick="showStarMessage('I still think about all those games we used to play.')"
         >
-
             <span>
-                ✦
+                ✧
             </span>
-
         </button>
 
 
-
-        <!-- STAR 5 -->
 
         <button
             class="star star-five"
-            onclick="showStarMessage(
-                'You somehow became one of the most important people in my life.'
-            )"
+            onclick="showStarMessage('You have become one of my favorite parts of my life.')"
         >
-
             <span>
                 ✦
             </span>
-
         </button>
 
 
-
-        <!-- STAR 6 -->
 
         <button
             class="star star-six"
-            onclick="showStarMessage(
-                'I hope we make a whole lot more memories together.'
-            )"
+            onclick="showStarMessage('I am really glad that video showed up on my FYP.')"
         >
-
             <span>
-                ✦
+                ✧
             </span>
-
         </button>
 
 
-
-        <!-- STAR 7 -->
 
         <button
             class="star star-seven"
-            onclick="showStarMessage(
-                'This little website is just one of my ways of saying I love you. ♡'
-            )"
+            onclick="showStarMessage('And this definitely isn't where our story ends.')"
         >
-
             <span>
                 ✦
             </span>
-
         </button>
 
 
-
-        <!-- MESSAGE -->
 
         <div
             class="star-message"
             id="starMessage"
         ></div>
-
 
     </div>
 
@@ -636,7 +567,7 @@
 
 
 <!-- =====================================================
-     TIMELINE
+     HOW IT STARTED
 ===================================================== -->
 
 <section class="section">
@@ -644,18 +575,17 @@
     <div class="section-title">
 
         <span>
-            our story
+            how it started
         </span>
 
-
         <h2>
-            how it started
+            before any of this
         </h2>
 
-
         <p>
-            It's kind of crazy looking back
-            at how everything ended up here.
+            The funny part is that our story
+            technically started way before we
+            even realized it.
         </p>
 
     </div>
@@ -665,189 +595,177 @@
     <div class="timeline">
 
 
-        <!-- TIMELINE 1 -->
+        <!-- 2ND GRADE -->
 
         <div class="timeline-item">
 
             <div class="timeline-dot"></div>
-
 
             <p class="timeline-date">
                 2nd grade
             </p>
 
-
             <h3>
-                when we first became friends
+                we became friends
             </h3>
-
 
             <p>
                 We became friends all the way back
-                in 2nd grade. I left in 5th grade,
-                and somehow all these years later,
-                we're seniors now. It's honestly
-                crazy thinking about how long you've
-                been a part of my life.
+                in 2nd grade. I don't think either of
+                us could've known that years later,
+                we'd somehow find our way back to
+                each other like this.
             </p>
 
         </div>
 
 
 
-        <!-- TIMELINE 2 -->
+        <!-- 5TH GRADE -->
 
         <div class="timeline-item">
 
             <div class="timeline-dot"></div>
 
-
             <p class="timeline-date">
-                the old days
+                5th grade
             </p>
 
-
             <h3>
-                all those times we used to play
+                life went different ways
             </h3>
 
+            <p>
+                I left in 5th grade, and life kept
+                moving. Years passed, and somehow
+                that friendship was still a little
+                part of my story.
+            </p>
+
+        </div>
+
+
+
+        <!-- GAMING -->
+
+        <div class="timeline-item">
+
+            <div class="timeline-dot"></div>
+
+            <p class="timeline-date">
+                all those minecraft memories
+            </p>
+
+            <h3>
+                we played basically everything
+            </h3>
 
             <p>
                 All those times we used to play
                 Fortnite, Apex, Call of Duty,
                 Minecraft, and basically everything
-                else. You’ve always been someone
-                I loved playing with, and looking back,
+                else. You've always been someone I
+                loved playing with, and looking back,
                 those random games are some of my
                 favorite memories. It just feels
                 different now knowing how important
-                you’ve become to me. ♡
+                you've become to me. ♡
             </p>
 
         </div>
 
 
 
-        <!-- TIMELINE 3 -->
+        <!-- FEBRUARY 8 -->
 
         <div class="timeline-item">
 
             <div class="timeline-dot"></div>
 
+            <p class="timeline-date">
+                february 8
+            </p>
+
+            <h3>
+                then you appeared on my fyp
+            </h3>
+
+            <p>
+                Two days after my birthday, on
+                February 8th, I saw one of your
+                videos pop up on my FYP.
+                And honestly, my first thought was
+                just how beautiful you were.
+            </p>
+
+        </div>
+
+
+
+        <!-- MINECRAFT MAZE -->
+
+        <div class="timeline-item">
+
+            <div class="timeline-dot"></div>
 
             <p class="timeline-date">
                 somewhere along the way
             </p>
 
-
             <h3>
-                you became really important to me
+                the minecraft maze
             </h3>
 
-
             <p>
-                Somewhere along the way,
-                you stopped feeling like just
-                an old friend. You started making
-                me feel important, seen, and cared
-                about in a way that I didn't really
-                expect.
+                I still think about the time you
+                told me to get on Minecraft because
+                you would "be right back."
+                Instead, I ended up going through
+                a maze that was basically you
+                telling me how much you loved me.
             </p>
 
-        </div>
-
-
-
-        <!-- TIMELINE 4 -->
-
-        <div class="timeline-item">
-
-            <div class="timeline-dot"></div>
-
-
-            <p class="timeline-date">
-                february 8th
-            </p>
-
-
-            <h3>
-                the day I saw you again
-            </h3>
-
-
-            <p>
-                Two days after my birthday,
-                I saw one of your videos pop up
-                on my FYP. And gosh, you were
-                so beautiful. I don't know if you
-                realize how much that random video
-                ended up changing things.
-            </p>
-
-        </div>
-
-
-
-        <!-- TIMELINE 5 -->
-
-        <div class="timeline-item">
-
-            <div class="timeline-dot"></div>
-
-
-            <p class="timeline-date">
-                that minecraft moment
-            </p>
-
-
-            <h3>
-                "get on minecraft, i'll be right back"
-            </h3>
-
-
-            <p>
-                Then there was that time you told
-                me to get on Minecraft because
-                you'd be right back. Instead,
-                I ended up going through a whole
-                maze where you were telling me
-                how you loved me.
+            <p style="margin-top: 18px;">
                 Maybe that relationship wasn't
-                really meant to last back then,
-                even if it only lasted for like
-                two days. Maybe it just wasn't
-                meant for then. But now, somehow,
-                it feels like it was meant to happen.
+                really meant to last back then.
+                Maybe two days wasn't what either
+                of us needed at the time.
+                But somehow, looking at where we
+                are now, it feels like maybe the
+                timing just wasn't right yet.
             </p>
 
         </div>
 
 
 
-        <!-- TIMELINE 6 -->
+        <!-- NOW -->
 
         <div class="timeline-item">
 
             <div class="timeline-dot"></div>
-
 
             <p class="timeline-date">
                 now
             </p>
 
-
             <h3>
                 and here we are ♡
             </h3>
 
-
             <p>
-                Maybe we're 5 hours apart,
-                maybe life has changed a lot
-                since 2nd grade, but somehow
-                we're here. And honestly,
-                I wouldn't trade where we are
-                now for anything.
+                We're seniors now, and after all
+                those years, you're somehow back
+                in my life in a completely different
+                way.
+                I may be five hours away, but you've
+                made me feel important, seen, and
+                cared about.
+            </p>
+
+            <p style="margin-top: 18px;">
+                And I don't think this is where the
+                story ends.
             </p>
 
         </div>
@@ -860,28 +778,85 @@
 
 
 <!-- =====================================================
-     SECRET MESSAGE
+     FAVORITE MEMORY
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <span>
+            one of my favorites
+        </span>
+
+        <h2>
+            a memory i still think about
+        </h2>
+
+        <p>
+            Sometimes the most random memories
+            end up meaning the most.
+        </p>
+
+    </div>
+
+
+
+    <div class="reason" style="max-width: 700px; margin: 0 auto;">
+
+        <div class="reason-icon">
+            ♡
+        </div>
+
+        <h3>
+            all those random nights
+        </h3>
+
+        <p>
+            I think one of my favorite things is
+            just remembering how much we used to
+            play together. Fortnite, Apex,
+            Call of Duty, Minecraft, and whatever
+            else we could find.
+
+            <br><br>
+
+            None of it had to be some huge
+            unforgettable moment. We were just
+            playing games and being friends.
+
+            <br><br>
+
+            But now, looking back at it, those
+            little moments feel different because
+            I know how much you mean to me now.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SECRET
 ===================================================== -->
 
 <section class="section">
 
     <div class="secret-box">
 
-
         <div class="secret-sparkle">
             ✦
         </div>
-
 
         <h2>
             there's one more thing
         </h2>
 
-
         <p>
-            okay, maybe you should click this.
+            You probably shouldn't click this.
         </p>
-
 
         <button
             class="secret-button"
@@ -896,17 +871,21 @@
             id="secretMessage"
         >
 
-            <p>
-                I don't know what the future looks like,
-                but I know I want you to be a part of it.
-                You've been in my life for so much longer
-                than either of us probably realized,
-                and I'm really glad somehow we found
-                our way back to each other. ♡
-            </p>
+            I love you, Soph.
+
+            <br><br>
+
+            I know I say it a lot, but I really
+            do mean it. You've become someone
+            incredibly important to me, and I'm
+            really glad that somehow, after all
+            these years, we found each other again.
+
+            <br><br>
+
+            ♡
 
         </div>
-
 
     </div>
 
@@ -915,44 +894,42 @@
 
 
 <!-- =====================================================
-     FINAL MESSAGE
+     FINAL
 ===================================================== -->
 
 <section class="section final">
 
     <div class="final-card">
 
-
         <div class="final-stars">
-            ✦　✧　✦
+            ✦　✧　♡　✧　✦
         </div>
 
-
         <h2>
-            and this is definitely
-            not where the story ends.
+            and this definitely
+            isn't where the story ends.
         </h2>
 
-
         <p>
-            I love you, Soph.
-            Thank you for becoming such an important
-            part of my life and for making me feel
-            seen and cared about.
-            Here's to all the memories we've already
-            made, and all the ones we haven't made yet.
-        </p>
+            From being friends in 2nd grade,
+            to losing touch, to random games,
+            to somehow finding each other again...
 
+            <br><br>
+
+            I don't know what the future looks
+            like, but I'm really happy you're
+            part of it.
+
+        </p>
 
         <div class="heart">
             ♡
         </div>
 
-
         <p class="final-signature">
-            made with love, just for you
+            made for soph, with love
         </p>
-
 
     </div>
 
@@ -970,32 +947,10 @@
 <button
     class="music-floating-button"
     id="musicFloatingButton"
-    onclick="toggleMusic()"
     aria-label="Play or pause music"
 >
     ♫
 </button>
-
-
-
-<!-- =====================================================
-     SOUNDCLOUD PLAYER
-===================================================== -->
-
-<iframe
-    id="soundcloud-player"
-    allow="autoplay"
-    style="
-        position: fixed;
-        width: 1px;
-        height: 1px;
-        left: -10px;
-        bottom: -10px;
-        opacity: 0;
-        pointer-events: none;
-        border: none;
-    "
-></iframe>
 
 
 
@@ -1008,9 +963,8 @@
 ></script>
 
 
-
 <!-- =====================================================
-     YOUR SCRIPT
+     YOUR JAVASCRIPT
 ===================================================== -->
 
 <script
