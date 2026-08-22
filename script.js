@@ -12,20 +12,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const openButton = document.getElementById("openButton");
     const main = document.getElementById("main");
 
+    let userHasInteracted = false;
+
     if (openButton) {
+
         openButton.addEventListener("click", () => {
+
+            userHasInteracted = true;
 
             if (opening) {
                 opening.classList.add("opening-hidden");
             }
 
             setTimeout(() => {
+
                 if (main) {
                     main.classList.add("main-visible");
                 }
+
             }, 250);
 
         });
+
     }
 
 
@@ -33,8 +41,11 @@ document.addEventListener("DOMContentLoaded", () => {
        SECRET MESSAGE
     ===================================================== */
 
-    const secretButton = document.getElementById("secretButton");
-    const secretMessage = document.getElementById("secretMessage");
+    const secretButton =
+        document.getElementById("secretButton");
+
+    const secretMessage =
+        document.getElementById("secretMessage");
 
     if (secretButton && secretMessage) {
 
@@ -43,9 +54,14 @@ document.addEventListener("DOMContentLoaded", () => {
             secretMessage.classList.toggle("show");
 
             if (secretMessage.classList.contains("show")) {
+
                 secretButton.textContent = "♡";
+
             } else {
-                secretButton.textContent = "there's something here";
+
+                secretButton.textContent =
+                    "there's something here";
+
             }
 
         });
@@ -57,23 +73,29 @@ document.addEventListener("DOMContentLoaded", () => {
        HIDDEN STARS
     ===================================================== */
 
-    const stars = document.querySelectorAll(".star");
-    const starMessage = document.getElementById("starMessage");
+    const stars =
+        document.querySelectorAll(".star");
+
+    const starMessage =
+        document.getElementById("starMessage");
 
     stars.forEach((star) => {
 
         star.addEventListener("click", () => {
 
-            const message = star.dataset.message;
-
             if (!starMessage) return;
+
+            const message =
+                star.dataset.message || "";
 
             starMessage.classList.remove("show");
 
             starMessage.textContent = message;
 
             requestAnimationFrame(() => {
+
                 starMessage.classList.add("show");
+
             });
 
         });
@@ -129,13 +151,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     if (!iframe) {
-        console.warn("SoundCloud iframe was not found.");
+
+        console.warn(
+            "SoundCloud iframe was not found."
+        );
+
         return;
+
     }
 
 
     /* =====================================================
-       SONG DATA
+       SONGS
     ===================================================== */
 
     const songs = [
@@ -143,26 +170,29 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             title: "I Love You",
             artist: "Fontaines D.C.",
-            url: "https://api.soundcloud.com/tracks/1178495929"
+            url:
+                "https://api.soundcloud.com/tracks/1178495929"
         },
 
         {
             title: "You'll Be Mine Tonight",
             artist: "Freddie",
-            url: "https://soundcloud.com/user-101510492/youll-be-mine-tonight-freddie"
+            url:
+                "https://soundcloud.com/user-101510492/youll-be-mine-tonight-freddie"
         },
 
         {
             title: "Moonlight on the River",
             artist: "Mac DeMarco",
-            url: "https://soundcloud.com/user-917397187-731881398/mac-demarco-moonlight-on-the-river-slowed"
+            url:
+                "https://soundcloud.com/user-917397187-731881398/mac-demarco-moonlight-on-the-river-slowed"
         }
 
     ];
 
 
     /* =====================================================
-       STATE
+       PLAYER STATE
     ===================================================== */
 
     let currentSong = 0;
@@ -175,89 +205,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let switchingSong = false;
 
-    let musicStarted = false;
+    let musicAreaVisible = false;
 
-    let userHasInteracted = false;
+    let playerLoaded = false;
 
-    let musicAreaWasEntered = false;
-
-
-    /* =====================================================
-       OPENING BUTTON UNLOCKS AUDIO
-    ===================================================== */
-
-    if (openButton) {
-
-        openButton.addEventListener("click", () => {
-
-            userHasInteracted = true;
-
-            /*
-             * The user has now interacted with the page.
-             * This lets us attempt SoundCloud playback later
-             * when they scroll into the music section.
-             */
-
-            if (
-                widgetReady &&
-                !musicAreaWasEntered &&
-                isMusicSectionVisible()
-            ) {
-
-                startMusicAutomatically();
-
-            }
-
-        });
-
-    }
+    let shouldResume = false;
 
 
     /* =====================================================
-       CHECK IF MUSIC AREA IS VISIBLE
-    ===================================================== */
-
-    function isMusicSectionVisible() {
-
-        if (!musicSection) {
-            return false;
-        }
-
-        const rect =
-            musicSection.getBoundingClientRect();
-
-        const windowHeight =
-            window.innerHeight ||
-            document.documentElement.clientHeight;
-
-        const visibleTop =
-            Math.max(
-                0,
-                rect.top
-            );
-
-        const visibleBottom =
-            Math.min(
-                windowHeight,
-                rect.bottom
-            );
-
-        const visibleHeight =
-            Math.max(
-                0,
-                visibleBottom - visibleTop
-            );
-
-        return (
-            visibleHeight >=
-            rect.height * 0.25
-        );
-
-    }
-
-
-    /* =====================================================
-       WAIT FOR SOUNDCLOUD API
+       WAIT FOR SOUNDCLOUD
     ===================================================== */
 
     function waitForSoundCloud() {
@@ -266,14 +222,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             initializeSoundCloud();
 
-            return;
+        } else {
+
+            setTimeout(
+                waitForSoundCloud,
+                100
+            );
 
         }
-
-        setTimeout(
-            waitForSoundCloud,
-            100
-        );
 
     }
 
@@ -287,10 +243,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (typeof SC === "undefined") {
 
             console.error(
-                "SoundCloud Widget API failed to load."
+                "SoundCloud Widget API is missing."
             );
 
             return;
+
         }
 
 
@@ -299,7 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           READY
+           PLAYER READY
         ================================================= */
 
         widget.bind(
@@ -319,17 +276,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /*
-                 * If the user already opened the page and
-                 * the music section is visible, start it.
+                 * Load the first song.
+                 *
+                 * We don't force playback here because
+                 * browsers can block autoplay before the
+                 * user interacts with the page.
                  */
 
-                if (
-                    userHasInteracted &&
-                    isMusicSectionVisible() &&
-                    !musicStarted
-                ) {
+                if (!playerLoaded) {
 
-                    startMusicAutomatically();
+                    playerLoaded = true;
+
+                    loadSong(
+                        currentSong,
+                        false
+                    );
 
                 }
 
@@ -349,14 +310,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 switchingSong = false;
 
+                shouldResume = true;
+
                 updatePlayButton();
 
+
                 if (musicDisc) {
-                    musicDisc.classList.add("spinning");
+
+                    musicDisc.classList.add(
+                        "spinning"
+                    );
+
                 }
 
+
                 if (floatingMusicButton) {
-                    floatingMusicButton.classList.add("playing");
+
+                    floatingMusicButton.classList.add(
+                        "playing"
+                    );
+
                 }
 
             }
@@ -375,12 +348,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 updatePlayButton();
 
+
                 if (musicDisc) {
-                    musicDisc.classList.remove("spinning");
+
+                    musicDisc.classList.remove(
+                        "spinning"
+                    );
+
                 }
 
+
                 if (floatingMusicButton) {
-                    floatingMusicButton.classList.remove("playing");
+
+                    floatingMusicButton.classList.remove(
+                        "playing"
+                    );
+
                 }
 
             }
@@ -397,15 +380,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 isPlaying = false;
 
+                shouldResume = false;
+
+
                 if (musicDisc) {
-                    musicDisc.classList.remove("spinning");
+
+                    musicDisc.classList.remove(
+                        "spinning"
+                    );
+
                 }
+
 
                 if (floatingMusicButton) {
-                    floatingMusicButton.classList.remove("playing");
+
+                    floatingMusicButton.classList.remove(
+                        "playing"
+                    );
+
                 }
 
+
                 updatePlayButton();
+
+
+                /*
+                 * Automatically go to the next song.
+                 */
 
                 nextSong(true);
 
@@ -414,7 +415,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           PLAY PROGRESS
+           PROGRESS
         ================================================= */
 
         widget.bind(
@@ -423,11 +424,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (!data) return;
 
+
                 const position =
                     data.currentPosition || 0;
 
+
                 const relative =
                     data.relativePosition || 0;
+
 
                 updateProgress(
                     position,
@@ -447,9 +451,10 @@ document.addEventListener("DOMContentLoaded", () => {
             (error) => {
 
                 console.error(
-                    "SoundCloud player error:",
+                    "SoundCloud error:",
                     error
                 );
+
 
                 switchingSong = false;
 
@@ -457,12 +462,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 updatePlayButton();
 
+
                 if (musicDisc) {
-                    musicDisc.classList.remove("spinning");
+
+                    musicDisc.classList.remove(
+                        "spinning"
+                    );
+
                 }
 
+
                 if (floatingMusicButton) {
-                    floatingMusicButton.classList.remove("playing");
+
+                    floatingMusicButton.classList.remove(
+                        "playing"
+                    );
+
                 }
 
             }
@@ -481,21 +496,27 @@ document.addEventListener("DOMContentLoaded", () => {
             !milliseconds ||
             milliseconds < 0
         ) {
+
             return "0:00";
+
         }
+
 
         const totalSeconds =
             Math.floor(
                 milliseconds / 1000
             );
 
+
         const minutes =
             Math.floor(
                 totalSeconds / 60
             );
 
+
         const seconds =
             totalSeconds % 60;
+
 
         return (
             minutes +
@@ -525,6 +546,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
         if (progressBar) {
 
             const percent =
@@ -535,6 +557,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         relative
                     )
                 ) * 100;
+
 
             progressBar.style.width =
                 percent + "%";
@@ -554,8 +577,11 @@ document.addEventListener("DOMContentLoaded", () => {
             !widget ||
             !duration
         ) {
+
             return;
+
         }
+
 
         widget.getDuration(
             (milliseconds) => {
@@ -578,6 +604,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const song =
             songs[currentSong];
 
+
         if (!song) return;
 
 
@@ -598,9 +625,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /*
-         * IMPORTANT:
-         * Remove active from ALL songs.
-         * Only the current song gets active.
+         * Remove BOTH classes from EVERY song.
+         *
+         * This prevents I Love You from staying
+         * highlighted when another song is selected.
          */
 
         songButtons.forEach(
@@ -613,6 +641,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 button.classList.remove(
                     "song-main"
                 );
+
 
                 if (index === currentSong) {
 
@@ -627,20 +656,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         if (currentTime) {
+
             currentTime.textContent =
                 "0:00";
+
         }
 
 
         if (progressBar) {
+
             progressBar.style.width =
                 "0%";
+
         }
 
 
         if (duration) {
+
             duration.textContent =
                 "0:00";
+
         }
 
     }
@@ -657,8 +692,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (isPlaying) {
 
-            playButton.textContent =
-                "Ⅱ";
+            playButton.textContent = "Ⅱ";
 
             playButton.setAttribute(
                 "aria-label",
@@ -667,8 +701,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } else {
 
-            playButton.textContent =
-                "▶";
+            playButton.textContent = "▶";
 
             playButton.setAttribute(
                 "aria-label",
@@ -681,83 +714,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       START CURRENT SONG
-    ===================================================== */
-
-    function playCurrentSong() {
-
-        if (
-            !widgetReady ||
-            !widget
-        ) {
-            return;
-        }
-
-        widget.play();
-
-    }
-
-
-    /* =====================================================
-       AUTOMATIC MUSIC START
-    ===================================================== */
-
-    function startMusicAutomatically() {
-
-        if (
-            !widgetReady ||
-            !widget
-        ) {
-            return;
-        }
-
-
-        if (musicStarted) {
-            return;
-        }
-
-
-        musicStarted = true;
-
-        musicAreaWasEntered = true;
-
-
-        console.log(
-            "Music area entered — starting music."
-        );
-
-
-        /*
-         * First make sure the correct song is loaded.
-         */
-
-        loadSong(
-            currentSong,
-            true
-        );
-
-    }
-
-
-    /* =====================================================
        LOAD SONG
     ===================================================== */
 
     function loadSong(
         index,
-        autoplay = true
+        autoplay = false
     ) {
 
         if (
             !widgetReady ||
             !widget
         ) {
+
             return;
+
         }
 
 
         if (!songs[index]) {
+
             return;
+
         }
 
 
@@ -765,7 +743,9 @@ document.addEventListener("DOMContentLoaded", () => {
             switchingSong &&
             index === currentSong
         ) {
+
             return;
+
         }
 
 
@@ -804,7 +784,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         console.log(
-            "Loading song:",
+            "Loading:",
             song.title
         );
 
@@ -831,21 +811,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 callback: () => {
 
-                    console.log(
-                        "Loaded:",
-                        song.title
-                    );
-
+                    switchingSong = false;
 
                     updateSongUI();
 
 
-                    if (autoplay) {
+                    setTimeout(
+                        () => {
 
-                        /*
-                         * Give SoundCloud a moment to
-                         * finish loading before playing.
-                         */
+                            updateDuration();
+
+                        },
+                        500
+                    );
+
+
+                    /*
+                     * If autoplay was requested,
+                     * start the song.
+                     */
+
+                    if (autoplay) {
 
                         setTimeout(
                             () => {
@@ -860,25 +846,36 @@ document.addEventListener("DOMContentLoaded", () => {
                                 }
 
                             },
-                            250
+                            200
                         );
 
                     }
-
-
-                    setTimeout(
-                        () => {
-
-                            updateDuration();
-
-                        },
-                        700
-                    );
 
                 }
 
             }
         );
+
+    }
+
+
+    /* =====================================================
+       PLAY CURRENT SONG
+    ===================================================== */
+
+    function playCurrentSong() {
+
+        if (
+            !widgetReady ||
+            !widget
+        ) {
+
+            return;
+
+        }
+
+
+        widget.play();
 
     }
 
@@ -903,7 +900,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     /*
-                     * Same song = pause/play.
+                     * Clicking the currently playing
+                     * song pauses it.
                      */
 
                     if (
@@ -919,7 +917,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     /*
-                     * Different song = load + autoplay.
+                     * Clicking another song
+                     * immediately loads and plays it.
                      */
 
                     loadSong(
@@ -935,7 +934,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       PLAY / PAUSE
+       PLAY / PAUSE BUTTON
     ===================================================== */
 
     if (playButton) {
@@ -951,7 +950,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     !widgetReady ||
                     !widget
                 ) {
+
                     return;
+
                 }
 
 
@@ -961,7 +962,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 } else {
 
-                    widget.play();
+                    playCurrentSong();
 
                 }
 
@@ -1059,7 +1060,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       PROGRESS BAR
+       PROGRESS SEEK
     ===================================================== */
 
     if (progressTrack) {
@@ -1072,8 +1073,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     !widgetReady ||
                     !widget
                 ) {
+
                     return;
+
                 }
+
+
+                userHasInteracted = true;
 
 
                 const rect =
@@ -1100,7 +1106,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     (milliseconds) => {
 
                         if (!milliseconds) {
+
                             return;
+
                         }
 
 
@@ -1147,10 +1155,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       MUSIC AREA OBSERVER
+       MUSIC AREA
        
-       Starts the song once the music section
-       becomes visible.
+       ENTER:
+       - Automatically play/resume
+
+       LEAVE:
+       - Pause
+
+       RETURN:
+       - Automatically resume
     ===================================================== */
 
     if (musicSection) {
@@ -1163,28 +1177,76 @@ document.addEventListener("DOMContentLoaded", () => {
                         (entry) => {
 
                             if (
-                                entry.isIntersecting &&
-                                entry.intersectionRatio >= 0.25
+                                !widgetReady ||
+                                !widget
                             ) {
 
+                                return;
+
+                            }
+
+
+                            if (entry.isIntersecting) {
+
+                                musicAreaVisible =
+                                    true;
+
+
                                 console.log(
-                                    "Music section visible."
+                                    "Entered music area"
                                 );
 
 
                                 /*
-                                 * Only start automatically
-                                 * after the user has interacted
-                                 * with the page.
+                                 * If the visitor has already
+                                 * interacted with the page,
+                                 * automatically play.
                                  */
 
                                 if (
-                                    userHasInteracted &&
-                                    !musicStarted &&
-                                    widgetReady
+                                    userHasInteracted
                                 ) {
 
-                                    startMusicAutomatically();
+                                    setTimeout(
+                                        () => {
+
+                                            if (
+                                                musicAreaVisible &&
+                                                widget &&
+                                                widgetReady
+                                            ) {
+
+                                                widget.play();
+
+                                            }
+
+                                        },
+                                        100
+                                    );
+
+                                }
+
+                            } else {
+
+                                musicAreaVisible =
+                                    false;
+
+
+                                console.log(
+                                    "Left music area"
+                                );
+
+
+                                /*
+                                 * Only pause if it is
+                                 * currently playing.
+                                 */
+
+                                if (isPlaying) {
+
+                                    shouldResume = true;
+
+                                    widget.pause();
 
                                 }
 
@@ -1195,10 +1257,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 },
                 {
-                    threshold: [
-                        0.25,
-                        0.5
-                    ]
+                    threshold: 0.25
                 }
             );
 
@@ -1222,7 +1281,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 !widgetReady ||
                 !widget
             ) {
+
                 return;
+
             }
 
 
@@ -1281,7 +1342,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       START SOUNDCLOUD
+       START
     ===================================================== */
 
     waitForSoundCloud();
