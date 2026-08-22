@@ -1,7 +1,3 @@
-/* =====================================================
-   RESET
-===================================================== */
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -14,22 +10,9 @@ html {
 
 body {
     min-height: 100vh;
-
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(128, 104, 180, 0.16),
-            transparent 38%
-        ),
-        #080712;
-
+    background: #080712;
     color: #f7f3ff;
-
-    font-family:
-        "DM Sans",
-        Arial,
-        sans-serif;
-
+    font-family: "DM Sans", Arial, sans-serif;
     overflow-x: hidden;
 }
 
@@ -37,9 +20,8 @@ button {
     font-family: inherit;
 }
 
-button:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.8);
-    outline-offset: 4px;
+button:focus {
+    outline: none;
 }
 
 
@@ -50,14 +32,10 @@ button:focus-visible {
 .background {
     position: fixed;
     inset: 0;
-
     width: 100%;
     height: 100%;
-
     pointer-events: none;
-
     overflow: hidden;
-
     z-index: -2;
 
     background:
@@ -76,20 +54,14 @@ button:focus-visible {
 .stars-background {
     position: absolute;
     inset: 0;
-
-    width: 100%;
-    height: 100%;
 }
 
 .bg-star {
     position: absolute;
-
     color: rgba(255, 255, 255, 0.25);
-
     font-size: 15px;
 
-    animation:
-        twinkle 4s ease-in-out infinite;
+    animation: twinkle 4s ease-in-out infinite;
 }
 
 .star-1 {
@@ -164,7 +136,6 @@ button:focus-visible {
 }
 
 @keyframes twinkle {
-
     0%,
     100% {
         opacity: 0.18;
@@ -186,10 +157,9 @@ button:focus-visible {
     position: fixed;
     inset: 0;
 
-    min-height: 100svh;
+    min-height: 100vh;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
@@ -226,7 +196,6 @@ button:focus-visible {
 }
 
 @keyframes openingFade {
-
     from {
         opacity: 0;
         transform: translateY(18px);
@@ -244,20 +213,14 @@ button:focus-visible {
     color: rgba(255, 255, 255, 0.55);
 
     font-size: 12px;
-
     letter-spacing: 0.25em;
-
     text-transform: uppercase;
 }
 
 .opening h1 {
-    font-family:
-        "Playfair Display",
-        Georgia,
-        serif;
+    font-family: "Playfair Display", Georgia, serif;
 
-    font-size:
-        clamp(44px, 8vw, 82px);
+    font-size: clamp(44px, 8vw, 82px);
 
     line-height: 0.98;
 
@@ -317,8 +280,7 @@ button:focus-visible {
 .main {
     opacity: 0;
 
-    transition:
-        opacity 1s ease;
+    transition: opacity 1s ease;
 }
 
 .main.main-visible {
@@ -331,10 +293,9 @@ button:focus-visible {
 ===================================================== */
 
 .hero {
-    min-height: 100svh;
+    min-height: 100vh;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
@@ -353,20 +314,14 @@ button:focus-visible {
     color: rgba(255, 255, 255, 0.45);
 
     font-size: 12px;
-
     letter-spacing: 0.2em;
-
     text-transform: uppercase;
 }
 
 .hero h2 {
-    font-family:
-        "Playfair Display",
-        Georgia,
-        serif;
+    font-family: "Playfair Display", Georgia, serif;
 
-    font-size:
-        clamp(55px, 10vw, 110px);
+    font-size: clamp(55px, 10vw, 110px);
 
     line-height: 0.95;
 
@@ -391,9 +346,7 @@ button:focus-visible {
     margin-top: 90px;
 
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
 
     gap: 10px;
@@ -415,7 +368,6 @@ button:focus-visible {
 }
 
 @keyframes scrollBounce {
-
     0%,
     100% {
         transform: translateY(0);
@@ -428,7 +380,7 @@ button:focus-visible {
 
 
 /* =====================================================
-   STORY SECTIONS
+   STORY
 ===================================================== */
 
 .story-section {
@@ -437,7 +389,6 @@ button:focus-visible {
     min-height: 80vh;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
@@ -489,13 +440,9 @@ button:focus-visible {
 .story-card h3 {
     margin-bottom: 30px;
 
-    font-family:
-        "Playfair Display",
-        Georgia,
-        serif;
+    font-family: "Playfair Display", Georgia, serif;
 
-    font-size:
-        clamp(34px, 6vw, 58px);
+    font-size: clamp(34px, 6vw, 58px);
 
     line-height: 1.05;
 
@@ -521,10 +468,7 @@ button:focus-visible {
 
     color: rgba(255, 255, 255, 0.85);
 
-    font-family:
-        "Playfair Display",
-        Georgia,
-        serif;
+    font-family: "Playfair Display", Georgia, serif;
 
     font-size: 22px;
 
@@ -533,7 +477,7 @@ button:focus-visible {
 
 
 /* =====================================================
-   STARS SECTION
+   STARS
 ===================================================== */
 
 .stars-section {
@@ -558,13 +502,9 @@ button:focus-visible {
 .section-heading h3 {
     margin-bottom: 15px;
 
-    font-family:
-        "Playfair Display",
-        Georgia,
-        serif;
+    font-family: "Playfair Display", Georgia, serif;
 
-    font-size:
-        clamp(38px, 6vw, 62px);
+    font-size: clamp(38px, 6vw, 62px);
 
     font-weight: 500;
 }
@@ -574,11 +514,6 @@ button:focus-visible {
 
     font-size: 14px;
 }
-
-
-/* =====================================================
-   STAR FIELD
-===================================================== */
 
 .star-field {
     position: relative;
@@ -695,10 +630,7 @@ button:focus-visible {
 
     color: rgba(255, 255, 255, 0.75);
 
-    font-family:
-        "Playfair Display",
-        Georgia,
-        serif;
+    font-family: "Playfair Display", Georgia, serif;
 
     font-size: 17px;
 
@@ -721,7 +653,7 @@ button:focus-visible {
 
 
 /* =====================================================
-   MUSIC SECTION
+   MUSIC
 ===================================================== */
 
 .music-section {
@@ -738,7 +670,7 @@ button:focus-visible {
 
     text-align: center;
 
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .music-player {
@@ -751,15 +683,12 @@ button:focus-visible {
     flex-direction: column;
 
     align-items: center;
-    justify-content: center;
 
     text-align: center;
 }
 
 
-/* =====================================================
-   RECORD
-===================================================== */
+/* RECORD */
 
 .music-disc-area {
     width: 100%;
@@ -769,7 +698,7 @@ button:focus-visible {
     align-items: center;
     justify-content: center;
 
-    margin: 0 auto 30px;
+    margin-bottom: 30px;
 }
 
 .music-disc {
@@ -777,8 +706,6 @@ button:focus-visible {
 
     width: 230px;
     height: 230px;
-
-    flex: 0 0 230px;
 
     border-radius: 50%;
 
@@ -791,8 +718,7 @@ button:focus-visible {
             #111018 7px
         );
 
-    border:
-        1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.12);
 
     box-shadow:
         0 25px 70px rgba(0, 0, 0, 0.45),
@@ -802,9 +728,6 @@ button:focus-visible {
 
     align-items: center;
     justify-content: center;
-
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .music-disc::before {
@@ -816,8 +739,7 @@ button:focus-visible {
 
     border-radius: 50%;
 
-    border:
-        1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .music-disc::after {
@@ -832,8 +754,7 @@ button:focus-visible {
 
     background: #080712;
 
-    border:
-        1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .disc-lines {
@@ -843,8 +764,7 @@ button:focus-visible {
 
     border-radius: 50%;
 
-    border:
-        1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .disc-center {
@@ -893,28 +813,15 @@ button:focus-visible {
 }
 
 
-/* =====================================================
-   CURRENT SONG
-===================================================== */
+/* CURRENT SONG */
 
 .current-song {
     width: 100%;
-
-    margin: 5px auto 0;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
 
     text-align: center;
 }
 
 .current-song-title {
-    width: 100%;
-
     color: white;
 
     font-family:
@@ -925,26 +832,18 @@ button:focus-visible {
     font-size: 27px;
 
     font-weight: 500;
-
-    text-align: center;
 }
 
 .current-song-artist {
-    width: 100%;
-
     margin-top: 5px;
 
     color: rgba(255, 255, 255, 0.42);
 
     font-size: 13px;
-
-    text-align: center;
 }
 
 
-/* =====================================================
-   PROGRESS
-===================================================== */
+/* PROGRESS */
 
 .music-progress {
     width: min(90%, 500px);
@@ -954,7 +853,6 @@ button:focus-visible {
     display: flex;
 
     align-items: center;
-    justify-content: center;
 
     gap: 10px;
 
@@ -970,8 +868,6 @@ button:focus-visible {
 
     height: 5px;
 
-    min-width: 0;
-
     overflow: hidden;
 
     border-radius: 999px;
@@ -979,8 +875,6 @@ button:focus-visible {
     background: rgba(255, 255, 255, 0.1);
 
     cursor: pointer;
-
-    --progress: 0%;
 }
 
 .progress-bar {
@@ -1001,15 +895,9 @@ button:focus-visible {
 }
 
 
-/* =====================================================
-   CONTROLS
-===================================================== */
+/* CONTROLS */
 
 .music-controls {
-    width: 100%;
-
-    margin: 10px auto 25px;
-
     display: flex;
 
     align-items: center;
@@ -1017,7 +905,7 @@ button:focus-visible {
 
     gap: 12px;
 
-    text-align: center;
+    margin-bottom: 25px;
 }
 
 .music-control {
@@ -1068,37 +956,24 @@ button:focus-visible {
 }
 
 
-/* =====================================================
-   SONG LIST
-===================================================== */
+/* SONG LIST */
 
 .music-wheel {
     width: 100%;
-
-    margin: 15px auto 0;
-
-    padding: 0;
 
     display: flex;
 
     flex-direction: column;
 
     align-items: center;
-    justify-content: center;
 
     gap: 10px;
-
-    text-align: center;
-
-    position: static;
 }
 
 .music-song {
     width: min(90%, 360px);
 
     min-height: 44px;
-
-    margin: 0 auto;
 
     padding: 11px 20px;
 
@@ -1122,8 +997,6 @@ button:focus-visible {
 
     text-align: center;
 
-    -webkit-tap-highlight-color: transparent;
-
     transition:
         color 0.2s ease,
         background 0.2s ease,
@@ -1142,8 +1015,7 @@ button:focus-visible {
     transform: translateY(-1px);
 }
 
-.music-song.active,
-.music-song.song-main {
+.music-song.active {
     color: white;
 
     background:
@@ -1151,39 +1023,30 @@ button:focus-visible {
 
     border-color:
         rgba(255, 255, 255, 0.2);
-
-    box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.15);
 }
 
 .music-hint {
-    width: 100%;
-
-    margin: 18px auto 0;
+    margin-top: 18px;
 
     color: rgba(255, 255, 255, 0.3);
 
     font-size: 11px;
-
-    text-align: center;
 }
 
 
-/* =====================================================
-   HIDDEN SOUNDCLOUD
-===================================================== */
+/* HIDE SOUNDCLOUD */
 
 #soundcloud-player {
-    position: absolute !important;
+    position: absolute;
 
-    width: 1px !important;
-    height: 1px !important;
+    width: 1px;
+    height: 1px;
 
-    opacity: 0 !important;
+    opacity: 0;
 
-    pointer-events: none !important;
+    pointer-events: none;
 
-    border: 0 !important;
+    border: 0;
 }
 
 
@@ -1248,8 +1111,7 @@ button:focus-visible {
         Georgia,
         serif;
 
-    font-size:
-        clamp(20px, 4vw, 30px);
+    font-size: clamp(20px, 4vw, 30px);
 
     font-style: italic;
 
@@ -1276,15 +1138,6 @@ button:focus-visible {
         scale(1);
 
     pointer-events: auto;
-}
-
-
-/* =====================================================
-   FINAL STORY
-===================================================== */
-
-.final-story {
-    min-height: 90vh;
 }
 
 
@@ -1319,7 +1172,6 @@ button:focus-visible {
 }
 
 @keyframes heartFloat {
-
     0%,
     100% {
         transform: translateY(0);
@@ -1436,46 +1288,36 @@ button:focus-visible {
 
 @media (max-width: 600px) {
 
-    body {
-        overflow-x: hidden;
-    }
-
-
     .opening {
         padding: 25px 18px;
     }
-
 
     .opening h1 {
         font-size:
             clamp(42px, 14vw, 64px);
     }
 
-
     .hero {
-        padding:
-            80px 18px;
+        padding: 80px 18px;
     }
-
 
     .hero h2 {
         font-size:
             clamp(50px, 15vw, 80px);
     }
 
-
     .hero-subtitle {
         font-size: 14px;
     }
 
 
+    /* STORY */
+
     .story-section {
         min-height: auto;
 
-        padding:
-            90px 18px;
+        padding: 90px 18px;
     }
-
 
     .story-card {
         width: 100%;
@@ -1483,12 +1325,10 @@ button:focus-visible {
         padding: 40px 5px;
     }
 
-
     .story-card h3 {
         font-size:
             clamp(34px, 10vw, 48px);
     }
-
 
     .story-card p:not(.story-label):not(.soft-line) {
         font-size: 15px;
@@ -1497,24 +1337,19 @@ button:focus-visible {
     }
 
 
-    /* ---------------------------------------------
-       STARS
-    --------------------------------------------- */
+    /* STARS */
 
     .stars-section {
         min-height: 80vh;
 
-        padding:
-            90px 15px;
+        padding: 90px 15px;
     }
-
 
     .star-field {
         width: 100%;
 
         height: 390px;
     }
-
 
     .star {
         width: 64px;
@@ -1523,48 +1358,40 @@ button:focus-visible {
         font-size: 25px;
     }
 
-
     .star-one {
         top: 8%;
         left: 7%;
     }
-
 
     .star-two {
         top: 24%;
         left: 43%;
     }
 
-
     .star-three {
         top: 5%;
         right: 7%;
     }
-
 
     .star-four {
         top: 51%;
         left: 17%;
     }
 
-
     .star-five {
         top: 65%;
         right: 16%;
     }
-
 
     .star-six {
         top: 39%;
         right: 0;
     }
 
-
     .star-seven {
         bottom: 2%;
         left: 42%;
     }
-
 
     .star-eight {
         bottom: 13%;
@@ -1572,157 +1399,39 @@ button:focus-visible {
     }
 
 
-    /* ---------------------------------------------
-       MUSIC
-    --------------------------------------------- */
+    /* MUSIC */
 
     .music-section {
-        width: 100%;
+        min-height: 100vh;
 
-        min-height: 100svh;
-
-        padding:
-            90px 15px;
-
-        margin: 0;
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        text-align: center;
-
-        overflow-x: hidden;
+        padding: 90px 15px;
     }
-
 
     .music-player {
         width: 100%;
-
-        max-width: 100%;
-
-        margin: 0 auto;
-
-        padding:
-            0 5px;
-
-        display: flex;
-
-        flex-direction: column;
-
-        align-items: center;
-        justify-content: center;
-
-        text-align: center;
     }
-
-
-    .music-disc-area {
-        width: 100%;
-
-        margin:
-            0 auto 28px;
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-    }
-
 
     .music-disc {
         width: 190px;
         height: 190px;
-
-        flex-basis: 190px;
-
-        margin:
-            0 auto;
     }
-
 
     .disc-center {
         width: 60px;
         height: 60px;
     }
 
-
-    .current-song {
-        width: 100%;
-
-        margin:
-            0 auto;
-
-        display: flex;
-
-        flex-direction: column;
-
-        align-items: center;
-        justify-content: center;
-
-        text-align: center;
-    }
-
-
     .current-song-title {
-        width: 100%;
-
         font-size: 23px;
-
-        text-align: center;
     }
-
-
-    .current-song-artist {
-        width: 100%;
-
-        text-align: center;
-    }
-
 
     .music-progress {
         width: 92%;
-
-        max-width: 420px;
-
-        margin:
-            22px auto 18px;
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        gap: 8px;
     }
-
-
-    .progress-track {
-        flex: 1;
-
-        min-width: 0;
-
-        height: 5px;
-    }
-
 
     .music-controls {
-        width: 100%;
-
-        margin:
-            8px auto 24px;
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
         gap: 10px;
-
-        text-align: center;
     }
-
 
     .music-control {
         min-width: 68px;
@@ -1733,108 +1442,23 @@ button:focus-visible {
         font-size: 11px;
     }
 
-
     .play-button {
         width: 48px;
         min-width: 48px;
-
-        height: 48px;
     }
-
-
-    /*
-       This is the important mobile centering fix.
-    */
-
-    .music-wheel {
-        width: 100% !important;
-
-        margin:
-            12px auto 0 !important;
-
-        padding: 0 !important;
-
-        display: flex !important;
-
-        flex-direction: column !important;
-
-        align-items: center !important;
-
-        justify-content: center !important;
-
-        gap: 10px !important;
-
-        position: static !important;
-
-        left: auto !important;
-        right: auto !important;
-
-        transform: none !important;
-
-        text-align: center !important;
-    }
-
 
     .music-song {
-        width: 90% !important;
-
-        max-width: 350px !important;
-
-        min-height: 46px;
-
-        margin:
-            0 auto !important;
-
-        display: flex !important;
-
-        align-items: center !important;
-
-        justify-content: center !important;
-
-        text-align: center !important;
-
-        position: static !important;
-
-        left: auto !important;
-        right: auto !important;
-
-        transform: none !important;
+        width: 90%;
     }
 
 
-    .music-song:hover {
-        transform:
-            none !important;
-    }
-
-
-    .music-song:active {
-        transform:
-            scale(0.98) !important;
-    }
-
-
-    .music-hint {
-        width: 100%;
-
-        margin:
-            17px auto 0;
-
-        text-align: center;
-    }
-
-
-    /* ---------------------------------------------
-       SECRET
-    --------------------------------------------- */
+    /* SECRET */
 
     .secret-section {
         min-height: 55vh;
 
-        padding:
-            90px 18px;
+        padding: 90px 18px;
     }
-
 
     .secret-message {
         width: 95%;
@@ -1843,26 +1467,20 @@ button:focus-visible {
     }
 
 
-    /* ---------------------------------------------
-       ENDING
-    --------------------------------------------- */
+    /* ENDING */
 
     .ending {
         min-height: 65vh;
 
-        padding:
-            100px 18px;
+        padding: 100px 18px;
     }
-
 
     .ending h4 {
         font-size: 28px;
     }
 
 
-    /* ---------------------------------------------
-       FLOATING MUSIC
-    --------------------------------------------- */
+    /* FLOATING BUTTON */
 
     .floating-music-button {
         right: 15px;
@@ -1875,7 +1493,7 @@ button:focus-visible {
 
 
 /* =====================================================
-   VERY SMALL PHONES
+   SMALL PHONES
 ===================================================== */
 
 @media (max-width: 380px) {
@@ -1883,23 +1501,18 @@ button:focus-visible {
     .music-disc {
         width: 170px;
         height: 170px;
-
-        flex-basis: 170px;
     }
-
 
     .music-control {
         min-width: 62px;
 
         padding:
-            9px 9px;
+            9px;
     }
-
 
     .music-song {
-        width: 94% !important;
+        width: 94%;
     }
-
 
     .star-field {
         height: 360px;
