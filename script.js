@@ -1,55 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* =====================================================
+    /* =========================
        OPENING
-    ===================================================== */
+    ========================= */
 
     const opening = document.getElementById("opening");
     const openButton = document.getElementById("openButton");
     const main = document.getElementById("main");
 
-    let siteOpened = false;
-
     if (openButton) {
         openButton.addEventListener("click", () => {
+            opening.classList.add("opening-hidden");
 
-            siteOpened = true;
-
-            if (opening) {
-                opening.classList.add("opening-hidden");
-            }
-
-            if (main) {
-                setTimeout(() => {
-                    main.classList.add("main-visible");
-                }, 250);
-            }
-
+            setTimeout(() => {
+                main.classList.add("main-visible");
+            }, 300);
         });
     }
 
 
-    /* =====================================================
-       MUSIC ELEMENTS
-    ===================================================== */
+    /* =========================
+       MUSIC
+    ========================= */
 
-    const iframe =
-        document.getElementById("soundcloud-player");
+    const iframe = document.getElementById("soundcloud-player");
 
-    const musicSection =
-        document.getElementById("musicSection");
-
-    const musicDisc =
-        document.getElementById("musicDisc");
-
-    const playButton =
-        document.getElementById("playButton");
-
-    const nextButton =
-        document.getElementById("nextButton");
-
-    const previousButton =
-        document.getElementById("previousButton");
+    const playButton = document.getElementById("playButton");
+    const nextButton = document.getElementById("nextButton");
+    const previousButton = document.getElementById("previousButton");
 
     const currentSongTitle =
         document.getElementById("currentSongTitle");
@@ -69,19 +47,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const progressTrack =
         document.getElementById("progressTrack");
 
-    const songButtons =
-        document.querySelectorAll(".music-song");
+    const musicDisc =
+        document.getElementById("musicDisc");
+
+    const musicSection =
+        document.getElementById("musicSection");
 
     const floatingMusicButton =
         document.getElementById("floatingMusicButton");
 
+    const songButtons =
+        document.querySelectorAll(".music-song");
 
-    /* =====================================================
-       SONGS
-    ===================================================== */
 
     const songs = [
-
         {
             title: "I Love You",
             artist: "Fontaines D.C.",
@@ -99,32 +78,23 @@ document.addEventListener("DOMContentLoaded", () => {
             artist: "Mac DeMarco",
             url: "https://soundcloud.com/user-917397187-731881398/mac-demarco-moonlight-on-the-river-slowed"
         }
-
     ];
 
 
-    /* =====================================================
-       PLAYER STATE
-    ===================================================== */
-
     let player = null;
-
-    let playerReady = false;
-
-    let playing = false;
 
     let currentIndex = 0;
 
+    let isPlaying = false;
+
+    let isReady = false;
+
     let changingSong = false;
 
-    let userInteracted = false;
 
-    let musicVisible = false;
-
-
-    /* =====================================================
+    /* =========================
        LOAD SOUNDCLOUD API
-    ===================================================== */
+    ========================= */
 
     function loadSoundCloudAPI() {
 
@@ -138,31 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-
-            const existing =
-                document.querySelector(
-                    'script[src="https://w.soundcloud.com/player/api.js"]'
-                );
-
-
-            if (existing) {
-
-                existing.addEventListener(
-                    "load",
-                    resolve,
-                    { once: true }
-                );
-
-                existing.addEventListener(
-                    "error",
-                    reject,
-                    { once: true }
-                );
-
-                return;
-            }
-
-
             const script =
                 document.createElement("script");
 
@@ -174,54 +119,40 @@ document.addEventListener("DOMContentLoaded", () => {
             script.onerror = reject;
 
             document.head.appendChild(script);
-
         });
-
     }
 
 
-    /* =====================================================
+    /* =========================
        FORMAT TIME
-    ===================================================== */
+    ========================= */
 
-    function formatTime(milliseconds) {
+    function formatTime(ms) {
 
-        if (
-            !milliseconds ||
-            milliseconds < 0
-        ) {
+        if (!ms || ms < 0) {
             return "0:00";
         }
 
-
-        const totalSeconds =
-            Math.floor(
-                milliseconds / 1000
-            );
-
+        const seconds =
+            Math.floor(ms / 1000);
 
         const minutes =
-            Math.floor(
-                totalSeconds / 60
-            );
+            Math.floor(seconds / 60);
 
-
-        const seconds =
-            totalSeconds % 60;
-
+        const remainingSeconds =
+            seconds % 60;
 
         return (
             minutes +
             ":" +
-            String(seconds).padStart(2, "0")
+            String(remainingSeconds).padStart(2, "0")
         );
-
     }
 
 
-    /* =====================================================
+    /* =========================
        RESET PROGRESS
-    ===================================================== */
+    ========================= */
 
     function resetProgress() {
 
@@ -229,280 +160,123 @@ document.addEventListener("DOMContentLoaded", () => {
             currentTime.textContent = "0:00";
         }
 
-
         if (duration) {
             duration.textContent = "0:00";
         }
 
-
         if (progressBar) {
             progressBar.style.width = "0%";
         }
-
-
-        if (progressTrack) {
-
-            progressTrack.style.setProperty(
-                "--progress",
-                "0%"
-            );
-
-        }
-
     }
 
 
-    /* =====================================================
-       UPDATE SONG INFORMATION
-    ===================================================== */
+    /* =========================
+       UPDATE UI
+    ========================= */
+
+    function updateUI() {
+
+        if (playButton) {
+            playButton.textContent =
+                isPlaying ? "Ⅱ" : "▶";
+        }
+
+        if (musicDisc) {
+            musicDisc.classList.toggle(
+                "spinning",
+                isPlaying
+            );
+        }
+
+        if (floatingMusicButton) {
+            floatingMusicButton.classList.toggle(
+                "playing",
+                isPlaying
+            );
+        }
+    }
+
+
+    /* =========================
+       UPDATE SONG
+    ========================= */
 
     function updateSongUI() {
 
-        const song =
-            songs[currentIndex];
-
+        const song = songs[currentIndex];
 
         if (!song) {
             return;
         }
 
-
         if (currentSongTitle) {
-
             currentSongTitle.textContent =
                 song.title;
-
         }
-
 
         if (currentSongArtist) {
-
             currentSongArtist.textContent =
                 song.artist;
-
         }
 
 
-        songButtons.forEach(
-            (button, index) => {
+        songButtons.forEach((button, index) => {
 
-                const active =
-                    index === currentIndex;
-
-
-                button.classList.toggle(
-                    "active",
-                    active
-                );
-
-
-                button.classList.toggle(
-                    "song-main",
-                    active
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       UPDATE PLAYER UI
-    ===================================================== */
-
-    function updatePlayerUI() {
-
-        if (playButton) {
-
-            playButton.textContent =
-                playing ? "Ⅱ" : "▶";
-
-        }
-
-
-        if (musicDisc) {
-
-            musicDisc.classList.toggle(
-                "spinning",
-                playing
+            button.classList.toggle(
+                "active",
+                index === currentIndex
             );
 
-        }
-
-
-        if (floatingMusicButton) {
-
-            floatingMusicButton.classList.toggle(
-                "playing",
-                playing
-            );
-
-        }
-
+        });
     }
 
 
-    /* =====================================================
-       GET DURATION
-    ===================================================== */
-
-    function getDuration() {
-
-        if (
-            !player ||
-            !playerReady
-        ) {
-            return;
-        }
-
-
-        player.getDuration(
-            (milliseconds) => {
-
-                if (
-                    milliseconds &&
-                    duration
-                ) {
-
-                    duration.textContent =
-                        formatTime(
-                            milliseconds
-                        );
-
-                }
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       UPDATE PROGRESS
-    ===================================================== */
-
-    function updateProgress(data) {
-
-        if (!data) {
-            return;
-        }
-
-
-        const current =
-            data.currentPosition || 0;
-
-
-        const total =
-            data.duration || 0;
-
-
-        if (currentTime) {
-
-            currentTime.textContent =
-                formatTime(current);
-
-        }
-
-
-        if (
-            total > 0 &&
-            duration
-        ) {
-
-            duration.textContent =
-                formatTime(total);
-
-        }
-
-
-        if (
-            total > 0 &&
-            progressBar
-        ) {
-
-            const percent =
-                Math.min(
-                    100,
-                    Math.max(
-                        0,
-                        (current / total) * 100
-                    )
-                );
-
-
-            progressBar.style.width =
-                percent + "%";
-
-
-            if (progressTrack) {
-
-                progressTrack.style.setProperty(
-                    "--progress",
-                    percent + "%"
-                );
-
-            }
-
-        }
-
-    }
-
-
-    /* =====================================================
+    /* =========================
        PLAY
-    ===================================================== */
+    ========================= */
 
     function playMusic() {
 
         if (
             !player ||
-            !playerReady
+            !isReady
         ) {
             return;
         }
 
-
-        userInteracted = true;
-
         player.play();
-
     }
 
 
-    /* =====================================================
+    /* =========================
        PAUSE
-    ===================================================== */
+    ========================= */
 
     function pauseMusic() {
 
         if (
             !player ||
-            !playerReady
+            !isReady
         ) {
             return;
         }
 
-
         player.pause();
-
     }
 
 
-    /* =====================================================
+    /* =========================
        LOAD SONG
-       MOBILE FRIENDLY
-    ===================================================== */
+    ========================= */
 
     function loadSong(index) {
 
         if (
             !player ||
-            !playerReady
+            !isReady
         ) {
             return;
         }
-
 
         if (
             index < 0 ||
@@ -512,56 +286,26 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        currentIndex =
-            index;
+        currentIndex = index;
 
+        changingSong = true;
 
-        userInteracted =
-            true;
+        isPlaying = false;
 
-
-        changingSong =
-            true;
-
-
-        const song =
-            songs[index];
-
-
-        /*
-         * Stop the old song first.
-         */
-
-        player.pause();
-
-
-        playing =
-            false;
-
-
-        /*
-         * Reset the old song's UI immediately.
-         */
+        updateUI();
 
         resetProgress();
 
         updateSongUI();
 
-        updatePlayerUI();
-
 
         /*
-         * Load the NEW song.
-         *
-         * auto_play:true is important here because
-         * this function is called directly from a
-         * user's tap/click.
+         * Load the new song.
          */
 
         player.load(
-            song.url,
+            songs[index].url,
             {
-
                 auto_play: true,
 
                 hide_related: true,
@@ -573,33 +317,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 show_reposts: false,
 
                 visual: false
-
             }
         );
 
 
         /*
-         * The new track is loading.
+         * Give SoundCloud time to
+         * load the new track.
          */
 
-        setTimeout(
-            () => {
+        setTimeout(() => {
 
-                changingSong =
-                    false;
+            changingSong = false;
 
-                getDuration();
-
-            },
-            1000
-        );
-
+        }, 1200);
     }
 
 
-    /* =====================================================
-       PLAY / PAUSE BUTTON
-    ===================================================== */
+    /* =========================
+       PLAY BUTTON
+    ========================= */
 
     if (playButton) {
 
@@ -609,108 +346,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 event.preventDefault();
 
-                event.stopPropagation();
-
-
-                userInteracted =
-                    true;
-
-
-                if (playing) {
-
+                if (isPlaying) {
                     pauseMusic();
+                } else {
+                    playMusic();
+                }
+
+            }
+        );
+    }
+
+
+    /* =========================
+       SONG BUTTONS
+    ========================= */
+
+    songButtons.forEach((button, index) => {
+
+        button.addEventListener(
+            "click",
+            (event) => {
+
+                event.preventDefault();
+
+                if (index !== currentIndex) {
+
+                    loadSong(index);
 
                 } else {
 
-                    playMusic();
+                    if (isPlaying) {
+                        pauseMusic();
+                    } else {
+                        playMusic();
+                    }
 
                 }
 
             }
         );
 
-    }
+    });
 
 
-    /* =====================================================
-       SONG BUTTONS
-    ===================================================== */
-
-    songButtons.forEach(
-        (button, index) => {
-
-            button.addEventListener(
-                "click",
-                (event) => {
-
-                    event.preventDefault();
-
-                    event.stopPropagation();
-
-
-                    userInteracted =
-                        true;
-
-
-                    /*
-                     * DIFFERENT SONG
-                     */
-
-                    if (
-                        index !== currentIndex
-                    ) {
-
-                        loadSong(index);
-
-                        return;
-
-                    }
-
-
-                    /*
-                     * SAME SONG
-                     */
-
-                    if (playing) {
-
-                        pauseMusic();
-
-                    } else {
-
-                        playMusic();
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-    /* =====================================================
-       NEXT SONG
-    ===================================================== */
-
-    function nextSong() {
-
-        let nextIndex =
-            currentIndex + 1;
-
-
-        if (
-            nextIndex >= songs.length
-        ) {
-
-            nextIndex = 0;
-
-        }
-
-
-        loadSong(nextIndex);
-
-    }
-
+    /* =========================
+       NEXT
+    ========================= */
 
     if (nextButton) {
 
@@ -720,45 +401,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 event.preventDefault();
 
-                event.stopPropagation();
+                let next =
+                    currentIndex + 1;
 
+                if (
+                    next >= songs.length
+                ) {
+                    next = 0;
+                }
 
-                userInteracted =
-                    true;
-
-
-                nextSong();
+                loadSong(next);
 
             }
         );
-
     }
 
 
-    /* =====================================================
-       PREVIOUS SONG
-    ===================================================== */
-
-    function previousSong() {
-
-        let previousIndex =
-            currentIndex - 1;
-
-
-        if (
-            previousIndex < 0
-        ) {
-
-            previousIndex =
-                songs.length - 1;
-
-        }
-
-
-        loadSong(previousIndex);
-
-    }
-
+    /* =========================
+       PREVIOUS
+    ========================= */
 
     if (previousButton) {
 
@@ -768,24 +429,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 event.preventDefault();
 
-                event.stopPropagation();
+                let previous =
+                    currentIndex - 1;
 
+                if (previous < 0) {
+                    previous =
+                        songs.length - 1;
+                }
 
-                userInteracted =
-                    true;
-
-
-                previousSong();
+                loadSong(previous);
 
             }
         );
-
     }
 
 
-    /* =====================================================
+    /* =========================
        PROGRESS BAR
-    ===================================================== */
+    ========================= */
 
     if (progressTrack) {
 
@@ -795,60 +456,75 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (
                     !player ||
-                    !playerReady
+                    !isReady
                 ) {
                     return;
                 }
 
-
                 const rect =
                     progressTrack.getBoundingClientRect();
 
-
-                const clickPosition =
-                    event.clientX -
-                    rect.left;
-
+                const position =
+                    event.clientX - rect.left;
 
                 const percentage =
                     Math.max(
                         0,
                         Math.min(
                             1,
-                            clickPosition /
-                            rect.width
+                            position / rect.width
                         )
                     );
 
-
                 player.getDuration(
-                    (milliseconds) => {
+                    (songDuration) => {
 
                         if (
-                            !milliseconds ||
-                            milliseconds <= 0
+                            songDuration &&
+                            songDuration > 0
                         ) {
-                            return;
+
+                            player.seekTo(
+                                songDuration *
+                                percentage
+                            );
+
                         }
-
-
-                        player.seekTo(
-                            milliseconds *
-                            percentage
-                        );
 
                     }
                 );
 
             }
         );
-
     }
 
 
-    /* =====================================================
-       SOUNDCLOUD PLAYER
-    ===================================================== */
+    /* =========================
+       FLOATING MUSIC BUTTON
+    ========================= */
+
+    if (floatingMusicButton) {
+
+        floatingMusicButton.addEventListener(
+            "click",
+            (event) => {
+
+                event.preventDefault();
+
+                if (isPlaying) {
+                    pauseMusic();
+                } else {
+                    playMusic();
+                }
+
+            }
+        );
+    }
+
+
+    /* =========================
+       SOUNDCLOUD
+    ========================= */
 
     async function initializeMusic() {
 
@@ -859,7 +535,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (error) {
 
             console.error(
-                "SoundCloud API could not load:",
+                "SoundCloud API failed:",
                 error
             );
 
@@ -876,110 +552,135 @@ document.addEventListener("DOMContentLoaded", () => {
             SC.Widget(iframe);
 
 
-        /* -----------------------------------------------
-           READY
-        ------------------------------------------------ */
+        /* READY */
 
         player.bind(
             SC.Widget.Events.READY,
             () => {
 
-                playerReady =
-                    true;
-
+                isReady = true;
 
                 updateSongUI();
 
                 resetProgress();
 
-                updatePlayerUI();
-
-                getDuration();
+                updateUI();
 
             }
         );
 
 
-        /* -----------------------------------------------
-           PLAY
-        ------------------------------------------------ */
+        /* PLAY */
 
         player.bind(
             SC.Widget.Events.PLAY,
             () => {
 
-                playing =
-                    true;
+                isPlaying = true;
 
-
-                updatePlayerUI();
+                updateUI();
 
             }
         );
 
 
-        /* -----------------------------------------------
-           PAUSE
-        ------------------------------------------------ */
+        /* PAUSE */
 
         player.bind(
             SC.Widget.Events.PAUSE,
             () => {
 
-                /*
-                 * Ignore the temporary pause that
-                 * happens while switching songs.
-                 */
-
                 if (changingSong) {
                     return;
                 }
 
+                isPlaying = false;
 
-                playing =
-                    false;
-
-
-                updatePlayerUI();
+                updateUI();
 
             }
         );
 
 
-        /* -----------------------------------------------
-           FINISH
-        ------------------------------------------------ */
-
-        player.bind(
-            SC.Widget.Events.FINISH,
-            () => {
-
-                playing =
-                    false;
-
-
-                updatePlayerUI();
-
-
-                /*
-                 * Automatically go to the next song.
-                 */
-
-                nextSong();
-
-            }
-        );
-
-
-        /* -----------------------------------------------
-           PROGRESS
-        ------------------------------------------------ */
+        /* PROGRESS */
 
         player.bind(
             SC.Widget.Events.PLAY_PROGRESS,
             (data) => {
 
-                updateProgress(data);
+                if (!data) {
+                    return;
+                }
+
+                const current =
+                    data.currentPosition || 0;
+
+                const total =
+                    data.duration || 0;
+
+
+                if (currentTime) {
+
+                    currentTime.textContent =
+                        formatTime(current);
+
+                }
+
+
+                if (
+                    duration &&
+                    total > 0
+                ) {
+
+                    duration.textContent =
+                        formatTime(total);
+
+                }
+
+
+                if (
+                    progressBar &&
+                    total > 0
+                ) {
+
+                    const percent =
+                        (
+                            current /
+                            total
+                        ) * 100;
+
+                    progressBar.style.width =
+                        Math.min(
+                            100,
+                            percent
+                        ) + "%";
+
+                }
+
+            }
+        );
+
+
+        /* FINISHED */
+
+        player.bind(
+            SC.Widget.Events.FINISH,
+            () => {
+
+                isPlaying = false;
+
+                updateUI();
+
+                let next =
+                    currentIndex + 1;
+
+                if (
+                    next >= songs.length
+                ) {
+                    next = 0;
+                }
+
+                loadSong(next);
 
             }
         );
@@ -987,10 +688,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
+    /* =========================
        MUSIC SECTION
        PAUSE WHEN LEAVING
-    ===================================================== */
+    ========================= */
 
     if (musicSection) {
 
@@ -998,30 +699,18 @@ document.addEventListener("DOMContentLoaded", () => {
             new IntersectionObserver(
                 (entries) => {
 
-                    const entry =
-                        entries[0];
+                    const visible =
+                        entries[0].isIntersecting;
 
+                    if (
+                        !visible &&
+                        player &&
+                        isReady &&
+                        isPlaying &&
+                        !changingSong
+                    ) {
 
-                    musicVisible =
-                        entry.isIntersecting;
-
-
-                    /*
-                     * Leaving the music section
-                     * pauses the song.
-                     */
-
-                    if (!musicVisible) {
-
-                        if (
-                            playerReady &&
-                            playing &&
-                            !changingSong
-                        ) {
-
-                            player.pause();
-
-                        }
+                        pauseMusic();
 
                     }
 
@@ -1031,139 +720,77 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             );
 
-
-        observer.observe(
-            musicSection
-        );
-
+        observer.observe(musicSection);
     }
 
 
-    /* =====================================================
-       FLOATING MUSIC BUTTON
-    ===================================================== */
-
-    if (floatingMusicButton) {
-
-        floatingMusicButton.addEventListener(
-            "click",
-            (event) => {
-
-                event.preventDefault();
-
-                event.stopPropagation();
+    initializeMusic();
 
 
-                userInteracted =
-                    true;
-
-
-                if (playing) {
-
-                    pauseMusic();
-
-                } else {
-
-                    playMusic();
-
-                }
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
+    /* =========================
        STARS
-    ===================================================== */
+    ========================= */
 
     const stars =
         document.querySelectorAll(".star");
-
 
     const starMessage =
         document.getElementById("starMessage");
 
 
-    stars.forEach(
-        (star) => {
+    stars.forEach((star) => {
 
-            star.addEventListener(
-                "click",
-                (event) => {
+        star.addEventListener(
+            "click",
+            (event) => {
 
-                    event.preventDefault();
+                event.preventDefault();
 
-                    event.stopPropagation();
+                const message =
+                    star.dataset.message;
 
+                if (!message || !starMessage) {
+                    return;
+                }
 
-                    if (!starMessage) {
-                        return;
-                    }
+                starMessage.textContent =
+                    message;
 
+                starMessage.classList.remove(
+                    "show"
+                );
 
-                    const message =
-                        star.dataset.message;
+                void starMessage.offsetWidth;
 
+                starMessage.classList.add(
+                    "show"
+                );
 
-                    if (!message) {
-                        return;
-                    }
+                clearTimeout(
+                    starMessage.hideTimer
+                );
 
+                starMessage.hideTimer =
+                    setTimeout(() => {
 
-                    starMessage.textContent =
-                        message;
-
-
-                    starMessage.classList.remove(
-                        "show"
-                    );
-
-
-                    /*
-                     * Restart the animation.
-                     */
-
-                    void starMessage.offsetWidth;
-
-
-                    starMessage.classList.add(
-                        "show"
-                    );
-
-
-                    clearTimeout(
-                        starMessage.hideTimer
-                    );
-
-
-                    starMessage.hideTimer =
-                        setTimeout(
-                            () => {
-
-                                starMessage.classList.remove(
-                                    "show"
-                                );
-
-                            },
-                            4500
+                        starMessage.classList.remove(
+                            "show"
                         );
 
-                }
-            );
+                    }, 4500);
 
-        }
-    );
+            }
+        );
+
+    });
 
 
-    /* =====================================================
-       SECRET MESSAGE
-    ===================================================== */
+    /* =========================
+       SECRET
+    ========================= */
 
     const secretButton =
         document.getElementById("secretButton");
-
 
     const secretMessage =
         document.getElementById("secretMessage");
@@ -1178,18 +805,17 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             () => {
 
-                const isOpen =
+                const showing =
                     secretMessage.classList.contains(
                         "show"
                     );
 
 
-                if (isOpen) {
+                if (showing) {
 
                     secretMessage.classList.remove(
                         "show"
                     );
-
 
                     secretButton.textContent =
                         "there's something here";
@@ -1200,7 +826,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         "show"
                     );
 
-
                     secretButton.textContent =
                         "hide it ♡";
 
@@ -1208,14 +833,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
         );
-
     }
-
-
-    /* =====================================================
-       START MUSIC SYSTEM
-    ===================================================== */
-
-    initializeMusic();
 
 });
