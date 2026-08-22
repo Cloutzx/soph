@@ -125,6 +125,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let firstSongLoaded = false;
 
+    let playAttempts = 0;
+
+    let playRetryTimer = null;
+
 
     /* =====================================================
        SOUNDCLOUD API
@@ -241,7 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       UPDATE SONG INFORMATION
+       UPDATE SONG UI
     ===================================================== */
 
     function updateSongUI() {
@@ -325,7 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       FLOATING BUTTON STATE
+       FLOATING BUTTON
     ===================================================== */
 
     function updateFloatingButton() {
@@ -443,10 +447,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       CHECK IF TRACK IS READY
+       STOP PLAY RETRIES
     ===================================================== */
 
-    function waitForTrackAndPlay(loadToken) {
+    function stopPlayRetries() {
+
+        if (playRetryTimer) {
+
+            clearTimeout(
+                playRetryTimer
+            );
+
+            playRetryTimer = null;
+
+        }
+
+        playAttempts = 0;
+
+    }
+
+
+    /* =====================================================
+       RELIABLE PLAY
+    ===================================================== */
+
+    function reliablePlay(loadToken) {
 
         if (
             loadToken !== currentLoadToken
@@ -461,110 +486,57 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        let attempts = 0;
+        if (playing) {
+            return;
+        }
 
-        const maxAttempts = 40;
+        playAttempts++;
 
-        const check = () => {
-
-            if (
-                loadToken !== currentLoadToken
-            ) {
-                return;
-            }
-
-            if (
-                !player ||
-                !playerReady
-            ) {
-                return;
-            }
-
-            attempts++;
-
-            player.getCurrentSound(
-                (sound) => {
-
-                    if (
-                        loadToken !== currentLoadToken
-                    ) {
-                        return;
-                    }
-
-                    /*
-                     * SoundCloud has successfully
-                     * loaded the track.
-                     */
-                    if (
-                        sound &&
-                        sound.permalink_url
-                    ) {
-
-                        console.log(
-                            "Track ready:",
-                            sound.title
-                        );
-
-                        loadingSong = false;
-
-                        /*
-                         * Play immediately.
-                         */
-                        player.play();
-
-                        /*
-                         * Get duration shortly after
-                         * the track becomes available.
-                         */
-                        setTimeout(
-                            () => {
-
-                                if (
-                                    loadToken ===
-                                    currentLoadToken
-                                ) {
-                                    getDuration();
-                                }
-
-                            },
-                            150
-                        );
-
-                        return;
-
-                    }
+        console.log(
+            "Play attempt:",
+            playAttempts,
+            songs[currentIndex].title
+        );
 
 
-                    /*
-                     * Track isn't ready yet.
-                     * Check again very shortly.
-                     */
-                    if (
-                        attempts < maxAttempts
-                    ) {
+        player.play();
 
-                        setTimeout(
-                            check,
-                            100
-                        );
 
-                    } else {
+        /*
+         * If SoundCloud hasn't started playback yet,
+         * try again very shortly.
+         *
+         * This is intentionally limited so we don't
+         * hammer the player.
+         */
+        if (
+            playAttempts < 15
+        ) {
 
-                        loadingSong = false;
+            playRetryTimer =
+                setTimeout(
+                    () => {
 
-                        console.warn(
-                            "SoundCloud track failed to become ready:",
-                            songs[currentIndex].title
-                        );
+                        if (
+                            loadToken !==
+                            currentLoadToken
+                        ) {
+                            return;
+                        }
 
-                    }
+                        if (!playing) {
 
-                }
-            );
+                            reliablePlay(
+                                loadToken
+                            );
 
-        };
+                        }
 
-        check();
+                    },
+                    150
+                );
+
+        }
 
     }
 
@@ -626,17 +598,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 updateDisc();
 
+                updateFloatingButton();
+
                 resetProgress();
 
+
                 /*
-                 * Load the first song.
+                 * Load the first song once.
                  */
                 if (!firstSongLoaded) {
 
                     firstSongLoaded = true;
 
                     loadSong(
-                        currentIndex,
+                        0,
                         false
                     );
 
@@ -654,6 +629,8 @@ document.addEventListener("DOMContentLoaded", () => {
             SC.Widget.Events.PLAY,
             () => {
 
+                stopPlayRetries();
+
                 playing = true;
 
                 loadingSong = false;
@@ -669,6 +646,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     songs[currentIndex].title
                 );
 
+                getDuration();
+
             }
         );
 
@@ -681,6 +660,8 @@ document.addEventListener("DOMContentLoaded", () => {
             SC.Widget.Events.PAUSE,
             () => {
 
+                stopPlayRetries();
+
                 playing = false;
 
                 updatePlayButton();
@@ -694,19 +675,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           FINISHED
+           FINISH
         ================================================= */
 
         player.bind(
             SC.Widget.Events.FINISH,
             () => {
 
-                console.log(
-                    "Finished:",
-                    songs[currentIndex].title
-                );
+                stopPlayRetries();
 
                 playing = false;
+
+                loadingSong = false;
 
                 updatePlayButton();
 
@@ -714,9 +694,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 updateFloatingButton();
 
+                console.log(
+                    "Finished:",
+                    songs[currentIndex].title
+                );
+
+
                 /*
-                 * Automatically move to the
-                 * next song.
+                 * Automatically go to next song.
                  */
                 nextSong(true);
 
@@ -758,19 +743,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (playing) {
 
+            stopPlayRetries();
+
             player.pause();
 
         } else {
 
             /*
-             * If we're currently loading a song,
-             * don't create another play request.
+             * If a song is already being loaded,
+             * let that load finish.
              */
             if (loadingSong) {
                 return;
             }
 
-            player.play();
+            playAttempts = 0;
+
+            reliablePlay(
+                currentLoadToken
+            );
 
         }
 
@@ -820,11 +811,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /*
-         * Every load receives a unique token.
-         *
-         * If the user clicks another song before
-         * this one finishes loading, the old request
-         * becomes invalid.
+         * Cancel all previous loading/play attempts.
+         */
+        stopPlayRetries();
+
+
+        /*
+         * New token invalidates every older
+         * song-switch request.
          */
         const loadToken =
             ++currentLoadToken;
@@ -845,9 +839,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /*
-         * Update UI immediately.
-         */
         resetProgress();
 
         updateSongUI();
@@ -870,16 +861,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /*
-         * Load the new SoundCloud track.
+         * Load the actual SoundCloud URL.
          *
-         * auto_play is intentionally enabled,
-         * but we ALSO explicitly call player.play()
-         * once SoundCloud confirms the track exists.
+         * auto_play is false here because we want
+         * our JavaScript to control exactly when
+         * playback begins.
          */
         player.load(
             song.url,
             {
-                auto_play: true,
+                auto_play: false,
 
                 hide_related: true,
 
@@ -895,12 +886,131 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /*
-         * Wait for the actual track to become
-         * available instead of guessing with
-         * a 700ms timeout.
+         * Give SoundCloud a tiny amount of time to
+         * replace the current track, then begin our
+         * controlled play attempts.
          */
-        waitForTrackAndPlay(
-            loadToken
+        setTimeout(
+            () => {
+
+                if (
+                    loadToken !==
+                    currentLoadToken
+                ) {
+                    return;
+                }
+
+                if (
+                    !player ||
+                    !playerReady
+                ) {
+                    return;
+                }
+
+
+                /*
+                 * Get the duration repeatedly while
+                 * SoundCloud finishes loading.
+                 */
+                let durationAttempts = 0;
+
+
+                const waitForDuration = () => {
+
+                    if (
+                        loadToken !==
+                        currentLoadToken
+                    ) {
+                        return;
+                    }
+
+                    durationAttempts++;
+
+
+                    player.getDuration(
+                        (milliseconds) => {
+
+                            if (
+                                loadToken !==
+                                currentLoadToken
+                            ) {
+                                return;
+                            }
+
+
+                            if (
+                                milliseconds &&
+                                milliseconds > 0
+                            ) {
+
+                                if (duration) {
+
+                                    duration.textContent =
+                                        formatTime(
+                                            milliseconds
+                                        );
+
+                                }
+
+
+                                /*
+                                 * Track is loaded enough
+                                 * to start playback.
+                                 */
+                                loadingSong = false;
+
+                                playAttempts = 0;
+
+                                reliablePlay(
+                                    loadToken
+                                );
+
+                                return;
+
+                            }
+
+
+                            /*
+                             * Some SoundCloud tracks,
+                             * especially slower-loading ones,
+                             * need more time.
+                             */
+                            if (
+                                durationAttempts <
+                                30
+                            ) {
+
+                                setTimeout(
+                                    waitForDuration,
+                                    100
+                                );
+
+                            } else {
+
+                                /*
+                                 * Final fallback:
+                                 * attempt playback anyway.
+                                 */
+                                loadingSong = false;
+
+                                playAttempts = 0;
+
+                                reliablePlay(
+                                    loadToken
+                                );
+
+                            }
+
+                        }
+                    );
+
+                };
+
+
+                waitForDuration();
+
+            },
+            100
         );
 
     }
@@ -937,6 +1047,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
+        /*
+         * Immediately switch to the next song.
+         */
         loadSong(
             nextIndex,
             !automatic
@@ -1040,10 +1153,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     /*
-                     * Same song:
-                     *
-                     * Play/pause instead of
-                     * reloading the track.
+                     * Clicking the current song
+                     * toggles play/pause.
                      */
                     if (
                         index === currentIndex
@@ -1058,8 +1169,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     /*
                      * Different song:
-                     *
-                     * Immediately load and play it.
+                     * immediately switch and play.
                      */
                     loadSong(
                         index,
@@ -1074,7 +1184,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       PROGRESS BAR CLICK / SEEK
+       PROGRESS BAR / SEEK
     ===================================================== */
 
     if (progressTrack) {
@@ -1137,8 +1247,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       PLAY WHEN ENTERING MUSIC SECTION
-       PAUSE WHEN LEAVING
+       MUSIC SECTION VISIBILITY
     ===================================================== */
 
     if (musicSection) {
@@ -1156,16 +1265,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     /*
-                     * ENTERING MUSIC SECTION
+                     * ENTER MUSIC SECTION
                      */
                     if (
                         musicSectionVisible
                     ) {
 
                         /*
-                         * Automatically play when
-                         * the user reaches the music
-                         * section after opening the site.
+                         * Once the user has opened
+                         * the site, automatically play
+                         * when they reach the music area.
                          */
                         if (
                             siteOpened &&
@@ -1177,7 +1286,12 @@ document.addEventListener("DOMContentLoaded", () => {
                             userInteracted =
                                 true;
 
-                            player.play();
+                            playAttempts =
+                                0;
+
+                            reliablePlay(
+                                currentLoadToken
+                            );
 
                         }
 
@@ -1185,7 +1299,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     /*
-                     * LEAVING MUSIC SECTION
+                     * LEAVE MUSIC SECTION
                      */
                     else {
 
@@ -1193,6 +1307,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             playerReady &&
                             playing
                         ) {
+
+                            stopPlayRetries();
 
                             player.pause();
 
@@ -1283,7 +1399,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     /*
-                     * Force animation restart.
+                     * Restart animation.
                      */
                     void starMessage.offsetWidth;
 
