@@ -136,10 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        SONG DATA
-
-       IMPORTANT:
-       I Love You uses the SoundCloud track ID that
-       you found from the working SoundCloud embed.
     ===================================================== */
 
     const songs = [
@@ -235,7 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     "SoundCloud player ready."
                 );
 
-
                 updateSongUI();
 
                 updatePlayButton();
@@ -259,7 +254,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 updatePlayButton();
 
                 if (musicDisc) {
-                    musicDisc.classList.add("playing");
+                    musicDisc.classList.add("spinning");
+                }
+
+                if (floatingMusicButton) {
+                    floatingMusicButton.classList.add("playing");
                 }
 
             }
@@ -279,7 +278,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 updatePlayButton();
 
                 if (musicDisc) {
-                    musicDisc.classList.remove("playing");
+                    musicDisc.classList.remove("spinning");
+                }
+
+                if (floatingMusicButton) {
+                    floatingMusicButton.classList.remove("playing");
                 }
 
             }
@@ -297,7 +300,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 isPlaying = false;
 
                 if (musicDisc) {
-                    musicDisc.classList.remove("playing");
+                    musicDisc.classList.remove("spinning");
+                }
+
+                if (floatingMusicButton) {
+                    floatingMusicButton.classList.remove("playing");
                 }
 
                 updatePlayButton();
@@ -318,14 +325,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (!data) return;
 
-
                 const position =
                     data.currentPosition || 0;
 
-
                 const relative =
                     data.relativePosition || 0;
-
 
                 updateProgress(
                     position,
@@ -356,7 +360,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 updatePlayButton();
 
                 if (musicDisc) {
-                    musicDisc.classList.remove("playing");
+                    musicDisc.classList.remove("spinning");
+                }
+
+                if (floatingMusicButton) {
+                    floatingMusicButton.classList.remove("playing");
                 }
 
             }
@@ -378,18 +386,14 @@ document.addEventListener("DOMContentLoaded", () => {
             return "0:00";
         }
 
-
         const totalSeconds =
             Math.floor(milliseconds / 1000);
-
 
         const minutes =
             Math.floor(totalSeconds / 60);
 
-
         const seconds =
             totalSeconds % 60;
-
 
         return (
             minutes +
@@ -416,7 +420,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (progressBar) {
 
             const percent =
@@ -427,7 +430,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         relative
                     )
                 ) * 100;
-
 
             progressBar.style.width =
                 percent + "%";
@@ -450,7 +452,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         widget.getDuration(
             (milliseconds) => {
 
@@ -472,11 +473,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const song =
             songs[currentSong];
 
-
         if (!song) return;
 
-
-        /* Current song title */
 
         if (currentSongTitle) {
 
@@ -486,8 +484,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /* Current artist */
-
         if (currentSongArtist) {
 
             currentSongArtist.textContent =
@@ -496,19 +492,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /* =================================================
-           IMPORTANT:
-           Remove active from EVERY song first.
-           Then add it ONLY to currentSong.
-        ================================================= */
+        /* ================================================
+           ONLY CURRENT SONG GETS ACTIVE
+        ================================================ */
 
         songButtons.forEach(
             (button, index) => {
 
                 button.classList.remove(
-                    "active"
+                    "active",
+                    "song-main"
                 );
-
 
                 if (index === currentSong) {
 
@@ -521,8 +515,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
-
-        /* Reset progress */
 
         if (currentTime) {
             currentTime.textContent = "0:00";
@@ -586,7 +578,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         widget.play();
 
     }
@@ -594,10 +585,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        LOAD SONG
-       
-       This is the important part:
-       clicking another song immediately loads it
-       AND automatically starts playback.
     ===================================================== */
 
     function loadSong(
@@ -618,8 +605,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /* Prevent duplicate requests */
-
         if (
             switchingSong &&
             index === currentSong
@@ -635,8 +620,6 @@ document.addEventListener("DOMContentLoaded", () => {
         isPlaying = false;
 
 
-        /* Update UI BEFORE loading */
-
         updateSongUI();
 
         updatePlayButton();
@@ -645,6 +628,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if (musicDisc) {
 
             musicDisc.classList.remove(
+                "spinning"
+            );
+
+        }
+
+
+        if (floatingMusicButton) {
+
+            floatingMusicButton.classList.remove(
                 "playing"
             );
 
@@ -660,10 +652,6 @@ document.addEventListener("DOMContentLoaded", () => {
             song.title
         );
 
-
-        /*
-         * Load the new SoundCloud track.
-         */
 
         widget.load(
             song.url,
@@ -696,11 +684,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     updateSongUI();
 
 
-                    /*
-                     * Wait briefly for the new
-                     * widget state, then play.
-                     */
-
                     if (autoplay) {
 
                         setTimeout(
@@ -716,7 +699,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 }
 
                             },
-                            100
+                            150
                         );
 
                     }
@@ -755,11 +738,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     event.stopPropagation();
 
 
-                    /*
-                     * Clicking the currently playing
-                     * song pauses it.
-                     */
-
                     if (
                         index === currentSong &&
                         isPlaying
@@ -771,11 +749,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     }
 
-
-                    /*
-                     * Clicking ANY other song
-                     * immediately switches + plays.
-                     */
 
                     loadSong(
                         index,
@@ -991,7 +964,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       AUTO PLAY WHEN ENTERING MUSIC AREA
+       MUSIC SECTION VISIBILITY
+       
+       NEW:
+       When the music section leaves the screen,
+       automatically pause the song.
     ===================================================== */
 
     if (musicSection) {
@@ -1003,19 +980,67 @@ document.addEventListener("DOMContentLoaded", () => {
                     entries.forEach(
                         (entry) => {
 
+                            /* =================================
+                               ENTER MUSIC AREA
+                            ================================= */
+
                             if (
-                                entry.isIntersecting &&
-                                !musicStarted &&
-                                widgetReady
+                                entry.isIntersecting
                             ) {
 
-                                musicStarted = true;
+                                /*
+                                 * Do NOT automatically resume.
+                                 *
+                                 * The user can press play or
+                                 * choose a song themselves.
+                                 */
+
+                                return;
+
+                            }
 
 
-                                loadSong(
-                                    currentSong,
-                                    true
+                            /* =================================
+                               LEAVE MUSIC AREA
+                            ================================= */
+
+                            if (
+                                !entry.isIntersecting &&
+                                widgetReady &&
+                                widget &&
+                                isPlaying
+                            ) {
+
+                                console.log(
+                                    "Left music section — pausing music."
                                 );
+
+
+                                widget.pause();
+
+
+                                isPlaying = false;
+
+
+                                updatePlayButton();
+
+
+                                if (musicDisc) {
+
+                                    musicDisc.classList.remove(
+                                        "spinning"
+                                    );
+
+                                }
+
+
+                                if (floatingMusicButton) {
+
+                                    floatingMusicButton.classList.remove(
+                                        "playing"
+                                    );
+
+                                }
 
                             }
 
@@ -1024,7 +1049,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 },
                 {
-                    threshold: 0.35
+                    threshold: 0.15
                 }
             );
 
@@ -1101,7 +1126,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       START SOUNDCloud
+       START SOUNDCLOUD
     ===================================================== */
 
     waitForSoundCloud();
