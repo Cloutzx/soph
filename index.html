@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +7,12 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#17131b"
     >
 
     <title>For Soph ♡</title>
@@ -69,6 +75,7 @@
             <button
                 class="open-button"
                 id="openButton"
+                type="button"
             >
                 open this ♡
             </button>
@@ -276,7 +283,7 @@
                 </article>
 
 
-                <!-- The relationship -->
+                <!-- Relationship -->
 
                 <article class="timeline-item">
 
@@ -478,7 +485,7 @@
             <div class="music-player">
 
 
-                <!-- HIDDEN SOUNDCLOUD PLAYER -->
+                <!-- SOUNDCLOUD PLAYER -->
 
                 <iframe
                     id="soundcloud-player"
@@ -509,7 +516,7 @@
                 </div>
 
 
-                <!-- SONG WHEEL -->
+                <!-- SONG SELECTOR -->
 
                 <div
                     class="music-wheel"
@@ -528,9 +535,17 @@
                             ♫
                         </div>
 
-                        <span>
-                            I Love You
-                        </span>
+                        <div class="song-info">
+
+                            <strong>
+                                I Love You
+                            </strong>
+
+                            <small>
+                                Fontaines D.C.
+                            </small>
+
+                        </div>
 
                     </button>
 
@@ -547,9 +562,17 @@
                             ♪
                         </div>
 
-                        <span>
-                            You'll Be Mine Tonight
-                        </span>
+                        <div class="song-info">
+
+                            <strong>
+                                You'll Be Mine Tonight
+                            </strong>
+
+                            <small>
+                                Freddie
+                            </small>
+
+                        </div>
 
                     </button>
 
@@ -566,9 +589,17 @@
                             ♬
                         </div>
 
-                        <span>
-                            Moonlight on the River
-                        </span>
+                        <div class="song-info">
+
+                            <strong>
+                                Moonlight on the River
+                            </strong>
+
+                            <small>
+                                Mac DeMarco
+                            </small>
+
+                        </div>
 
                     </button>
 
@@ -653,6 +684,16 @@
                 </div>
 
 
+                <!-- MUSIC STATUS -->
+
+                <div
+                    class="music-status"
+                    id="musicStatus"
+                >
+                    tap play to start the music
+                </div>
+
+
                 <div class="music-hint">
                     the music pauses when you leave this section
                 </div>
@@ -698,26 +739,40 @@
 
                 <!-- BACKGROUND STARS -->
 
-                <div class="background-star"
-                    style="top: 12%; left: 8%;"></div>
+                <div
+                    class="background-star"
+                    style="top: 12%; left: 8%;"
+                ></div>
 
-                <div class="background-star"
-                    style="top: 38%; left: 28%;"></div>
+                <div
+                    class="background-star"
+                    style="top: 38%; left: 28%;"
+                ></div>
 
-                <div class="background-star"
-                    style="top: 72%; left: 18%;"></div>
+                <div
+                    class="background-star"
+                    style="top: 72%; left: 18%;"
+                ></div>
 
-                <div class="background-star"
-                    style="top: 22%; right: 30%;"></div>
+                <div
+                    class="background-star"
+                    style="top: 22%; right: 30%;"
+                ></div>
 
-                <div class="background-star"
-                    style="top: 80%; right: 20%;"></div>
+                <div
+                    class="background-star"
+                    style="top: 80%; right: 20%;"
+                ></div>
 
-                <div class="background-star"
-                    style="top: 45%; right: 35%;"></div>
+                <div
+                    class="background-star"
+                    style="top: 45%; right: 35%;"
+                ></div>
 
-                <div class="background-star"
-                    style="bottom: 10%; right: 8%;"></div>
+                <div
+                    class="background-star"
+                    style="bottom: 10%; right: 8%;"
+                ></div>
 
 
                 <!-- CLICKABLE STARS -->
@@ -907,7 +962,6 @@
 
         </section>
 
-
     </main>
 
 
@@ -926,11 +980,18 @@
 
 
     <!-- =====================================================
-         JAVASCRIPT
+         SOUNDCLOUD API
     ====================================================== -->
+
+    <script
+        src="https://w.soundcloud.com/player/api.js"
+    ></script>
+
+    <!-- JavaScript -->
 
     <script src="script.js"></script>
 
 </body>
 
 </html>
+```
