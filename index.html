@@ -1,1 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>For Soph ♡</title>
+
+    <meta name="description" content="A little something made just for Soph ♡">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0f0b18;
+            color: #fff;
+            font-family: "DM Sans", sans-serif;
+            overflow-x: hidden;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        /* =========================
+           BACKGROUND
+        ========================= */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.18;
+        }
+
+        .glow.one {
+            background: #ff7eb6;
+            top: -200px;
+            left: -150px;
+        }
+
+        .glow.two {
+            background: #a98cff;
+            right: -200px;
+            top: 30%;
+        }
+
+        .glow.three {
+            background: #ff9fcd;
+            bottom: -250px;
+            left: 25%;
+        }
+
+        .particle {
+            position: absolute;
+            color: rgba(255, 190, 220, 0.75);
+            animation: floatUp linear infinite;
+            user-select: none;
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(110vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 1;
+            }
+
+            85% {
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-15vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* =========================
+           OPENING
+        ========================= */
+
+        .opening {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .opening-content {
+            max-width: 700px;
+            animation: appear 1.2s ease forwards;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tiny-text {
+            color: #e8c8da;
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .opening h1 {
+            font-family: "Pacifico", cursive;
+            font-size: clamp(55px, 11vw, 110px);
+            font-weight: 400;
+            color: #ffd9e9;
+            text-shadow: 0 0 35px rgba(255, 150, 200, 0.25);
+            line-height: 1.1;
+        }
+
+        .opening-subtitle {
+            margin-top: 25px;
+            color: #d9ccd8;
+            font-size: 18px;
+        }
+
+        .open-button {
+            margin-top: 35px;
+            padding: 15px 28px;
+            border: 1px solid rgba(255, 200, 225, 0.35);
+            border-radius: 999px;
+            background: rgba(255, 180, 215, 0.1);
+            color: #ffeaf3;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .open-button:hover {
+            transform: translateY(-3px) scale(1.03);
+            background: rgba(255, 180, 215, 0.18);
+            box-shadow: 0 10px 35px rgba(255, 120, 180, 0.18);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #8d7e8d;
+            font-size: 13px;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        #main {
+            position: relative;
+            z-index: 2;
+            display: none;
+        }
+
+        .section {
+            width: min(1000px, 90%);
+            margin: auto;
+            padding: 110px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title span {
+            display: block;
+            color: #dcaac4;
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-title h2 {
+            font-family: "Pacifico", cursive;
+            font-size: clamp(35px, 6vw, 55px);
+            font-weight: 400;
+            color: #ffe2ed;
+        }
+
+        .section-title p {
+            max-width: 600px;
+            margin: 15px auto 0;
+            color: #bdb0be;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           WHY YOU
+        ========================= */
+
+        .reasons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .reason {
+            min-height: 180px;
+            padding: 28px;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.045);
+            border: 1px solid rgba(255, 210, 230, 0.1);
+            backdrop-filter: blur(12px);
+            transition: 0.35s ease;
+            cursor: default;
+        }
+
+        .reason:hover {
+            transform: translateY(-6px);
+            background: rgba(255, 180, 215, 0.08);
+            border-color: rgba(255, 190, 220, 0.25);
+        }
+
+        .reason-number {
+            color: #e9aaca;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .reason h3 {
+            color: #ffe7f0;
+            margin-bottom: 10px;
+            font-size: 19px;
+        }
+
+        .reason p {
+            color: #afa3af;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* =========================
+           NIGHT SKY
+        ========================= */
+
+        .sky-container {
+            position: relative;
+            height: 500px;
+            border-radius: 35px;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 30% 30%, rgba(155, 116, 190, 0.16), transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(255, 140, 190, 0.12), transparent 30%),
+                #0b0812;
+            border: 1px solid rgba(255, 210, 230, 0.1);
+        }
+
+        .sky-text {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #a99aaa;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .star {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background: white;
+            border-radius: 50%;
+            box-shadow:
+                0 0 8px white,
+                0 0 18px rgba(255, 190, 220, 0.8);
+            cursor: pointer;
+            animation: twinkle 2s infinite ease-in-out;
+            transition: 0.3s ease;
+        }
+
+        .star:hover {
+            transform: scale(2);
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.45;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .star-message {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(500px, 85%);
+            padding: 18px 22px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 210, 230, 0.12);
+            border-radius: 18px;
+            color: #eadce6;
+            opacity: 0;
+            transition: 0.4s ease;
+            pointer-events: none;
+        }
+
+        .star-message.show {
+            opacity: 1;
+        }
+
+        /* =========================
+           TIMELINE
+        ========================= */
+
+        .timeline {
+            position: relative;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 20px;
+            width: 1px;
+            background: rgba(255, 190, 220, 0.18);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 45px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 14px;
+            top: 4px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #f3b3d0;
+            box-shadow: 0 0 15px rgba(243, 179, 208, 0.5);
+        }
+
+        .timeline-date {
+            color: #dca8c3;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-item h3 {
+            color: #ffe7f0;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-item p {
+            color: #afa3af;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           SECRET
+        ========================= */
+
+        .secret-box {
+            text-align: center;
+            padding: 60px 25px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 210, 230, 0.1);
+        }
+
+        .secret-box h2 {
+            font-family: "Pacifico", cursive;
+            font-weight: 400;
+            color: #ffe1ed;
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .secret-box p {
+            color: #a99faa;
+            margin-bottom: 25px;
+        }
+
+        .secret-button {
+            border: 1px solid rgba(255, 190, 220, 0.25);
+            background: rgba(255, 170, 210, 0.08);
+            color: #ffe7f1;
+            padding: 13px 23px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .secret-button:hover {
+            transform: scale(1.05);
+            background: rgba(255, 170, 210, 0.16);
+        }
+
+        .secret-message {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: 0.7s ease;
+        }
+
+        .secret-message.show {
+            max-height: 300px;
+            opacity: 1;
+            margin-top: 30px;
+        }
+
+        .secret-message p {
+            color: #f1dce7;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* =========================
+           FINAL MESSAGE
+        ========================= */
+
+        .final {
+            text-align: center;
+            padding-bottom: 130px;
+        }
+
+        .final-card {
+            padding: 65px 30px;
+            border-radius: 35px;
+            background:
+                radial-gradient(circle at center, rgba(255, 150, 200, 0.08), transparent 65%),
+                rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 210, 230, 0.12);
+        }
+
+        .final-card h2 {
+            font-family: "Pacifico", cursive;
+            font-size: clamp(40px, 7vw, 65px);
+            font-weight: 400;
+            color: #ffe0ec;
+            margin-bottom: 25px;
+        }
+
+        .final-card p {
+            max-width: 650px;
+            margin: auto;
+            color: #c5b6c2;
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .heart {
+            display: inline-block;
+            margin-top: 30px;
+            color: #f4abc9;
+            font-size: 28px;
+            animation: heartbeat 1.6s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* =========================
+           MUSIC BUTTON
+        ========================= */
+
+        .music-button {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 20;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 210, 230, 0.2);
+            background: rgba(20, 15, 28, 0.75);
+            backdrop-filter: blur(10px);
+            color: #f6cfe0;
+            cursor: pointer;
+            display: none;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 750px) {
+            .section {
+                padding: 80px 0;
+            }
+
+            .reasons {
+                grid-template-columns: 1fr;
+            }
+
+            .reason {
+                min-height: auto;
+            }
+
+            .sky-container {
+                height: 450px;
+            }
+
+            .opening-subtitle {
+                font-size: 16px;
+            }
+
+            .final-card {
+                padding: 50px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BACKGROUND -->
+    <div class="background">
+        <div class="glow one"></div>
+        <div class="glow two"></div>
+        <div class="glow three"></div>
+
+        <div class="particle" style="left: 5%; animation-duration: 14s; animation-delay: 0s;">♡</div>
+        <div class="particle" style="left: 15%; animation-duration: 18s; animation-delay: 3s;">✦</div>
+        <div class="particle" style="left: 27%; animation-duration: 13s; animation-delay: 5s;">♡</div>
+        <div class="particle" style="left: 39%; animation-duration: 17s; animation-delay: 1s;">✧</div>
+        <div class="particle" style="left: 52%; animation-duration: 15s; animation-delay: 7s;">♡</div>
+        <div class="particle" style="left: 65%; animation-duration: 19s; animation-delay: 2s;">✦</div>
+        <div class="particle" style="left: 78%; animation-duration: 14s; animation-delay: 4s;">♡</div>
+        <div class="particle" style="left: 91%; animation-duration: 17s; animation-delay: 6s;">✧</div>
+    </div>
+
+
+    <!-- OPENING SCREEN -->
+    <section class="opening" id="opening">
+
+        <div class="opening-content">
+
+            <div class="tiny-text">
+                a little something for you
+            </div>
+
+            <h1>hi soph ♡</h1>
+
+            <p class="opening-subtitle">
+                i made you a little place on the internet
+            </p>
+
+            <button class="open-button" onclick="openSite()">
+                open it ♡
+            </button>
+
+        </div>
+
+        <div class="scroll-hint">
+            ↓ there's more
+        </div>
+
+    </section>
+
+
+    <!-- MAIN WEBSITE -->
+    <main id="main">
+
+        <!-- WHY YOU -->
+        <section class="section">
+
+            <div class="section-title">
+                <span>something i wanted you to know</span>
+                <h2>why you?</h2>
+                <p>
+                    honestly, i could probably make this list way longer,
+                    but here's a few things that make you you.
+                </p>
+            </div>
+
+            <div class="reasons">
+
+                <div class="reason">
+                    <div class="reason-number">01</div>
+                    <h3>Your personality</h3>
+                    <p>
+                        There's just something about the way you are
+                        that makes being around you feel different.
+                    </p>
+                </div>
+
+                <div class="reason">
+                    <div class="reason-number">02</div>
+                    <h3>The little things</h3>
+                    <p>
+                        It's the random conversations, little jokes,
+                        and moments that end up meaning the most.
+                    </p>
+                </div>
+
+                <div class="reason">
+                    <div class="reason-number">03</div>
+                    <h3>You make me smile</h3>
+                    <p>
+                        Somehow you can make a normal day feel
+                        a little better just by being in it.
+                    </p>
+                </div>
+
+                <div class="reason">
+                    <div class="reason-number">04</div>
+                    <h3>You're you</h3>
+                    <p>
+                        Not because you're perfect, but because you're
+                        genuinely yourself. That's one of my favorite things.
+                    </p>
+                </div>
+
+                <div class="reason">
+                    <div class="reason-number">05</div>
+                    <h3>The memories</h3>
+                    <p>
+                        All the random little moments we've had are
+                        memories I wouldn't trade for anything.
+                    </p>
+                </div>
+
+                <div class="reason">
+                    <div class="reason-number">06</div>
+                    <h3>Just... you</h3>
+                    <p>
+                        Sometimes there's not even a complicated reason.
+                        I just really like having you in my life.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NIGHT SKY -->
+        <section class="section">
+
+            <div class="section-title">
+                <span>look around</span>
+                <h2>a little night sky</h2>
+                <p>
+                    click around. some of the stars have something to say.
+                </p>
+            </div>
+
+            <div class="sky-container">
+
+                <div class="sky-text">
+                    click a star ✦
+                </div>
+
+                <div class="star"
+                     style="top: 25%; left: 17%;"
+                     onclick="showStarMessage('you make ordinary days feel a little less ordinary ♡')">
+                </div>
+
+                <div class="star"
+                     style="top: 43%; left: 32%;"
+                     onclick="showStarMessage('i hope you know how much you mean to me')">
+                </div>
+
+                <div class="star"
+                     style="top: 18%; left: 49%;"
+                     onclick="showStarMessage('you are one of my favorite people :)')">
+                </div>
+
+                <div class="star"
+                     style="top: 57%; left: 62%;"
+                     onclick="showStarMessage('thank you for being you')">
+                </div>
+
+                <div class="star"
+                     style="top: 34%; left: 78%;"
+                     onclick="showStarMessage('i would choose you again and again')">
+                </div>
+
+                <div class="star"
+                     style="top: 72%; left: 84%;"
+                     onclick="showStarMessage('okay this one is just here because youre cute')">
+                </div>
+
+                <div class="star-message" id="starMessage"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TIMELINE -->
+        <section class="section">
+
+            <div class="section-title">
+                <span>our little story</span>
+                <h2>the timeline</h2>
+                <p>
+                    some of the moments that made everything feel a little more special.
+                </p>
+            </div>
+
+            <div class="timeline">
+
+                <div class="timeline-item">
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-date">
+                        the beginning
+                    </div>
+
+                    <h3>when we started talking</h3>
+
+                    <p>
+                        This is where you can put the story of how
+                        everything started.
+                    </p>
+
+                </div>
+
+
+                <div class="timeline-item">
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-date">
+                        one of my favorites
+                    </div>
+
+                    <h3>a memory i still think about</h3>
+
+                    <p>
+                        Add one of your favorite memories here.
+                        It can be something completely random.
+                    </p>
+
+                </div>
+
+
+                <div class="timeline-item">
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-date">
+                        somewhere along the way
+                    </div>
+
+                    <h3>you became really important to me</h3>
+
+                    <p>
+                        You can write about the moment you realized
+                        just how much you cared about her.
+                    </p>
+
+                </div>
+
+
+                <div class="timeline-item">
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-date">
+                        now
+                    </div>
+
+                    <h3>and here we are ♡</h3>
+
+                    <p>
+                        And this is definitely not where the story ends.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SECRET -->
+        <section class="section">
+
+            <div class="secret-box">
+
+                <h2>psst...</h2>
+
+                <p>
+                    i may have hidden something here.
+                </p>
+
+                <button class="secret-button" onclick="openSecret()">
+                    definitely don't click this
+                </button>
+
+                <div class="secret-message" id="secretMessage">
+
+                    <p>
+                        okay fine, you found it.<br><br>
+
+                        i just wanted another excuse to tell you
+                        that i love you and i'm really happy you're
+                        in my life.<br><br>
+
+                        ♡
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FINAL MESSAGE -->
+        <section class="section final">
+
+            <div class="final-card">
+
+                <h2>for you, soph</h2>
+
+                <p>
+                    I know this is just a little website, but I wanted
+                    to make something that was ours. Something you could
+                    come back to whenever you wanted.<br><br>
+
+                    I don't always know exactly how to put everything
+                    I feel into words, but I hope you know that you mean
+                    a lot to me. I'm really glad I met you, and I'm really
+                    glad that you're you.
+                    <br><br>
+
+                    And if I could choose who I'd meet in every lifetime,
+                    I'd still hope it was you.
+                </p>
+
+                <div class="heart">
+                    ♡
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- MUSIC BUTTON -->
+    <button class="music-button" id="musicButton" onclick="toggleMusic()">
+        ♫
+    </button>
+
+
+    <script>
+
+        /* =========================
+           OPEN WEBSITE
+        ========================= */
+
+        function openSite() {
+
+            const opening = document.getElementById("opening");
+            const main = document.getElementById("main");
+
+            opening.style.transition = "opacity 0.8s ease";
+            opening.style.opacity = "0";
+
+            setTimeout(() => {
+
+                opening.style.display = "none";
+
+                main.style.display = "block";
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "instant"
+                });
+
+            }, 800);
+        }
+
+
+        /* =========================
+           STAR MESSAGES
+        ========================= */
+
+        function showStarMessage(message) {
+
+            const box = document.getElementById("starMessage");
+
+            box.textContent = message;
+
+            box.classList.remove("show");
+
+            setTimeout(() => {
+                box.classList.add("show");
+            }, 50);
+        }
+
+
+        /* =========================
+           SECRET MESSAGE
+        ========================= */
+
+        function openSecret() {
+
+            const message = document.getElementById("secretMessage");
+
+            message.classList.toggle("show");
+
+        }
+
+
+        /* =========================
+           OPTIONAL MUSIC
+        ========================= */
+
+        let musicPlaying = false;
+
+        function toggleMusic() {
+
+            musicPlaying = !musicPlaying;
+
+            const button = document.getElementById("musicButton");
+
+            if (musicPlaying) {
+                button.textContent = "❚❚";
+            } else {
+                button.textContent = "♫";
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
