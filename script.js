@@ -71,10 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const songs = [
 
         {
-            title: "I Love You",
-            artist: "Fontaines D.C.",
-            url: "https://soundcloud.com/fontainesdublin/i-love-you"
-        },
+    title: "I Love You",
+    artist: "Fontaines D.C.",
+    url: "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1178495929"
+},
 
         {
             title: "You'll Be Mine Tonight",
