@@ -16,7 +16,10 @@
 
     <title>for soph ♡</title>
 
-    <!-- Fonts -->
+    <!-- =====================================================
+         FONTS
+    ====================================================== -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -25,11 +28,17 @@
         rel="stylesheet"
     >
 
-    <!-- CSS -->
+    <!-- =====================================================
+         CSS
+    ====================================================== -->
+
     <link rel="stylesheet" href="style.css">
+
 </head>
 
+
 <body>
+
 
     <!-- =====================================================
          BACKGROUND
@@ -430,11 +439,14 @@
 
                 <iframe
                     id="soundcloud-player"
-                    allow="autoplay; encrypted-media"
+                    width="100%"
+                    height="300"
                     scrolling="no"
                     frameborder="no"
-                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1178495929&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false"
-                ></iframe>
+                    allow="autoplay; encrypted-media"
+                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1178495929&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
+                >
+                </iframe>
 
 
                 <!-- =================================================
@@ -506,6 +518,7 @@
                         </span>
 
                     </button>
+
 
                 </div>
 
@@ -856,14 +869,17 @@
     <!-- =====================================================
          SOUNDCLOUD WIDGET API
          
-         IMPORTANT:
-         This MUST load before script.js
+         MUST LOAD BEFORE script.js
     ====================================================== -->
 
     <script src="https://w.soundcloud.com/player/api.js"></script>
 
-    <!-- YOUR JAVASCRIPT -->
+    <!-- =====================================================
+         MAIN JAVASCRIPT
+    ====================================================== -->
+
     <script src="script.js"></script>
+
 
 </body>
 
