@@ -1,83 +1,31 @@
 /* =========================================================
-   SOP WEBSITE
-   script.js
+   SOP ♡
+   COMPLETE SCRIPT
 ========================================================= */
 
 
 /* =========================================================
-   OPEN WEBSITE
+   OPENING SCREEN
 ========================================================= */
 
-function openSite() {
-    const opening = document.getElementById("opening");
-    const main = document.getElementById("main");
+const opening = document.getElementById("opening");
+const openButton = document.getElementById("openButton");
+const main = document.getElementById("main");
 
-    if (opening) {
+let siteOpened = false;
+
+if (openButton) {
+    openButton.addEventListener("click", () => {
+
+        siteOpened = true;
+
         opening.classList.add("opening-hidden");
-    }
 
-    if (main) {
-        main.classList.add("main-visible");
-    }
+        setTimeout(() => {
+            main.classList.add("main-visible");
+        }, 300);
 
-    // Try to start the currently selected song.
-    // Browsers may block autoplay until the user interacts,
-    // but clicking "open it" counts as user interaction.
-    setTimeout(() => {
-        if (window.soundcloudReady) {
-            playCurrentSong();
-        }
-    }, 800);
-}
-
-
-/* =========================================================
-   SECRET MESSAGE
-========================================================= */
-
-function openSecret() {
-    const message = document.getElementById("secretMessage");
-
-    if (!message) return;
-
-    message.classList.toggle("show");
-
-    const button = document.querySelector(".secret-button");
-
-    if (button) {
-        if (message.classList.contains("show")) {
-            button.textContent = "okay maybe you can click this ♡";
-        } else {
-            button.textContent = "definitely don't click this";
-        }
-    }
-}
-
-
-/* =========================================================
-   STAR MESSAGES
-========================================================= */
-
-function showStarMessage(message) {
-    const box = document.getElementById("starMessage");
-
-    if (!box) return;
-
-    box.textContent = message;
-
-    box.classList.remove("show");
-
-    // Force browser to recognize the class removal before
-    // adding it again.
-    void box.offsetWidth;
-
-    box.classList.add("show");
-
-    clearTimeout(window.starMessageTimer);
-
-    window.starMessageTimer = setTimeout(() => {
-        box.classList.remove("show");
-    }, 5000);
+    });
 }
 
 
@@ -85,12 +33,41 @@ function showStarMessage(message) {
    MUSIC
 ========================================================= */
 
+const soundcloudPlayer = document.getElementById("soundcloud-player");
+const musicDisc = document.getElementById("musicDisc");
 
-/*
-    Your SoundCloud tracks.
+const playButton = document.getElementById("playButton");
+const previousButton = document.getElementById("previousButton");
+const nextButton = document.getElementById("nextButton");
 
-    These are the three links you gave me.
-*/
+const currentSongTitle =
+    document.getElementById("currentSongTitle");
+
+const currentSongArtist =
+    document.getElementById("currentSongArtist");
+
+const currentTimeElement =
+    document.getElementById("currentTime");
+
+const durationElement =
+    document.getElementById("duration");
+
+const progressTrack =
+    document.getElementById("progressTrack");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const musicFloatingButton =
+    document.getElementById("musicFloatingButton");
+
+const musicSection =
+    document.querySelector(".music-section");
+
+
+/* =========================================================
+   SOUNDCLOUD SONGS
+========================================================= */
 
 const songs = [
 
@@ -119,334 +96,150 @@ const songs = [
    MUSIC STATE
 ========================================================= */
 
-let currentSongIndex = 1;
+let currentSongIndex = 0;
 
-let widget = null;
-
-let widgetReady = false;
+let player = null;
 
 let isPlaying = false;
 
-let currentDuration = 0;
+let musicSectionVisible = false;
 
-let currentPosition = 0;
-
-let progressTimer = null;
-
-window.soundcloudReady = false;
+let soundcloudReady = false;
 
 
 /* =========================================================
-   ELEMENTS
+   LOAD SOUNDCLOUD API
 ========================================================= */
 
-const iframe = document.getElementById("soundcloud-player");
+function loadSoundCloudAPI() {
 
-const playButton = document.getElementById("playButton");
+    return new Promise((resolve) => {
 
-const nextButton = document.getElementById("nextButton");
-
-const previousButton = document.getElementById("previousButton");
-
-const currentSongTitle =
-    document.getElementById("currentSongTitle");
-
-const currentSongArtist =
-    document.getElementById("currentSongArtist");
-
-const currentTime =
-    document.getElementById("currentTime");
-
-const duration =
-    document.getElementById("duration");
-
-const progressBar =
-    document.getElementById("progressBar");
-
-const progressTrack =
-    document.getElementById("progressTrack");
-
-const floatingMusicButton =
-    document.getElementById("musicFloatingButton");
-
-const songButtons =
-    document.querySelectorAll(".music-song");
-
-
-/* =========================================================
-   TIME FORMATTER
-========================================================= */
-
-function formatTime(milliseconds) {
-
-    if (
-        milliseconds === undefined ||
-        milliseconds === null ||
-        !Number.isFinite(milliseconds)
-    ) {
-        return "0:00";
-    }
-
-    const totalSeconds =
-        Math.max(0, Math.floor(milliseconds / 1000));
-
-    const minutes =
-        Math.floor(totalSeconds / 60);
-
-    const seconds =
-        totalSeconds % 60;
-
-    return (
-        minutes +
-        ":" +
-        String(seconds).padStart(2, "0")
-    );
-}
-
-
-/* =========================================================
-   UPDATE SONG INFORMATION
-========================================================= */
-
-function updateSongInfo() {
-
-    const song = songs[currentSongIndex];
-
-    if (!song) return;
-
-    if (currentSongTitle) {
-        currentSongTitle.textContent = song.title;
-    }
-
-    if (currentSongArtist) {
-        currentSongArtist.textContent = song.artist;
-    }
-
-    if (currentTime) {
-        currentTime.textContent = "0:00";
-    }
-
-    if (duration) {
-        duration.textContent = "0:00";
-    }
-
-    if (progressBar) {
-        progressBar.style.width = "0%";
-    }
-
-    updateSongButtons();
-}
-
-
-/* =========================================================
-   UPDATE SONG WHEEL
-========================================================= */
-
-function updateSongButtons() {
-
-    songButtons.forEach((button, index) => {
-
-        button.classList.remove("active");
-        button.classList.remove("song-main");
-
-        if (index === currentSongIndex) {
-
-            button.classList.add("active");
-            button.classList.add("song-main");
-
+        if (window.SC) {
+            resolve();
+            return;
         }
+
+        const script = document.createElement("script");
+
+        script.src =
+            "https://w.soundcloud.com/player/api.js";
+
+        script.onload = () => {
+            resolve();
+        };
+
+        document.head.appendChild(script);
 
     });
+
 }
 
 
 /* =========================================================
-   CREATE SOUNDCLOUD WIDGET
+   CREATE SOUNDCLOUD PLAYER
 ========================================================= */
 
-function createWidget() {
+async function initializeMusic() {
 
-    if (!iframe) {
-        console.error(
-            "SoundCloud iframe was not found."
-        );
-
+    if (!soundcloudPlayer) {
         return;
     }
 
-    if (
-        typeof SC === "undefined" ||
-        !SC.Widget
-    ) {
-        console.error(
-            "SoundCloud Widget API did not load."
-        );
+    await loadSoundCloudAPI();
 
-        return;
-    }
+    player =
+        SC.Widget(soundcloudPlayer);
+
+    soundcloudReady = true;
 
 
-    widget = SC.Widget(iframe);
+    /* -----------------------------------------
+       LOAD FIRST SONG
+    ----------------------------------------- */
+
+    loadSong(currentSongIndex, false);
 
 
-    widget.bind(
+    /* -----------------------------------------
+       PLAYER READY
+    ----------------------------------------- */
+
+    player.bind(
         SC.Widget.Events.READY,
-        function () {
+        () => {
 
-            console.log(
-                "SoundCloud widget ready."
-            );
+            soundcloudReady = true;
 
-            widgetReady = true;
-
-            window.soundcloudReady = true;
-
-            setupWidgetEvents();
-
-            updateSongInfo();
+            updateSongDisplay();
 
         }
     );
-}
 
 
-/* =========================================================
-   SOUNDCLOUD EVENTS
-========================================================= */
+    /* -----------------------------------------
+       PLAY
+    ----------------------------------------- */
 
-function setupWidgetEvents() {
-
-    if (!widget) return;
-
-
-    /* PLAY */
-
-    widget.bind(
+    player.bind(
         SC.Widget.Events.PLAY,
-        function () {
+        () => {
 
             isPlaying = true;
 
             updatePlayButton();
 
-            startProgressUpdater();
-
-            if (floatingMusicButton) {
-                floatingMusicButton.classList.add(
-                    "playing"
-                );
-            }
+            startDisc();
 
         }
     );
 
 
-    /* PAUSE */
+    /* -----------------------------------------
+       PAUSE
+    ----------------------------------------- */
 
-    widget.bind(
+    player.bind(
         SC.Widget.Events.PAUSE,
-        function () {
+        () => {
 
             isPlaying = false;
 
             updatePlayButton();
 
-            stopProgressUpdater();
-
-            if (floatingMusicButton) {
-                floatingMusicButton.classList.remove(
-                    "playing"
-                );
-            }
+            stopDisc();
 
         }
     );
 
 
-    /* FINISH */
+    /* -----------------------------------------
+       FINISH
+    ----------------------------------------- */
 
-    widget.bind(
+    player.bind(
         SC.Widget.Events.FINISH,
-        function () {
+        () => {
 
             isPlaying = false;
 
-            stopProgressUpdater();
+            stopDisc();
 
-            nextSong(true);
-
-        }
-    );
-
-
-    /* LOAD PROGRESS */
-
-    widget.bind(
-        SC.Widget.Events.LOAD_PROGRESS,
-        function (data) {
-
-            if (!data) return;
-
-            if (
-                data.loadedFraction !== undefined &&
-                progressBar &&
-                currentDuration > 0
-            ) {
-
-                // Don't actually set the progress here.
-                // PLAY_PROGRESS is more accurate.
-
-            }
+            nextSong();
 
         }
     );
 
 
-    /* PLAY PROGRESS */
+    /* -----------------------------------------
+       PLAY PROGRESS
+    ----------------------------------------- */
 
-    widget.bind(
+    player.bind(
         SC.Widget.Events.PLAY_PROGRESS,
-        function (data) {
+        (data) => {
 
-            if (!data) return;
-
-            if (
-                data.currentPosition !== undefined
-            ) {
-
-                currentPosition =
-                    data.currentPosition;
-
-                updateProgress(
-                    currentPosition
-                );
-
-            }
-
-        }
-    );
-
-
-    /* SEEK */
-
-    widget.bind(
-        SC.Widget.Events.SEEK,
-        function (data) {
-
-            if (!data) return;
-
-            if (
-                data.currentPosition !== undefined
-            ) {
-
-                currentPosition =
-                    data.currentPosition;
-
-                updateProgress(
-                    currentPosition
-                );
-
-            }
+            updateProgress(data);
 
         }
     );
@@ -458,109 +251,149 @@ function setupWidgetEvents() {
    LOAD SONG
 ========================================================= */
 
-function loadSong(
-    index,
-    autoplay = false
-) {
+function loadSong(index, autoplay = false) {
 
-    if (!widgetReady || !widget) {
-        console.warn(
-            "SoundCloud is not ready yet."
-        );
-
+    if (!player || !soundcloudReady) {
         return;
     }
 
-    if (
-        index < 0 ||
-        index >= songs.length
-    ) {
-        return;
+    if (index < 0) {
+        index = songs.length - 1;
     }
 
+    if (index >= songs.length) {
+        index = 0;
+    }
 
     currentSongIndex = index;
 
-    isPlaying = false;
-
-    currentDuration = 0;
-
-    currentPosition = 0;
-
-    stopProgressUpdater();
-
-    updateSongInfo();
-
-    updatePlayButton();
+    const song = songs[currentSongIndex];
 
 
-    /*
-        THIS IS IMPORTANT.
+    /* -----------------------------------------
+       UPDATE TEXT
+    ----------------------------------------- */
 
-        We use the existing SoundCloud widget
-        instead of creating another iframe.
+    updateSongDisplay();
 
-        That prevents overlapping songs.
-    */
 
-    widget.load(
-        songs[index].url,
+    /* -----------------------------------------
+       UPDATE ACTIVE SONG
+    ----------------------------------------- */
+
+    updateSongButtons();
+
+
+    /* -----------------------------------------
+       RESET PROGRESS
+    ----------------------------------------- */
+
+    if (progressBar) {
+        progressBar.style.width = "0%";
+    }
+
+    if (currentTimeElement) {
+        currentTimeElement.textContent = "0:00";
+    }
+
+    if (durationElement) {
+        durationElement.textContent = "0:00";
+    }
+
+
+    /* -----------------------------------------
+       LOAD SOUNDCLOUD
+    ----------------------------------------- */
+
+    player.load(
+        song.url,
         {
             auto_play: autoplay,
             hide_related: true,
             show_comments: false,
             show_user: false,
             show_reposts: false,
-            visual: false,
-            color: "#b28bbd"
+            visual: false
         }
     );
-
-
-    /*
-        Ask SoundCloud for the duration shortly
-        after the new track loads.
-    */
-
-    setTimeout(() => {
-        getDuration();
-    }, 700);
 
 }
 
 
 /* =========================================================
-   GET DURATION
+   UPDATE SONG DISPLAY
 ========================================================= */
 
-function getDuration() {
+function updateSongDisplay() {
 
-    if (!widgetReady || !widget) return;
+    if (!songs[currentSongIndex]) {
+        return;
+    }
 
-    widget.getDuration(
-        function (milliseconds) {
+    const song = songs[currentSongIndex];
 
-            if (
-                milliseconds &&
-                milliseconds > 0
-            ) {
+    if (currentSongTitle) {
+        currentSongTitle.textContent =
+            song.title;
+    }
 
-                currentDuration =
-                    milliseconds;
+    if (currentSongArtist) {
+        currentSongArtist.textContent =
+            song.artist;
+    }
 
-                if (duration) {
-                    duration.textContent =
-                        formatTime(milliseconds);
-                }
+}
 
-                updateProgress(
-                    currentPosition
-                );
 
-            }
+/* =========================================================
+   UPDATE SONG BUTTONS
+========================================================= */
+
+function updateSongButtons() {
+
+    const songButtons =
+        document.querySelectorAll(".music-song");
+
+    songButtons.forEach((button, index) => {
+
+        button.classList.remove(
+            "active",
+            "song-main"
+        );
+
+        if (index === currentSongIndex) {
+
+            button.classList.add(
+                "active",
+                "song-main"
+            );
 
         }
-    );
+
+    });
+
+}
+
+
+/* =========================================================
+   PLAY / PAUSE
+========================================================= */
+
+function togglePlay() {
+
+    if (!player || !soundcloudReady) {
+        return;
+    }
+
+    if (isPlaying) {
+
+        player.pause();
+
+    } else {
+
+        player.play();
+
+    }
 
 }
 
@@ -569,13 +402,14 @@ function getDuration() {
    PLAY
 ========================================================= */
 
-function playCurrentSong() {
+function playMusic() {
 
-    if (!widgetReady || !widget) {
+    if (!player || !soundcloudReady) {
         return;
     }
 
-    widget.play();
+    player.play();
+
 }
 
 
@@ -583,39 +417,14 @@ function playCurrentSong() {
    PAUSE
 ========================================================= */
 
-function pauseCurrentSong() {
+function pauseMusic() {
 
-    if (!widgetReady || !widget) {
+    if (!player || !soundcloudReady) {
         return;
     }
 
-    widget.pause();
-}
+    player.pause();
 
-
-/* =========================================================
-   TOGGLE PLAY
-========================================================= */
-
-function togglePlay() {
-
-    if (!widgetReady || !widget) {
-        console.warn(
-            "SoundCloud widget isn't ready."
-        );
-
-        return;
-    }
-
-    if (isPlaying) {
-
-        pauseCurrentSong();
-
-    } else {
-
-        playCurrentSong();
-
-    }
 }
 
 
@@ -623,21 +432,16 @@ function togglePlay() {
    NEXT SONG
 ========================================================= */
 
-function nextSong(fromFinish = false) {
+function nextSong() {
 
-    let nextIndex =
-        currentSongIndex + 1;
-
-    if (
-        nextIndex >= songs.length
-    ) {
-        nextIndex = 0;
-    }
+    const nextIndex =
+        (currentSongIndex + 1) % songs.length;
 
     loadSong(
         nextIndex,
-        fromFinish || isPlaying
+        true
     );
+
 }
 
 
@@ -647,20 +451,15 @@ function nextSong(fromFinish = false) {
 
 function previousSong() {
 
-    let previousIndex =
-        currentSongIndex - 1;
-
-    if (
-        previousIndex < 0
-    ) {
-        previousIndex =
-            songs.length - 1;
-    }
+    const previousIndex =
+        (currentSongIndex - 1 + songs.length)
+        % songs.length;
 
     loadSong(
         previousIndex,
-        false
+        true
     );
+
 }
 
 
@@ -668,9 +467,94 @@ function previousSong() {
    PLAY BUTTON
 ========================================================= */
 
+if (playButton) {
+
+    playButton.addEventListener(
+        "click",
+        () => {
+
+            togglePlay();
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   NEXT BUTTON
+========================================================= */
+
+if (nextButton) {
+
+    nextButton.addEventListener(
+        "click",
+        () => {
+
+            nextSong();
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   PREVIOUS BUTTON
+========================================================= */
+
+if (previousButton) {
+
+    previousButton.addEventListener(
+        "click",
+        () => {
+
+            previousSong();
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SONG BUTTONS
+========================================================= */
+
+const songButtons =
+    document.querySelectorAll(".music-song");
+
+songButtons.forEach((button) => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            const index =
+                Number(
+                    button.dataset.song
+                );
+
+            loadSong(
+                index,
+                true
+            );
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   UPDATE PLAY BUTTON
+========================================================= */
+
 function updatePlayButton() {
 
-    if (!playButton) return;
+    if (!playButton) {
+        return;
+    }
 
     if (isPlaying) {
 
@@ -691,110 +575,164 @@ function updatePlayButton() {
         );
 
     }
+
+
+    /* Floating button */
+
+    if (musicFloatingButton) {
+
+        musicFloatingButton.textContent =
+            isPlaying ? "Ⅱ" : "♫";
+
+        musicFloatingButton.classList.toggle(
+            "playing",
+            isPlaying
+        );
+
+    }
+
 }
 
 
 /* =========================================================
-   PROGRESS
+   VINYL START / STOP
 ========================================================= */
 
-function updateProgress(milliseconds) {
+function startDisc() {
 
-    if (!currentTime) return;
+    if (!musicDisc) {
+        return;
+    }
 
-    currentTime.textContent =
-        formatTime(milliseconds);
+    musicDisc.classList.add(
+        "spinning"
+    );
 
+}
+
+
+function stopDisc() {
+
+    if (!musicDisc) {
+        return;
+    }
+
+    musicDisc.classList.remove(
+        "spinning"
+    );
+
+}
+
+
+/* =========================================================
+   FLOATING MUSIC BUTTON
+========================================================= */
+
+if (musicFloatingButton) {
+
+    musicFloatingButton.addEventListener(
+        "click",
+        () => {
+
+            togglePlay();
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT TIME
+========================================================= */
+
+function formatTime(milliseconds) {
 
     if (
-        currentDuration > 0 &&
-        progressBar
+        !milliseconds ||
+        milliseconds < 0
+    ) {
+        return "0:00";
+    }
+
+    const totalSeconds =
+        Math.floor(
+            milliseconds / 1000
+        );
+
+    const minutes =
+        Math.floor(
+            totalSeconds / 60
+        );
+
+    const seconds =
+        totalSeconds % 60;
+
+    return (
+        minutes +
+        ":" +
+        String(seconds).padStart(2, "0")
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE PROGRESS
+========================================================= */
+
+function updateProgress(data) {
+
+    if (!data) {
+        return;
+    }
+
+
+    /* Current time */
+
+    if (currentTimeElement) {
+
+        currentTimeElement.textContent =
+            formatTime(
+                data.currentPosition
+            );
+
+    }
+
+
+    /* Duration */
+
+    if (
+        durationElement &&
+        data.duration
+    ) {
+
+        durationElement.textContent =
+            formatTime(
+                data.duration
+            );
+
+    }
+
+
+    /* Progress bar */
+
+    if (
+        progressBar &&
+        data.duration
     ) {
 
         const percentage =
-            Math.min(
-                100,
-                Math.max(
-                    0,
-                    (milliseconds /
-                        currentDuration) *
-                    100
-                )
-            );
+            (
+                data.currentPosition /
+                data.duration
+            ) * 100;
 
         progressBar.style.width =
-            percentage + "%";
-
-    }
-
-
-    if (
-        currentDuration > 0 &&
-        duration
-    ) {
-
-        duration.textContent =
-            formatTime(currentDuration);
-
-    }
-
-}
-
-
-/* =========================================================
-   PROGRESS FALLBACK
-========================================================= */
-
-function startProgressUpdater() {
-
-    stopProgressUpdater();
-
-    progressTimer =
-        setInterval(() => {
-
-            if (!widgetReady || !widget) {
-                return;
-            }
-
-            widget.getPosition(
-                function (position) {
-
-                    if (
-                        position !== undefined &&
-                        position !== null
-                    ) {
-
-                        currentPosition =
-                            position;
-
-                        updateProgress(
-                            position
-                        );
-
-                    }
-
-                }
-            );
-
-
-            if (currentDuration <= 0) {
-                getDuration();
-            }
-
-        }, 500);
-
-}
-
-
-function stopProgressUpdater() {
-
-    if (progressTimer) {
-
-        clearInterval(
-            progressTimer
-        );
-
-        progressTimer = null;
+            Math.min(
+                percentage,
+                100
+            ) + "%";
 
     }
 
@@ -805,146 +743,47 @@ function stopProgressUpdater() {
    CLICK PROGRESS BAR
 ========================================================= */
 
-function seekFromProgress(event) {
-
-    if (
-        !widgetReady ||
-        !widget ||
-        !progressTrack ||
-        currentDuration <= 0
-    ) {
-        return;
-    }
-
-
-    const rect =
-        progressTrack.getBoundingClientRect();
-
-
-    const clickPosition =
-        event.clientX -
-        rect.left;
-
-
-    let percentage =
-        clickPosition /
-        rect.width;
-
-
-    percentage =
-        Math.max(
-            0,
-            Math.min(
-                1,
-                percentage
-            )
-        );
-
-
-    const newPosition =
-        currentDuration *
-        percentage;
-
-
-    widget.seekTo(
-        newPosition
-    );
-
-}
-
-
-/* =========================================================
-   SONG BUTTONS
-========================================================= */
-
-songButtons.forEach(
-    (button) => {
-
-        button.addEventListener(
-            "click",
-            function () {
-
-                const index =
-                    Number(
-                        this.dataset.index
-                    );
-
-                if (
-                    Number.isNaN(index)
-                ) {
-                    return;
-                }
-
-                /*
-                    Selecting a song immediately
-                    loads that song and plays it.
-                */
-
-                loadSong(
-                    index,
-                    true
-                );
-
-            }
-        );
-
-    }
-);
-
-
-/* =========================================================
-   CONTROL BUTTONS
-========================================================= */
-
-if (playButton) {
-
-    playButton.addEventListener(
-        "click",
-        function () {
-
-            togglePlay();
-
-        }
-    );
-
-}
-
-
-if (nextButton) {
-
-    nextButton.addEventListener(
-        "click",
-        function () {
-
-            nextSong(false);
-
-        }
-    );
-
-}
-
-
-if (previousButton) {
-
-    previousButton.addEventListener(
-        "click",
-        function () {
-
-            previousSong();
-
-        }
-    );
-
-}
-
-
 if (progressTrack) {
 
     progressTrack.addEventListener(
         "click",
-        function (event) {
+        (event) => {
 
-            seekFromProgress(event);
+            if (
+                !player ||
+                !soundcloudReady
+            ) {
+                return;
+            }
+
+            player.getDuration(
+                (duration) => {
+
+                    if (!duration) {
+                        return;
+                    }
+
+                    const rect =
+                        progressTrack.getBoundingClientRect();
+
+                    const clickPosition =
+                        event.clientX -
+                        rect.left;
+
+                    const percentage =
+                        clickPosition /
+                        rect.width;
+
+                    const newPosition =
+                        duration *
+                        percentage;
+
+                    player.seekTo(
+                        newPosition
+                    );
+
+                }
+            );
 
         }
     );
@@ -953,160 +792,257 @@ if (progressTrack) {
 
 
 /* =========================================================
-   FLOATING MUSIC BUTTON
+   AUTOMATIC MUSIC WHEN ENTERING SECTION
 ========================================================= */
 
-if (floatingMusicButton) {
+if (musicSection) {
 
-    floatingMusicButton.addEventListener(
+    const musicObserver =
+        new IntersectionObserver(
+            (entries) => {
+
+                entries.forEach(
+                    (entry) => {
+
+                        if (
+                            entry.isIntersecting &&
+                            siteOpened
+                        ) {
+
+                            musicSectionVisible =
+                                true;
+
+                            /*
+                             * Start the song when
+                             * the music section
+                             * becomes visible.
+                             */
+
+                            if (
+                                player &&
+                                soundcloudReady
+                            ) {
+
+                                player.play();
+
+                            }
+
+                        } else {
+
+                            musicSectionVisible =
+                                false;
+
+                            /*
+                             * Stop music when the
+                             * section leaves view.
+                             */
+
+                            if (
+                                player &&
+                                soundcloudReady
+                            ) {
+
+                                player.pause();
+
+                            }
+
+                        }
+
+                    }
+                );
+
+            },
+            {
+                threshold: 0.35
+            }
+        );
+
+
+    musicObserver.observe(
+        musicSection
+    );
+
+}
+
+
+/* =========================================================
+   STARS
+========================================================= */
+
+const stars =
+    document.querySelectorAll(".star");
+
+const starMessage =
+    document.getElementById("starMessage");
+
+let starMessageTimeout;
+
+
+stars.forEach((star) => {
+
+    star.addEventListener(
         "click",
-        function () {
-
-            togglePlay();
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   KEYBOARD CONTROLS
-========================================================= */
-
-document.addEventListener(
-    "keydown",
-    function (event) {
-
-        /*
-            Don't trigger music controls while
-            typing into an input.
-        */
-
-        const tag =
-            document.activeElement?.tagName;
-
-        if (
-            tag === "INPUT" ||
-            tag === "TEXTAREA"
-        ) {
-            return;
-        }
-
-
-        /* SPACE = PLAY / PAUSE */
-
-        if (
-            event.code === "Space"
-        ) {
+        (event) => {
 
             event.preventDefault();
 
-            togglePlay();
+            const message =
+                star.dataset.message;
+
+            if (!message) {
+                return;
+            }
+
+
+            /* -----------------------------------------
+               SHOW MESSAGE
+            ----------------------------------------- */
+
+            if (starMessage) {
+
+                starMessage.textContent =
+                    message;
+
+                starMessage.classList.add(
+                    "show"
+                );
+
+            }
+
+
+            /* -----------------------------------------
+               RESET MESSAGE TIMER
+            ----------------------------------------- */
+
+            clearTimeout(
+                starMessageTimeout
+            );
+
+            starMessageTimeout =
+                setTimeout(
+                    () => {
+
+                        if (starMessage) {
+
+                            starMessage.classList.remove(
+                                "show"
+                            );
+
+                        }
+
+                    },
+                    4500
+                );
+
+
+            /* -----------------------------------------
+               LITTLE STAR EFFECT
+            ----------------------------------------- */
+
+            star.style.transform =
+                "scale(1.35)";
+
+            setTimeout(
+                () => {
+
+                    star.style.transform =
+                        "";
+
+                },
+                250
+            );
 
         }
-
-
-        /* RIGHT ARROW = NEXT */
-
-        if (
-            event.code === "ArrowRight"
-        ) {
-
-            nextSong(false);
-
-        }
-
-
-        /* LEFT ARROW = PREVIOUS */
-
-        if (
-            event.code === "ArrowLeft"
-        ) {
-
-            previousSong();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   INITIALIZE SOUNDCLOUD
-========================================================= */
-
-function initializeSoundCloud() {
-
-    if (
-        typeof SC === "undefined" ||
-        !SC.Widget
-    ) {
-
-        console.error(
-            "SoundCloud API hasn't loaded yet."
-        );
-
-        /*
-            Sometimes the API takes a moment to load.
-            Try again.
-        */
-
-        setTimeout(
-            initializeSoundCloud,
-            500
-        );
-
-        return;
-    }
-
-
-    createWidget();
-
-}
-
-
-/* =========================================================
-   WAIT FOR PAGE
-========================================================= */
-
-if (
-    document.readyState === "loading"
-) {
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        initializeSoundCloud
     );
 
-} else {
+});
 
-    initializeSoundCloud();
+
+/* =========================================================
+   SECRET MESSAGE
+========================================================= */
+
+const secretButton =
+    document.getElementById("secretButton");
+
+const secretMessage =
+    document.getElementById("secretMessage");
+
+if (
+    secretButton &&
+    secretMessage
+) {
+
+    secretButton.addEventListener(
+        "click",
+        () => {
+
+            const isOpen =
+                secretMessage.classList.contains(
+                    "show"
+                );
+
+            if (isOpen) {
+
+                secretMessage.classList.remove(
+                    "show"
+                );
+
+                secretButton.textContent =
+                    "read it";
+
+            } else {
+
+                secretMessage.classList.add(
+                    "show"
+                );
+
+                secretButton.textContent =
+                    "hide it";
+
+            }
+
+        }
+    );
 
 }
 
 
 /* =========================================================
-   INITIAL UI
+   SMOOTH SCROLL
 ========================================================= */
 
-updateSongInfo();
+document.querySelectorAll(
+    'a[href^="#"]'
+).forEach((link) => {
 
-updatePlayButton();
+    link.addEventListener(
+        "click",
+        (event) => {
+
+            const target =
+                document.querySelector(
+                    link.getAttribute("href")
+                );
+
+            if (!target) {
+                return;
+            }
+
+            event.preventDefault();
+
+            target.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+    );
+
+});
 
 
 /* =========================================================
-   MAKE OPEN SITE AVAILABLE GLOBALLY
+   START MUSIC SYSTEM
 ========================================================= */
 
-window.openSite =
-    openSite;
-
-window.openSecret =
-    openSecret;
-
-window.showStarMessage =
-    showStarMessage;
-
-window.playCurrentSong =
-    playCurrentSong;
+initializeMusic();
