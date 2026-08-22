@@ -151,6 +151,9 @@
 
             <div class="timeline">
 
+
+                <!-- SECOND GRADE -->
+
                 <div class="timeline-item">
 
                     <div class="timeline-dot"></div>
@@ -172,6 +175,8 @@
 
                 </div>
 
+
+                <!-- FEBRUARY 8 -->
 
                 <div class="timeline-item">
 
@@ -196,6 +201,8 @@
 
                 </div>
 
+
+                <!-- MINECRAFT -->
 
                 <div class="timeline-item">
 
@@ -225,6 +232,8 @@
                 </div>
 
 
+                <!-- GAMING -->
+
                 <div class="timeline-item">
 
                     <div class="timeline-dot"></div>
@@ -251,6 +260,8 @@
 
                 </div>
 
+
+                <!-- NOW -->
 
                 <div class="timeline-item">
 
@@ -306,6 +317,7 @@
 
 
             <div class="reasons">
+
 
                 <div class="reason">
 
@@ -411,6 +423,11 @@
 
             <div class="music-player">
 
+
+                <!-- =================================================
+                     HIDDEN SOUNDCLOUD PLAYER
+                ================================================== -->
+
                 <iframe
                     id="soundcloud-player"
                     allow="autoplay"
@@ -420,37 +437,48 @@
                 ></iframe>
 
 
+                <!-- =================================================
+                     CURRENT COVER
+                ================================================== -->
+
                 <div class="music-disc-area">
 
-                    <div
-                        class="music-disc"
-                        id="musicDisc"
+                    <img
+                        id="currentSongCover"
+                        class="current-song-cover"
+                        src="music/i-love-you.jpg"
+                        alt="I Love You - Fontaines D.C."
                     >
-
-                        <div class="disc-label">
-                            ♡
-                        </div>
-
-                        <div class="disc-shine"></div>
-
-                    </div>
 
                 </div>
 
 
+                <!-- =================================================
+                     SONG COVER SELECTION
+                ================================================== -->
+
                 <div class="music-wheel">
+
+
+                    <!-- I LOVE YOU -->
 
                     <button
                         class="music-song active song-main"
                         data-song="0"
                         type="button"
-                        aria-label="I Love You"
+                        aria-label="I Love You by Fontaines D.C."
                     >
-                        <span class="song-name">
-                            I Love You
-                        </span>
+
+                        <img
+                            src="music/i-love-you.jpg"
+                            alt="I Love You - Fontaines D.C."
+                            class="song-cover"
+                        >
+
                     </button>
 
+
+                    <!-- YOU'LL BE MINE TONIGHT -->
 
                     <button
                         class="music-song"
@@ -458,11 +486,17 @@
                         type="button"
                         aria-label="You'll Be Mine Tonight"
                     >
-                        <span class="song-name">
-                            You'll Be Mine Tonight
-                        </span>
+
+                        <img
+                            src="music/youll-be-mine-tonight.jpg"
+                            alt="You'll Be Mine Tonight"
+                            class="song-cover"
+                        >
+
                     </button>
 
+
+                    <!-- MOONLIGHT ON THE RIVER -->
 
                     <button
                         class="music-song"
@@ -470,13 +504,21 @@
                         type="button"
                         aria-label="Moonlight on the River"
                     >
-                        <span class="song-name">
-                            Moonlight on the River
-                        </span>
+
+                        <img
+                            src="music/moonlight-on-the-river.jpg"
+                            alt="Moonlight on the River"
+                            class="song-cover"
+                        >
+
                     </button>
 
                 </div>
 
+
+                <!-- =================================================
+                     CURRENT SONG
+                ================================================== -->
 
                 <div class="current-song">
 
@@ -495,11 +537,16 @@
                 </div>
 
 
+                <!-- =================================================
+                     PROGRESS BAR
+                ================================================== -->
+
                 <div class="music-progress">
 
                     <span id="currentTime">
                         0:00
                     </span>
+
 
                     <div
                         class="progress-track"
@@ -513,12 +560,17 @@
 
                     </div>
 
+
                     <span id="duration">
                         0:00
                     </span>
 
                 </div>
 
+
+                <!-- =================================================
+                     CONTROLS
+                ================================================== -->
 
                 <div class="music-controls">
 
@@ -553,7 +605,7 @@
 
 
                 <p class="music-hint">
-                    click a song or press play ♡
+                    click a cover or press play ♡
                 </p>
 
             </div>
@@ -726,19 +778,6 @@
 
                     <br><br>
 
-                    And maybe I don't know exactly what
-                    our future will look like, but I do know
-                    that I want to be there for it with you.
-
-                    <br><br>
-
-                    I want to grow with you, make memories
-                    with you, and someday, if we're lucky
-                    enough to make it that far, I want to
-                    marry you.
-
-                    <br><br>
-
                     ♡
 
                 </div>
@@ -812,5 +851,4 @@
     <script src="script.js"></script>
 
 </body>
-
 </html>
