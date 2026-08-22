@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+
     /* =====================================================
        OPENING
     ===================================================== */
@@ -7,8 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const openButton = document.getElementById("openButton");
     const main = document.getElementById("main");
 
+    let siteOpened = false;
+
     if (openButton) {
         openButton.addEventListener("click", () => {
+
+            siteOpened = true;
+
             if (opening) {
                 opening.classList.add("opening-hidden");
             }
@@ -18,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     main.classList.add("main-visible");
                 }, 250);
             }
+
         });
     }
 
@@ -26,15 +33,23 @@ document.addEventListener("DOMContentLoaded", () => {
        MUSIC ELEMENTS
     ===================================================== */
 
-    const iframe = document.getElementById("soundcloud-player");
+    const iframe =
+        document.getElementById("soundcloud-player");
 
-    const musicSection = document.getElementById("musicSection");
+    const musicSection =
+        document.getElementById("musicSection");
 
-    const musicDisc = document.getElementById("musicDisc");
+    const musicDisc =
+        document.getElementById("musicDisc");
 
-    const playButton = document.getElementById("playButton");
-    const nextButton = document.getElementById("nextButton");
-    const previousButton = document.getElementById("previousButton");
+    const playButton =
+        document.getElementById("playButton");
+
+    const nextButton =
+        document.getElementById("nextButton");
+
+    const previousButton =
+        document.getElementById("previousButton");
 
     const currentSongTitle =
         document.getElementById("currentSongTitle");
@@ -66,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const songs = [
+
         {
             title: "I Love You",
             artist: "Fontaines D.C.",
@@ -83,11 +99,12 @@ document.addEventListener("DOMContentLoaded", () => {
             artist: "Mac DeMarco",
             url: "https://soundcloud.com/user-917397187-731881398/mac-demarco-moonlight-on-the-river-slowed"
         }
+
     ];
 
 
     /* =====================================================
-       STATE
+       PLAYER STATE
     ===================================================== */
 
     let player = null;
@@ -100,6 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let changingSong = false;
 
+    let userInteracted = false;
+
     let musicVisible = false;
 
 
@@ -108,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function loadSoundCloudAPI() {
+
         return new Promise((resolve, reject) => {
 
             if (
@@ -118,20 +138,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            const existingScript =
+
+            const existing =
                 document.querySelector(
                     'script[src="https://w.soundcloud.com/player/api.js"]'
                 );
 
-            if (existingScript) {
 
-                existingScript.addEventListener(
+            if (existing) {
+
+                existing.addEventListener(
                     "load",
                     resolve,
                     { once: true }
                 );
 
-                existingScript.addEventListener(
+                existing.addEventListener(
                     "error",
                     reject,
                     { once: true }
@@ -139,6 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 return;
             }
+
 
             const script =
                 document.createElement("script");
@@ -151,7 +174,9 @@ document.addEventListener("DOMContentLoaded", () => {
             script.onerror = reject;
 
             document.head.appendChild(script);
+
         });
+
     }
 
 
@@ -168,20 +193,29 @@ document.addEventListener("DOMContentLoaded", () => {
             return "0:00";
         }
 
+
         const totalSeconds =
-            Math.floor(milliseconds / 1000);
+            Math.floor(
+                milliseconds / 1000
+            );
+
 
         const minutes =
-            Math.floor(totalSeconds / 60);
+            Math.floor(
+                totalSeconds / 60
+            );
+
 
         const seconds =
             totalSeconds % 60;
+
 
         return (
             minutes +
             ":" +
             String(seconds).padStart(2, "0")
         );
+
     }
 
 
@@ -195,20 +229,26 @@ document.addEventListener("DOMContentLoaded", () => {
             currentTime.textContent = "0:00";
         }
 
+
         if (duration) {
             duration.textContent = "0:00";
         }
+
 
         if (progressBar) {
             progressBar.style.width = "0%";
         }
 
+
         if (progressTrack) {
+
             progressTrack.style.setProperty(
                 "--progress",
                 "0%"
             );
+
         }
+
     }
 
 
@@ -218,64 +258,88 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateSongUI() {
 
-        const song = songs[currentIndex];
+        const song =
+            songs[currentIndex];
+
 
         if (!song) {
             return;
         }
 
+
         if (currentSongTitle) {
+
             currentSongTitle.textContent =
                 song.title;
+
         }
+
 
         if (currentSongArtist) {
+
             currentSongArtist.textContent =
                 song.artist;
+
         }
 
-        songButtons.forEach((button, index) => {
 
-            const active =
-                index === currentIndex;
+        songButtons.forEach(
+            (button, index) => {
 
-            button.classList.toggle(
-                "active",
-                active
-            );
+                const active =
+                    index === currentIndex;
 
-            button.classList.toggle(
-                "song-main",
-                active
-            );
-        });
+
+                button.classList.toggle(
+                    "active",
+                    active
+                );
+
+
+                button.classList.toggle(
+                    "song-main",
+                    active
+                );
+
+            }
+        );
+
     }
 
 
     /* =====================================================
-       UPDATE MUSIC UI
+       UPDATE PLAYER UI
     ===================================================== */
 
-    function updateMusicUI() {
+    function updatePlayerUI() {
 
         if (playButton) {
+
             playButton.textContent =
                 playing ? "Ⅱ" : "▶";
+
         }
 
+
         if (musicDisc) {
+
             musicDisc.classList.toggle(
                 "spinning",
                 playing
             );
+
         }
 
+
         if (floatingMusicButton) {
+
             floatingMusicButton.classList.toggle(
                 "playing",
                 playing
             );
+
         }
+
     }
 
 
@@ -292,16 +356,25 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        player.getDuration((milliseconds) => {
 
-            if (
-                milliseconds &&
-                duration
-            ) {
-                duration.textContent =
-                    formatTime(milliseconds);
+        player.getDuration(
+            (milliseconds) => {
+
+                if (
+                    milliseconds &&
+                    duration
+                ) {
+
+                    duration.textContent =
+                        formatTime(
+                            milliseconds
+                        );
+
+                }
+
             }
-        });
+        );
+
     }
 
 
@@ -315,24 +388,33 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+
         const current =
             data.currentPosition || 0;
+
 
         const total =
             data.duration || 0;
 
+
         if (currentTime) {
+
             currentTime.textContent =
                 formatTime(current);
+
         }
+
 
         if (
             total > 0 &&
             duration
         ) {
+
             duration.textContent =
                 formatTime(total);
+
         }
+
 
         if (
             total > 0 &&
@@ -348,16 +430,22 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
                 );
 
+
             progressBar.style.width =
                 percent + "%";
 
+
             if (progressTrack) {
+
                 progressTrack.style.setProperty(
                     "--progress",
                     percent + "%"
                 );
+
             }
+
         }
+
     }
 
 
@@ -374,7 +462,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+
+        userInteracted = true;
+
         player.play();
+
     }
 
 
@@ -391,12 +483,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+
         player.pause();
+
     }
 
 
     /* =====================================================
-       LOAD + PLAY SONG
+       LOAD SONG
+       MOBILE FRIENDLY
     ===================================================== */
 
     function loadSong(index) {
@@ -408,6 +503,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+
         if (
             index < 0 ||
             index >= songs.length
@@ -415,58 +511,89 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        currentIndex = index;
 
-        changingSong = true;
+        currentIndex =
+            index;
+
+
+        userInteracted =
+            true;
+
+
+        changingSong =
+            true;
+
+
+        const song =
+            songs[index];
+
 
         /*
-         * Stop the current song.
+         * Stop the old song first.
          */
 
         player.pause();
 
-        playing = false;
 
-        updateMusicUI();
+        playing =
+            false;
+
 
         /*
-         * Reset immediately.
+         * Reset the old song's UI immediately.
          */
 
         resetProgress();
 
         updateSongUI();
 
+        updatePlayerUI();
+
+
         /*
-         * Load the new SoundCloud track.
+         * Load the NEW song.
          *
-         * auto_play is enabled here because
-         * loadSong() is called from the user's
-         * actual button tap.
+         * auto_play:true is important here because
+         * this function is called directly from a
+         * user's tap/click.
          */
 
         player.load(
-            songs[index].url,
+            song.url,
             {
+
                 auto_play: true,
+
                 hide_related: true,
+
                 show_comments: false,
+
                 show_user: false,
+
                 show_reposts: false,
+
                 visual: false
+
             }
         );
 
+
         /*
-         * Give the new track a moment to load.
-         * This does NOT call play() again, which
-         * prevents the play/pause flicker.
+         * The new track is loading.
          */
 
-        setTimeout(() => {
-            changingSong = false;
-            getDuration();
-        }, 1000);
+        setTimeout(
+            () => {
+
+                changingSong =
+                    false;
+
+                getDuration();
+
+            },
+            1000
+        );
+
     }
 
 
@@ -476,17 +603,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (playButton) {
 
-        playButton.addEventListener("click", (event) => {
+        playButton.addEventListener(
+            "click",
+            (event) => {
 
-            event.preventDefault();
-            event.stopPropagation();
+                event.preventDefault();
 
-            if (playing) {
-                pauseMusic();
-            } else {
-                playMusic();
+                event.stopPropagation();
+
+
+                userInteracted =
+                    true;
+
+
+                if (playing) {
+
+                    pauseMusic();
+
+                } else {
+
+                    playMusic();
+
+                }
+
             }
-        });
+        );
+
     }
 
 
@@ -494,42 +636,60 @@ document.addEventListener("DOMContentLoaded", () => {
        SONG BUTTONS
     ===================================================== */
 
-    songButtons.forEach((button, index) => {
+    songButtons.forEach(
+        (button, index) => {
 
-        button.addEventListener("click", (event) => {
+            button.addEventListener(
+                "click",
+                (event) => {
 
-            event.preventDefault();
-            event.stopPropagation();
+                    event.preventDefault();
 
-            /*
-             * Different song:
-             * immediately load + autoplay.
-             */
+                    event.stopPropagation();
 
-            if (index !== currentIndex) {
 
-                loadSong(index);
+                    userInteracted =
+                        true;
 
-                return;
-            }
 
-            /*
-             * Same song:
-             * toggle play/pause.
-             */
+                    /*
+                     * DIFFERENT SONG
+                     */
 
-            if (playing) {
-                pauseMusic();
-            } else {
-                playMusic();
-            }
-        });
+                    if (
+                        index !== currentIndex
+                    ) {
 
-    });
+                        loadSong(index);
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * SAME SONG
+                     */
+
+                    if (playing) {
+
+                        pauseMusic();
+
+                    } else {
+
+                        playMusic();
+
+                    }
+
+                }
+            );
+
+        }
+    );
 
 
     /* =====================================================
-       NEXT
+       NEXT SONG
     ===================================================== */
 
     function nextSong() {
@@ -537,28 +697,46 @@ document.addEventListener("DOMContentLoaded", () => {
         let nextIndex =
             currentIndex + 1;
 
-        if (nextIndex >= songs.length) {
+
+        if (
+            nextIndex >= songs.length
+        ) {
+
             nextIndex = 0;
+
         }
 
+
         loadSong(nextIndex);
+
     }
 
 
     if (nextButton) {
 
-        nextButton.addEventListener("click", (event) => {
+        nextButton.addEventListener(
+            "click",
+            (event) => {
 
-            event.preventDefault();
-            event.stopPropagation();
+                event.preventDefault();
 
-            nextSong();
-        });
+                event.stopPropagation();
+
+
+                userInteracted =
+                    true;
+
+
+                nextSong();
+
+            }
+        );
+
     }
 
 
     /* =====================================================
-       PREVIOUS
+       PREVIOUS SONG
     ===================================================== */
 
     function previousSong() {
@@ -566,75 +744,110 @@ document.addEventListener("DOMContentLoaded", () => {
         let previousIndex =
             currentIndex - 1;
 
-        if (previousIndex < 0) {
-            previousIndex = songs.length - 1;
+
+        if (
+            previousIndex < 0
+        ) {
+
+            previousIndex =
+                songs.length - 1;
+
         }
 
+
         loadSong(previousIndex);
+
     }
 
 
     if (previousButton) {
 
-        previousButton.addEventListener("click", (event) => {
+        previousButton.addEventListener(
+            "click",
+            (event) => {
 
-            event.preventDefault();
-            event.stopPropagation();
+                event.preventDefault();
 
-            previousSong();
-        });
+                event.stopPropagation();
+
+
+                userInteracted =
+                    true;
+
+
+                previousSong();
+
+            }
+        );
+
     }
 
 
     /* =====================================================
-       PROGRESS BAR SEEK
+       PROGRESS BAR
     ===================================================== */
 
     if (progressTrack) {
 
-        progressTrack.addEventListener("click", (event) => {
-
-            if (
-                !player ||
-                !playerReady
-            ) {
-                return;
-            }
-
-            const rect =
-                progressTrack.getBoundingClientRect();
-
-            const clickPosition =
-                event.clientX - rect.left;
-
-            const percentage =
-                Math.max(
-                    0,
-                    Math.min(
-                        1,
-                        clickPosition / rect.width
-                    )
-                );
-
-            player.getDuration((milliseconds) => {
+        progressTrack.addEventListener(
+            "click",
+            (event) => {
 
                 if (
-                    !milliseconds ||
-                    milliseconds <= 0
+                    !player ||
+                    !playerReady
                 ) {
                     return;
                 }
 
-                player.seekTo(
-                    milliseconds * percentage
+
+                const rect =
+                    progressTrack.getBoundingClientRect();
+
+
+                const clickPosition =
+                    event.clientX -
+                    rect.left;
+
+
+                const percentage =
+                    Math.max(
+                        0,
+                        Math.min(
+                            1,
+                            clickPosition /
+                            rect.width
+                        )
+                    );
+
+
+                player.getDuration(
+                    (milliseconds) => {
+
+                        if (
+                            !milliseconds ||
+                            milliseconds <= 0
+                        ) {
+                            return;
+                        }
+
+
+                        player.seekTo(
+                            milliseconds *
+                            percentage
+                        );
+
+                    }
                 );
-            });
-        });
+
+            }
+        );
+
     }
 
 
     /* =====================================================
-       SOUNDCLOUD INITIALIZATION
+       SOUNDCLOUD PLAYER
     ===================================================== */
 
     async function initializeMusic() {
@@ -646,20 +859,18 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (error) {
 
             console.error(
-                "SoundCloud API failed:",
+                "SoundCloud API could not load:",
                 error
             );
 
             return;
         }
 
-        if (!iframe) {
-            console.error(
-                "SoundCloud iframe not found."
-            );
 
+        if (!iframe) {
             return;
         }
+
 
         player =
             SC.Widget(iframe);
@@ -673,15 +884,18 @@ document.addEventListener("DOMContentLoaded", () => {
             SC.Widget.Events.READY,
             () => {
 
-                playerReady = true;
+                playerReady =
+                    true;
+
 
                 updateSongUI();
 
                 resetProgress();
 
-                updateMusicUI();
+                updatePlayerUI();
 
                 getDuration();
+
             }
         );
 
@@ -694,9 +908,12 @@ document.addEventListener("DOMContentLoaded", () => {
             SC.Widget.Events.PLAY,
             () => {
 
-                playing = true;
+                playing =
+                    true;
 
-                updateMusicUI();
+
+                updatePlayerUI();
+
             }
         );
 
@@ -710,18 +927,21 @@ document.addEventListener("DOMContentLoaded", () => {
             () => {
 
                 /*
-                 * SoundCloud sends a PAUSE while changing
-                 * tracks. Don't let that make the new
-                 * song's UI flash to paused.
+                 * Ignore the temporary pause that
+                 * happens while switching songs.
                  */
 
                 if (changingSong) {
                     return;
                 }
 
-                playing = false;
 
-                updateMusicUI();
+                playing =
+                    false;
+
+
+                updatePlayerUI();
+
             }
         );
 
@@ -734,11 +954,19 @@ document.addEventListener("DOMContentLoaded", () => {
             SC.Widget.Events.FINISH,
             () => {
 
-                playing = false;
+                playing =
+                    false;
 
-                updateMusicUI();
+
+                updatePlayerUI();
+
+
+                /*
+                 * Automatically go to the next song.
+                 */
 
                 nextSong();
+
             }
         );
 
@@ -752,13 +980,16 @@ document.addEventListener("DOMContentLoaded", () => {
             (data) => {
 
                 updateProgress(data);
+
             }
         );
+
     }
 
 
     /* =====================================================
-       PAUSE WHEN LEAVING MUSIC SECTION
+       MUSIC SECTION
+       PAUSE WHEN LEAVING
     ===================================================== */
 
     if (musicSection) {
@@ -770,8 +1001,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     const entry =
                         entries[0];
 
+
                     musicVisible =
                         entry.isIntersecting;
+
+
+                    /*
+                     * Leaving the music section
+                     * pauses the song.
+                     */
 
                     if (!musicVisible) {
 
@@ -782,15 +1020,22 @@ document.addEventListener("DOMContentLoaded", () => {
                         ) {
 
                             player.pause();
+
                         }
+
                     }
+
                 },
                 {
                     threshold: 0.25
                 }
             );
 
-        observer.observe(musicSection);
+
+        observer.observe(
+            musicSection
+        );
+
     }
 
 
@@ -805,15 +1050,27 @@ document.addEventListener("DOMContentLoaded", () => {
             (event) => {
 
                 event.preventDefault();
+
                 event.stopPropagation();
 
+
+                userInteracted =
+                    true;
+
+
                 if (playing) {
+
                     pauseMusic();
+
                 } else {
+
                     playMusic();
+
                 }
+
             }
         );
+
     }
 
 
@@ -824,61 +1081,80 @@ document.addEventListener("DOMContentLoaded", () => {
     const stars =
         document.querySelectorAll(".star");
 
+
     const starMessage =
         document.getElementById("starMessage");
 
 
-    stars.forEach((star) => {
+    stars.forEach(
+        (star) => {
 
-        star.addEventListener("click", (event) => {
+            star.addEventListener(
+                "click",
+                (event) => {
 
-            event.preventDefault();
-            event.stopPropagation();
+                    event.preventDefault();
 
-            if (!starMessage) {
-                return;
-            }
+                    event.stopPropagation();
 
-            const message =
-                star.dataset.message;
 
-            if (!message) {
-                return;
-            }
+                    if (!starMessage) {
+                        return;
+                    }
 
-            starMessage.textContent =
-                message;
 
-            starMessage.classList.remove(
-                "show"
-            );
+                    const message =
+                        star.dataset.message;
 
-            /*
-             * Restart animation.
-             */
 
-            void starMessage.offsetWidth;
+                    if (!message) {
+                        return;
+                    }
 
-            starMessage.classList.add(
-                "show"
-            );
 
-            clearTimeout(
-                starMessage.hideTimer
-            );
+                    starMessage.textContent =
+                        message;
 
-            starMessage.hideTimer =
-                setTimeout(() => {
 
                     starMessage.classList.remove(
                         "show"
                     );
 
-                }, 4500);
 
-        });
+                    /*
+                     * Restart the animation.
+                     */
 
-    });
+                    void starMessage.offsetWidth;
+
+
+                    starMessage.classList.add(
+                        "show"
+                    );
+
+
+                    clearTimeout(
+                        starMessage.hideTimer
+                    );
+
+
+                    starMessage.hideTimer =
+                        setTimeout(
+                            () => {
+
+                                starMessage.classList.remove(
+                                    "show"
+                                );
+
+                            },
+                            4500
+                        );
+
+                }
+            );
+
+        }
+    );
 
 
     /* =====================================================
@@ -887,6 +1163,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const secretButton =
         document.getElementById("secretButton");
+
 
     const secretMessage =
         document.getElementById("secretMessage");
@@ -901,16 +1178,18 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             () => {
 
-                const open =
+                const isOpen =
                     secretMessage.classList.contains(
                         "show"
                     );
 
-                if (open) {
+
+                if (isOpen) {
 
                     secretMessage.classList.remove(
                         "show"
                     );
+
 
                     secretButton.textContent =
                         "there's something here";
@@ -921,16 +1200,20 @@ document.addEventListener("DOMContentLoaded", () => {
                         "show"
                     );
 
+
                     secretButton.textContent =
                         "hide it ♡";
+
                 }
+
             }
         );
+
     }
 
 
     /* =====================================================
-       START
+       START MUSIC SYSTEM
     ===================================================== */
 
     initializeMusic();
