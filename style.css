@@ -1,6 +1,12 @@
-/* =========================
+/* =========================================================
+   SOPH'S LITTLE WEBSITE
+   style.css
+========================================================= */
+
+
+/* =========================================================
    RESET
-========================= */
+========================================================= */
 
 * {
     box-sizing: border-box;
@@ -14,9 +20,19 @@ html {
 
 body {
     min-height: 100vh;
-    background: #0f0b18;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #21152d 0%,
+            #100b18 45%,
+            #09070e 100%
+        );
+
     color: #ffffff;
+
     font-family: "DM Sans", sans-serif;
+
     overflow-x: hidden;
 }
 
@@ -24,56 +40,208 @@ button {
     font-family: inherit;
 }
 
+button:focus-visible {
+    outline: 2px solid #f7b9d4;
+    outline-offset: 4px;
+}
 
-/* =========================
+
+/* =========================================================
    BACKGROUND
-========================= */
+========================================================= */
 
 .background {
     position: fixed;
+
     inset: 0;
+
     overflow: hidden;
+
     pointer-events: none;
+
     z-index: 0;
 }
 
+
+/* BIG GLOWS */
+
 .glow {
     position: absolute;
-    width: 500px;
-    height: 500px;
+
+    width: 550px;
+    height: 550px;
+
     border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.18;
+
+    filter: blur(120px);
+
+    opacity: 0.16;
+
+    pointer-events: none;
 }
 
-.glow.one {
-    background: #ff7eb6;
-    top: -200px;
-    left: -150px;
+.glow-one {
+    background: #ff77b7;
+
+    top: -260px;
+    left: -180px;
 }
 
-.glow.two {
-    background: #a98cff;
-    right: -200px;
-    top: 30%;
+.glow-two {
+    background: #9c83ff;
+
+    right: -260px;
+    top: 28%;
 }
 
-.glow.three {
-    background: #ff9fcd;
-    bottom: -250px;
+.glow-three {
+    background: #ff9bc8;
+
+    bottom: -300px;
     left: 25%;
 }
 
-.particle {
+
+/* BACKGROUND SYMBOLS */
+
+.stars-background {
     position: absolute;
-    color: rgba(255, 190, 220, 0.75);
-    animation: floatUp linear infinite;
-    user-select: none;
+
+    inset: 0;
+
+    overflow: hidden;
 }
 
-@keyframes floatUp {
+.stars-background span {
+    position: absolute;
+
+    color: rgba(255, 215, 232, 0.4);
+
+    animation:
+        backgroundTwinkle
+        4s
+        ease-in-out
+        infinite;
+}
+
+.stars-background span:nth-child(1) {
+    top: 10%;
+    left: 12%;
+    font-size: 16px;
+}
+
+.stars-background span:nth-child(2) {
+    top: 18%;
+    left: 78%;
+    font-size: 11px;
+    animation-delay: 1s;
+}
+
+.stars-background span:nth-child(3) {
+    top: 35%;
+    left: 25%;
+    font-size: 8px;
+    animation-delay: 2s;
+}
+
+.stars-background span:nth-child(4) {
+    top: 45%;
+    left: 91%;
+    font-size: 18px;
+    animation-delay: 0.5s;
+}
+
+.stars-background span:nth-child(5) {
+    top: 60%;
+    left: 8%;
+    font-size: 9px;
+    animation-delay: 2.5s;
+}
+
+.stars-background span:nth-child(6) {
+    top: 72%;
+    left: 76%;
+    font-size: 17px;
+    animation-delay: 1.5s;
+}
+
+.stars-background span:nth-child(7) {
+    top: 82%;
+    left: 18%;
+    font-size: 10px;
+}
+
+.stars-background span:nth-child(8) {
+    top: 25%;
+    left: 55%;
+    font-size: 8px;
+}
+
+.stars-background span:nth-child(9) {
+    top: 88%;
+    left: 91%;
+    font-size: 15px;
+}
+
+.stars-background span:nth-child(10) {
+    top: 52%;
+    left: 45%;
+    font-size: 14px;
+    animation-delay: 1s;
+}
+
+.stars-background span:nth-child(11) {
+    top: 12%;
+    left: 42%;
+    font-size: 8px;
+}
+
+.stars-background span:nth-child(12) {
+    top: 67%;
+    left: 53%;
+    font-size: 15px;
+    animation-delay: 2s;
+}
+
+@keyframes backgroundTwinkle {
+
+    0%,
+    100% {
+        opacity: 0.2;
+
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 0.85;
+
+        transform: scale(1.25);
+    }
+}
+
+
+/* EXTRA PARTICLES FROM JS */
+
+.floating-particle {
+    position: absolute;
+
+    color: rgba(255, 180, 215, 0.55);
+
+    animation:
+        particleFloat
+        linear
+        infinite;
+
+    pointer-events: none;
+}
+
+@keyframes particleFloat {
+
     from {
-        transform: translateY(110vh) rotate(0deg);
+        transform:
+            translateY(110vh)
+            rotate(0deg);
+
         opacity: 0;
     }
 
@@ -86,298 +254,1351 @@ button {
     }
 
     to {
-        transform: translateY(-15vh) rotate(360deg);
+        transform:
+            translateY(-15vh)
+            rotate(360deg);
+
         opacity: 0;
     }
 }
 
 
-/* =========================
+/* =========================================================
    OPENING
-========================= */
+========================================================= */
 
 .opening {
     min-height: 100vh;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     padding: 30px;
+
     position: relative;
-    z-index: 2;
+
+    z-index: 5;
+
     text-align: center;
 }
 
 .opening-content {
-    max-width: 700px;
-    animation: appear 1.2s ease forwards;
+    width: min(750px, 100%);
+
+    animation:
+        openingAppear
+        1.2s
+        ease
+        forwards;
 }
 
-@keyframes appear {
+@keyframes openingAppear {
+
     from {
         opacity: 0;
-        transform: translateY(25px);
+
+        transform:
+            translateY(30px)
+            scale(0.97);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+
+        transform:
+            translateY(0)
+            scale(1);
     }
 }
 
+
+/* CLOSING ANIMATION */
+
+.opening-closing {
+    animation:
+        openingDisappear
+        0.8s
+        ease
+        forwards;
+}
+
+@keyframes openingDisappear {
+
+    to {
+        opacity: 0;
+
+        transform:
+            scale(1.05)
+            translateY(-20px);
+    }
+}
+
+
 .tiny-text {
-    color: #e8c8da;
-    font-size: 14px;
-    letter-spacing: 3px;
+    color: #dbaac3;
+
+    font-size: 12px;
+
+    letter-spacing: 4px;
+
     text-transform: uppercase;
-    margin-bottom: 20px;
+
+    margin-bottom: 25px;
 }
 
 .opening h1 {
     font-family: "Pacifico", cursive;
-    font-size: clamp(55px, 11vw, 110px);
+
+    font-size:
+        clamp(
+            65px,
+            13vw,
+            125px
+        );
+
     font-weight: 400;
-    color: #ffd9e9;
-    text-shadow: 0 0 35px rgba(255, 150, 200, 0.25);
-    line-height: 1.1;
+
+    line-height: 1;
+
+    color: #ffe1ed;
+
+    text-shadow:
+        0 0 20px rgba(255, 158, 202, 0.25),
+        0 0 60px rgba(255, 130, 190, 0.12);
 }
 
 .opening-subtitle {
-    margin-top: 25px;
-    color: #d9ccd8;
+    margin-top: 28px;
+
+    color: #cbbdca;
+
     font-size: 18px;
 }
 
 .open-button {
-    margin-top: 35px;
-    padding: 15px 28px;
-    border: 1px solid rgba(255, 200, 225, 0.35);
+    margin-top: 38px;
+
+    padding: 15px 31px;
+
     border-radius: 999px;
-    background: rgba(255, 180, 215, 0.1);
+
+    border: 1px solid
+        rgba(255, 205, 225, 0.25);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 180, 215, 0.16),
+            rgba(180, 140, 255, 0.08)
+        );
+
     color: #ffeaf3;
-    font-size: 16px;
+
+    font-size: 15px;
+
     cursor: pointer;
-    transition: 0.3s ease;
-    backdrop-filter: blur(10px);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.35s ease;
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 10px 35px
+        rgba(0, 0, 0, 0.15);
 }
 
 .open-button:hover {
-    transform: translateY(-3px) scale(1.03);
-    background: rgba(255, 180, 215, 0.18);
-    box-shadow: 0 10px 35px rgba(255, 120, 180, 0.18);
+    transform:
+        translateY(-4px)
+        scale(1.04);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 180, 215, 0.24),
+            rgba(180, 140, 255, 0.13)
+        );
+
+    box-shadow:
+        0 15px 45px
+        rgba(255, 120, 180, 0.18);
+}
+
+.opening-note {
+    margin-top: 20px;
+
+    color: #776d79;
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
 }
 
 .scroll-hint {
     position: absolute;
+
     bottom: 25px;
+
     left: 50%;
-    transform: translateX(-50%);
-    color: #8d7e8d;
-    font-size: 13px;
+
+    transform:
+        translateX(-50%);
+
+    color: #817583;
+
+    font-size: 18px;
+
+    animation:
+        scrollBounce
+        2s
+        ease-in-out
+        infinite;
+}
+
+@keyframes scrollBounce {
+
+    0%,
+    100% {
+        transform:
+            translateX(-50%)
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateX(-50%)
+            translateY(7px);
+    }
 }
 
 
-/* =========================
+/* =========================================================
    MAIN
-========================= */
+========================================================= */
 
 #main {
     position: relative;
+
     z-index: 2;
+
     display: none;
 }
 
 .section {
-    width: min(1000px, 90%);
+    width: min(1050px, 90%);
+
     margin: auto;
-    padding: 110px 0;
+
+    padding: 120px 0;
 }
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    min-height: 85vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 750px;
+}
+
+.eyebrow {
+    color: #d6a7bf;
+
+    font-size: 12px;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 22px;
+}
+
+.hero h2 {
+    font-family: "Pacifico", cursive;
+
+    font-weight: 400;
+
+    font-size:
+        clamp(
+            42px,
+            7vw,
+            75px
+        );
+
+    line-height: 1.25;
+
+    color: #ffe0eb;
+
+    text-shadow:
+        0 0 35px
+        rgba(255, 150, 200, 0.12);
+}
+
+.hero p {
+    max-width: 550px;
+
+    margin:
+        25px
+        auto
+        0;
+
+    color: #aaa0ad;
+
+    line-height: 1.8;
+
+    font-size: 16px;
+}
+
+.hero-heart {
+    margin-top: 35px;
+
+    font-size: 35px;
+
+    color: #f2a9c8;
+
+    animation:
+        heartBeat
+        2s
+        ease-in-out
+        infinite;
+}
+
+@keyframes heartBeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.16);
+    }
+}
+
+
+/* =========================================================
+   SECTION TITLES
+========================================================= */
 
 .section-title {
     text-align: center;
-    margin-bottom: 50px;
+
+    margin-bottom: 55px;
 }
 
 .section-title span {
     display: block;
-    color: #dcaac4;
-    font-size: 13px;
+
+    color: #c994b2;
+
+    font-size: 11px;
+
     letter-spacing: 3px;
+
     text-transform: uppercase;
-    margin-bottom: 12px;
+
+    margin-bottom: 15px;
 }
 
 .section-title h2 {
     font-family: "Pacifico", cursive;
-    font-size: clamp(35px, 6vw, 55px);
+
     font-weight: 400;
+
+    font-size:
+        clamp(
+            38px,
+            6vw,
+            58px
+        );
+
     color: #ffe2ed;
 }
 
 .section-title p {
     max-width: 600px;
-    margin: 15px auto 0;
-    color: #bdb0be;
-    line-height: 1.7;
+
+    margin:
+        18px
+        auto
+        0;
+
+    color: #9f95a2;
+
+    line-height: 1.8;
 }
 
 
-/* =========================
-   WHY YOU
-========================= */
+/* =========================================================
+   REASONS
+========================================================= */
 
 .reasons {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
     gap: 18px;
 }
 
 .reason {
-    min-height: 180px;
-    padding: 28px;
-    border-radius: 24px;
-    background: rgba(255, 255, 255, 0.045);
-    border: 1px solid rgba(255, 210, 230, 0.1);
-    backdrop-filter: blur(12px);
-    transition: 0.35s ease;
-    cursor: default;
+    position: relative;
+
+    min-height: 230px;
+
+    padding: 30px;
+
+    border-radius: 27px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.018)
+        );
+
+    border: 1px solid
+        rgba(255, 205, 225, 0.09);
+
+    backdrop-filter: blur(18px);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.4s ease,
+        border-color 0.4s ease,
+        background 0.4s ease;
+}
+
+.reason::before {
+    content: "";
+
+    position: absolute;
+
+    width: 130px;
+    height: 130px;
+
+    border-radius: 50%;
+
+    background: #ff8cbb;
+
+    filter: blur(80px);
+
+    opacity: 0;
+
+    top: -60px;
+    right: -50px;
+
+    transition: opacity 0.4s ease;
 }
 
 .reason:hover {
-    transform: translateY(-6px);
-    background: rgba(255, 180, 215, 0.08);
-    border-color: rgba(255, 190, 220, 0.25);
+    transform:
+        translateY(-8px);
+
+    border-color:
+        rgba(255, 185, 215, 0.22);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 190, 220, 0.09),
+            rgba(255, 255, 255, 0.025)
+        );
+}
+
+.reason:hover::before {
+    opacity: 0.12;
 }
 
 .reason-number {
-    color: #e9aaca;
-    font-size: 13px;
-    margin-bottom: 20px;
+    color: #d79bb8;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+}
+
+.reason-icon {
+    margin-top: 20px;
+
+    margin-bottom: 16px;
+
+    color: #f0aac8;
+
+    font-size: 20px;
 }
 
 .reason h3 {
-    color: #ffe7f0;
+    color: #ffe8f1;
+
+    font-size: 18px;
+
     margin-bottom: 10px;
-    font-size: 19px;
 }
 
 .reason p {
-    color: #afa3af;
-    line-height: 1.6;
+    color: #a49aa5;
+
     font-size: 14px;
+
+    line-height: 1.7;
 }
 
 
-/* =========================
+/* =========================================================
+   MUSIC SECTION
+========================================================= */
+
+.music-section {
+    position: relative;
+}
+
+
+/* MUSIC PLAYER */
+
+.music-player {
+    position: relative;
+
+    width: min(820px, 100%);
+
+    margin: auto;
+
+    padding:
+        50px
+        35px
+        35px;
+
+    border-radius: 35px;
+
+    background:
+        radial-gradient(
+            circle at 50% 25%,
+            rgba(255, 150, 200, 0.08),
+            transparent 40%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.06),
+            rgba(255, 255, 255, 0.018)
+        );
+
+    border: 1px solid
+        rgba(255, 210, 230, 0.1);
+
+    backdrop-filter: blur(20px);
+
+    overflow: hidden;
+
+    box-shadow:
+        0 30px 80px
+        rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================================
+   MUSIC WHEEL
+========================================================= */
+
+.music-wheel {
+    position: relative;
+
+    height: 245px;
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    perspective: 1000px;
+
+    transition:
+        transform 0.7s
+        cubic-bezier(
+            0.2,
+            0.8,
+            0.2,
+            1
+        );
+}
+
+
+/* SONG BUTTON */
+
+.music-song {
+    position: absolute;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    width: 170px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 13px;
+
+    transition:
+        transform 0.65s
+        cubic-bezier(
+            0.2,
+            0.8,
+            0.2,
+            1
+        ),
+        opacity 0.5s ease,
+        filter 0.5s ease;
+}
+
+.music-song span {
+    max-width: 160px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color: #8f8591;
+
+    font-size: 12px;
+
+    transition:
+        color 0.4s ease;
+}
+
+
+/* ALBUM ART */
+
+.song-art {
+    width: 115px;
+
+    height: 115px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 28px;
+
+    color: #ffe7f1;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 225, 238, 0.12),
+            rgba(255, 160, 205, 0.035)
+        );
+
+    border: 1px solid
+        rgba(255, 215, 230, 0.12);
+
+    box-shadow:
+        inset 0 0 30px
+        rgba(255, 180, 215, 0.06),
+        0 15px 40px
+        rgba(0, 0, 0, 0.2);
+
+    transition:
+        transform 0.6s ease,
+        box-shadow 0.6s ease,
+        width 0.6s ease,
+        height 0.6s ease;
+}
+
+
+/* CENTER SONG */
+
+.song-main {
+    z-index: 3;
+
+    transform:
+        translateX(0)
+        scale(1.12);
+
+    opacity: 1;
+
+    filter: none;
+}
+
+.song-main .song-art {
+    width: 170px;
+
+    height: 170px;
+
+    font-size: 40px;
+
+    box-shadow:
+        inset 0 0 45px
+        rgba(255, 180, 215, 0.09),
+        0 20px 55px
+        rgba(0, 0, 0, 0.3);
+
+    border-color:
+        rgba(255, 210, 230, 0.2);
+}
+
+.song-main span {
+    color: #f3d6e4;
+
+    font-weight: 600;
+}
+
+
+/* LEFT SONG */
+
+.song-left {
+    transform:
+        translateX(-265px)
+        scale(0.72);
+
+    opacity: 0.55;
+
+    filter: blur(0.4px);
+}
+
+
+/* RIGHT SONG */
+
+.song-right {
+    transform:
+        translateX(265px)
+        scale(0.72);
+
+    opacity: 0.55;
+
+    filter: blur(0.4px);
+}
+
+
+/* HOVER */
+
+.music-song:hover {
+    opacity: 1;
+}
+
+.music-song:hover .song-art {
+    transform: scale(1.05);
+
+    box-shadow:
+        0 15px 45px
+        rgba(255, 150, 200, 0.12);
+}
+
+
+/* ROTATION STATES */
+
+.music-wheel.wheel-left
+.song-left {
+    transform:
+        translateX(0)
+        scale(1.12);
+}
+
+.music-wheel.wheel-left
+.song-left .song-art {
+    width: 170px;
+    height: 170px;
+}
+
+.music-wheel.wheel-left
+.song-main {
+    transform:
+        translateX(265px)
+        scale(0.72);
+
+    opacity: 0.55;
+}
+
+.music-wheel.wheel-left
+.song-right {
+    transform:
+        translateX(530px)
+        scale(0.55);
+
+    opacity: 0.25;
+}
+
+
+.music-wheel.wheel-right
+.song-right {
+    transform:
+        translateX(0)
+        scale(1.12);
+}
+
+.music-wheel.wheel-right
+.song-right .song-art {
+    width: 170px;
+    height: 170px;
+}
+
+.music-wheel.wheel-right
+.song-main {
+    transform:
+        translateX(-265px)
+        scale(0.72);
+
+    opacity: 0.55;
+}
+
+.music-wheel.wheel-right
+.song-left {
+    transform:
+        translateX(-530px)
+        scale(0.55);
+
+    opacity: 0.25;
+}
+
+
+/* =========================================================
+   CURRENT SONG
+========================================================= */
+
+.current-song {
+    text-align: center;
+
+    margin-top: 10px;
+}
+
+.now-playing {
+    color: #c18da9;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 9px;
+}
+
+.current-song h3 {
+    color: #ffe6ef;
+
+    font-size: 20px;
+
+    font-weight: 600;
+}
+
+.current-song p {
+    margin-top: 5px;
+
+    color: #8e8490;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   MUSIC PROGRESS
+========================================================= */
+
+.music-progress {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin:
+        28px
+        auto
+        0;
+
+    width: min(600px, 100%);
+}
+
+.music-progress span {
+    min-width: 30px;
+
+    color: #817782;
+
+    font-size: 10px;
+
+    font-variant-numeric: tabular-nums;
+}
+
+.progress-track {
+    position: relative;
+
+    flex: 1;
+
+    height: 5px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255, 255, 255, 0.08);
+
+    cursor: pointer;
+}
+
+.progress-bar {
+    position: absolute;
+
+    left: 0;
+
+    top: 0;
+
+    height: 100%;
+
+    width: 0%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            #e99fbe,
+            #f5c4d9
+        );
+
+    box-shadow:
+        0 0 12px
+        rgba(240, 160, 195, 0.3);
+}
+
+
+/* =========================================================
+   MUSIC CONTROLS
+========================================================= */
+
+.music-controls {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    margin-top: 28px;
+}
+
+.music-controls button {
+    width: 44px;
+
+    height: 44px;
+
+    border-radius: 50%;
+
+    border: 1px solid
+        rgba(255, 210, 230, 0.1);
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    color: #d9bdcb;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+}
+
+.music-controls button:hover {
+    transform: scale(1.08);
+
+    background:
+        rgba(255, 180, 215, 0.09);
+}
+
+.music-controls .play-button {
+    width: 58px;
+
+    height: 58px;
+
+    font-size: 18px;
+
+    color: #fff0f6;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 180, 215, 0.18),
+            rgba(180, 140, 255, 0.1)
+        );
+
+    border-color:
+        rgba(255, 205, 225, 0.18);
+
+    box-shadow:
+        0 10px 30px
+        rgba(255, 120, 180, 0.1);
+}
+
+.music-hint {
+    text-align: center;
+
+    margin-top: 23px;
+
+    color: #716874;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
    NIGHT SKY
-========================= */
+========================================================= */
 
 .sky-container {
     position: relative;
-    height: 500px;
+
+    height: 540px;
+
     border-radius: 35px;
+
     overflow: hidden;
 
     background:
         radial-gradient(
-            circle at 30% 30%,
-            rgba(155, 116, 190, 0.16),
+            circle at 25% 30%,
+            rgba(135, 105, 190, 0.13),
             transparent 30%
         ),
         radial-gradient(
-            circle at 80% 70%,
-            rgba(255, 140, 190, 0.12),
-            transparent 30%
+            circle at 80% 65%,
+            rgba(255, 130, 190, 0.09),
+            transparent 32%
         ),
-        #0b0812;
+        linear-gradient(
+            160deg,
+            #0b0812,
+            #100b19
+        );
 
-    border: 1px solid rgba(255, 210, 230, 0.1);
+    border: 1px solid
+        rgba(255, 210, 230, 0.1);
+
+    box-shadow:
+        inset 0 0 80px
+        rgba(0, 0, 0, 0.25);
 }
 
-.sky-text {
+.sky-container::before {
+    content: "";
+
     position: absolute;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.12) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        80px 80px;
+
+    opacity: 0.25;
+}
+
+.sky-title {
+    position: absolute;
+
     top: 30px;
+
     left: 0;
     right: 0;
+
     text-align: center;
-    color: #a99aaa;
-    font-size: 13px;
-    letter-spacing: 1px;
+
+    color: #9c8e9d;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    z-index: 3;
 }
+
+
+/* BACKGROUND SKY STARS */
+
+.background-star {
+    position: absolute;
+
+    width: 2px;
+
+    height: 2px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 7px
+        rgba(255, 255, 255, 0.7);
+
+    animation:
+        skyTwinkle
+        ease-in-out
+        infinite;
+}
+
+@keyframes skyTwinkle {
+
+    0%,
+    100% {
+        opacity: 0.2;
+
+        transform: scale(0.7);
+    }
+
+    50% {
+        opacity: 0.9;
+
+        transform: scale(1.5);
+    }
+}
+
+
+/* =========================================================
+   BIG CLICKABLE STARS
+========================================================= */
 
 .star {
     position: absolute;
-    width: 7px;
-    height: 7px;
 
-    background: white;
+    width: 72px;
+
+    height: 72px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 0;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 190, 220, 0.08),
+            transparent 65%
+        );
+
     border-radius: 50%;
-
-    box-shadow:
-        0 0 8px white,
-        0 0 18px rgba(255, 190, 220, 0.8);
 
     cursor: pointer;
 
-    animation: twinkle 2s infinite ease-in-out;
+    z-index: 5;
 
-    transition: 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease;
+}
+
+
+/*
+    The visible star is tiny,
+    but the button around it is large.
+*/
+
+.star span {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 15px;
+
+    height: 15px;
+
+    color: #fff4f8;
+
+    font-size: 19px;
+
+    text-shadow:
+        0 0 8px #ffffff,
+        0 0 20px #f6afd0;
+
+    animation:
+        starPulse
+        2s
+        ease-in-out
+        infinite;
 }
 
 .star:hover {
-    transform: scale(2);
+    transform: scale(1.25);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 190, 220, 0.13),
+            transparent 65%
+        );
 }
 
-@keyframes twinkle {
+.star:active {
+    transform: scale(0.95);
+}
+
+@keyframes starPulse {
+
     0%,
     100% {
-        opacity: 0.45;
+        opacity: 0.55;
+
+        transform: scale(0.8);
     }
 
     50% {
         opacity: 1;
+
+        transform: scale(1.2);
     }
 }
 
+
+/* STAR POSITIONS */
+
+.star-one {
+    top: 21%;
+    left: 14%;
+}
+
+.star-two {
+    top: 42%;
+    left: 29%;
+}
+
+.star-three {
+    top: 18%;
+    left: 49%;
+}
+
+.star-four {
+    top: 58%;
+    left: 61%;
+}
+
+.star-five {
+    top: 31%;
+    left: 78%;
+}
+
+.star-six {
+    top: 71%;
+    left: 83%;
+}
+
+.star-seven {
+    top: 74%;
+    left: 38%;
+}
+
+
+/* MESSAGE */
+
 .star-message {
     position: absolute;
+
     bottom: 25px;
+
     left: 50%;
 
-    transform: translateX(-50%);
+    transform:
+        translateX(-50%)
+        translateY(10px);
 
-    width: min(500px, 85%);
+    width: min(540px, 82%);
 
-    padding: 18px 22px;
+    padding: 18px 25px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(20, 14, 27, 0.75);
+
+    border: 1px solid
+        rgba(255, 210, 230, 0.12);
+
+    backdrop-filter: blur(15px);
 
     text-align: center;
 
-    background: rgba(255, 255, 255, 0.06);
+    color: #e8d9e3;
 
-    border: 1px solid rgba(255, 210, 230, 0.12);
+    font-size: 13px;
 
-    border-radius: 18px;
-
-    color: #eadce6;
+    line-height: 1.6;
 
     opacity: 0;
 
-    transition: 0.4s ease;
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
 
     pointer-events: none;
+
+    z-index: 10;
 }
 
 .star-message.show {
     opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
 }
 
 
-/* =========================
+/* =========================================================
    TIMELINE
-========================= */
+========================================================= */
 
 .timeline {
     position: relative;
-    max-width: 700px;
+
+    max-width: 760px;
+
     margin: auto;
 }
 
@@ -386,117 +1607,176 @@ button {
 
     position: absolute;
 
-    top: 0;
-    bottom: 0;
     left: 20px;
+
+    top: 0;
+
+    bottom: 0;
 
     width: 1px;
 
-    background: rgba(255, 190, 220, 0.18);
+    background:
+        linear-gradient(
+            to bottom,
+            transparent,
+            rgba(255, 190, 220, 0.22),
+            transparent
+        );
 }
 
 .timeline-item {
     position: relative;
 
-    padding-left: 60px;
+    padding-left: 65px;
 
-    margin-bottom: 45px;
+    margin-bottom: 60px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
 }
 
 .timeline-dot {
     position: absolute;
 
     left: 14px;
+
     top: 4px;
 
     width: 13px;
+
     height: 13px;
 
     border-radius: 50%;
 
-    background: #f3b3d0;
+    background: #f1abc9;
 
     box-shadow:
-        0 0 15px rgba(243, 179, 208, 0.5);
+        0 0 0 5px
+        rgba(241, 171, 201, 0.07),
+        0 0 20px
+        rgba(241, 171, 201, 0.45);
 }
 
 .timeline-date {
-    color: #dca8c3;
+    color: #c995b0;
 
-    font-size: 13px;
+    font-size: 10px;
 
-    margin-bottom: 8px;
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 9px;
 }
 
 .timeline-item h3 {
     color: #ffe7f0;
 
-    font-size: 20px;
+    font-size: 21px;
 
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .timeline-item p {
-    color: #afa3af;
+    color: #a89da9;
 
-    line-height: 1.7;
+    line-height: 1.85;
+
+    font-size: 14px;
+
+    max-width: 650px;
 }
 
 
-/* =========================
+/* =========================================================
    SECRET
-========================= */
+========================================================= */
 
 .secret-box {
+    position: relative;
+
     text-align: center;
 
-    padding: 60px 25px;
+    padding: 70px 25px;
 
-    border-radius: 30px;
+    border-radius: 35px;
 
-    background: rgba(255, 255, 255, 0.04);
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(255, 170, 210, 0.08),
+            transparent 55%
+        ),
+        rgba(255, 255, 255, 0.035);
 
-    border: 1px solid rgba(255, 210, 230, 0.1);
+    border: 1px solid
+        rgba(255, 210, 230, 0.1);
+
+    overflow: hidden;
+}
+
+.secret-sparkle {
+    color: #efb1ca;
+
+    font-size: 22px;
+
+    margin-bottom: 12px;
+
+    animation:
+        starPulse
+        2s
+        ease-in-out
+        infinite;
 }
 
 .secret-box h2 {
     font-family: "Pacifico", cursive;
 
+    font-size: 45px;
+
     font-weight: 400;
 
-    color: #ffe1ed;
-
-    font-size: 40px;
-
-    margin-bottom: 15px;
+    color: #ffe0ec;
 }
 
-.secret-box p {
-    color: #a99faa;
+.secret-box > p {
+    margin-top: 10px;
 
-    margin-bottom: 25px;
+    margin-bottom: 28px;
+
+    color: #918792;
+
+    font-size: 13px;
 }
 
 .secret-button {
-    border: 1px solid rgba(255, 190, 220, 0.25);
-
-    background: rgba(255, 170, 210, 0.08);
-
-    color: #ffe7f1;
-
-    padding: 13px 23px;
+    padding: 13px 24px;
 
     border-radius: 999px;
 
+    border: 1px solid
+        rgba(255, 190, 220, 0.16);
+
+    background:
+        rgba(255, 180, 215, 0.06);
+
+    color: #e9d1de;
+
     cursor: pointer;
 
-    transition: 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease;
 }
 
 .secret-button:hover {
-    transform: scale(1.05);
+    transform:
+        translateY(-3px)
+        scale(1.03);
 
-    background: rgba(255, 170, 210, 0.16);
+    background:
+        rgba(255, 180, 215, 0.12);
 }
 
 .secret-message {
@@ -506,62 +1786,91 @@ button {
 
     opacity: 0;
 
-    transition: 0.7s ease;
+    transition:
+        max-height 0.8s ease,
+        opacity 0.5s ease,
+        margin 0.5s ease;
 }
 
 .secret-message.show {
-    max-height: 300px;
+    max-height: 350px;
 
     opacity: 1;
 
-    margin-top: 30px;
+    margin-top: 35px;
 }
 
 .secret-message p {
-    color: #f1dce7;
+    max-width: 600px;
 
-    line-height: 1.8;
+    margin: auto;
 
-    font-size: 16px;
+    color: #ead8e2;
+
+    line-height: 1.9;
+
+    font-size: 15px;
 }
 
 
-/* =========================
-   FINAL MESSAGE
-========================= */
+/* =========================================================
+   FINAL
+========================================================= */
 
 .final {
-    text-align: center;
+    padding-bottom: 150px;
 
-    padding-bottom: 130px;
+    text-align: center;
 }
 
 .final-card {
-    padding: 65px 30px;
+    position: relative;
 
-    border-radius: 35px;
+    padding:
+        80px
+        30px;
+
+    border-radius: 40px;
 
     background:
         radial-gradient(
             circle at center,
-            rgba(255, 150, 200, 0.08),
-            transparent 65%
+            rgba(255, 155, 205, 0.09),
+            transparent 60%
         ),
-        rgba(255, 255, 255, 0.035);
+        rgba(255, 255, 255, 0.025);
 
-    border: 1px solid rgba(255, 210, 230, 0.12);
+    border: 1px solid
+        rgba(255, 210, 230, 0.1);
+
+    overflow: hidden;
+}
+
+.final-stars {
+    color: #dca2bd;
+
+    font-size: 13px;
+
+    margin-bottom: 20px;
+
+    letter-spacing: 4px;
 }
 
 .final-card h2 {
     font-family: "Pacifico", cursive;
 
-    font-size: clamp(40px, 7vw, 65px);
+    font-size:
+        clamp(
+            45px,
+            7vw,
+            70px
+        );
 
     font-weight: 400;
 
     color: #ffe0ec;
 
-    margin-bottom: 25px;
+    margin-bottom: 28px;
 }
 
 .final-card p {
@@ -569,104 +1878,399 @@ button {
 
     margin: auto;
 
-    color: #c5b6c2;
+    color: #b8acb7;
 
-    line-height: 1.9;
+    line-height: 2;
 
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .heart {
     display: inline-block;
 
-    margin-top: 30px;
+    margin-top: 35px;
 
-    color: #f4abc9;
+    color: #f1abc9;
 
-    font-size: 28px;
+    font-size: 35px;
 
-    animation: heartbeat 1.6s infinite;
+    animation:
+        heartBeat
+        1.8s
+        ease-in-out
+        infinite;
 }
 
-@keyframes heartbeat {
-    0%,
-    100% {
-        transform: scale(1);
-    }
+.final-signature {
+    margin-top: 25px;
 
-    50% {
-        transform: scale(1.2);
-    }
+    color: #756b77;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
 }
 
 
-/* =========================
-   MUSIC BUTTON
-========================= */
+/* =========================================================
+   FLOATING MUSIC BUTTON
+========================================================= */
 
-.music-button {
+.music-floating-button {
     position: fixed;
 
-    right: 20px;
-    bottom: 20px;
+    right: 22px;
 
-    z-index: 20;
+    bottom: 22px;
 
-    width: 48px;
-    height: 48px;
+    z-index: 50;
+
+    width: 52px;
+
+    height: 52px;
 
     border-radius: 50%;
 
-    border: 1px solid rgba(255, 210, 230, 0.2);
+    border: 1px solid
+        rgba(255, 210, 230, 0.16);
 
-    background: rgba(20, 15, 28, 0.75);
+    background:
+        rgba(20, 14, 28, 0.75);
 
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
 
-    color: #f6cfe0;
+    color: #f5cddd;
 
     cursor: pointer;
 
-    display: none;
+    font-size: 17px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    opacity: 0;
+
+    transform:
+        translateY(20px)
+        scale(0.8);
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease,
+        background 0.3s ease;
+}
+
+.music-floating-button.visible {
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    pointer-events: auto;
+}
+
+.music-floating-button:hover {
+    transform:
+        translateY(-3px)
+        scale(1.07);
+
+    background:
+        rgba(255, 180, 215, 0.1);
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* =========================================================
+   CLICK SPARKLES
+========================================================= */
 
-@media (max-width: 750px) {
+.click-sparkle {
+    position: fixed;
+
+    z-index: 100;
+
+    pointer-events: none;
+
+    color: #f7bdd6;
+
+    font-size: 14px;
+
+    animation:
+        clickSparkle
+        0.9s
+        ease-out
+        forwards;
+}
+
+@keyframes clickSparkle {
+
+    from {
+        opacity: 1;
+
+        transform:
+            translate(
+                0,
+                0
+            )
+            scale(0.8);
+    }
+
+    to {
+        opacity: 0;
+
+        transform:
+            translate(
+                var(--x),
+                var(--y)
+            )
+            scale(1.3);
+    }
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+.reveal {
+    opacity: 0;
+
+    transform:
+        translateY(25px);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .reasons {
+        grid-template-columns:
+            repeat(
+                2,
+                1fr
+            );
+    }
+
+
+    .song-left {
+        transform:
+            translateX(-210px)
+            scale(0.68);
+    }
+
+    .song-right {
+        transform:
+            translateX(210px)
+            scale(0.68);
+    }
+
+
+    .music-wheel.wheel-left
+    .song-main {
+        transform:
+            translateX(210px)
+            scale(0.68);
+    }
+
+    .music-wheel.wheel-right
+    .song-main {
+        transform:
+            translateX(-210px)
+            scale(0.68);
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
 
     .section {
-        padding: 80px 0;
+        width: 90%;
+
+        padding: 85px 0;
     }
+
+
+    .hero {
+        min-height: 75vh;
+    }
+
 
     .reasons {
         grid-template-columns: 1fr;
     }
 
+
     .reason {
         min-height: auto;
     }
 
-    .sky-container {
-        height: 450px;
+
+    /* MUSIC */
+
+    .music-player {
+        padding:
+            40px
+            18px
+            28px;
     }
 
-    .opening-subtitle {
-        font-size: 16px;
+
+    .music-wheel {
+        height: 220px;
     }
+
+
+    .song-art {
+        width: 95px;
+        height: 95px;
+    }
+
+
+    .song-main .song-art {
+        width: 145px;
+        height: 145px;
+    }
+
+
+    .song-left {
+        transform:
+            translateX(-135px)
+            scale(0.58);
+    }
+
+
+    .song-right {
+        transform:
+            translateX(135px)
+            scale(0.58);
+    }
+
+
+    .music-wheel.wheel-left
+    .song-left {
+        transform:
+            translateX(0)
+            scale(1.05);
+    }
+
+
+    .music-wheel.wheel-left
+    .song-left .song-art {
+        width: 145px;
+        height: 145px;
+    }
+
+
+    .music-wheel.wheel-left
+    .song-main {
+        transform:
+            translateX(135px)
+            scale(0.58);
+    }
+
+
+    .music-wheel.wheel-left
+    .song-right {
+        transform:
+            translateX(270px)
+            scale(0.45);
+    }
+
+
+    .music-wheel.wheel-right
+    .song-right {
+        transform:
+            translateX(0)
+            scale(1.05);
+    }
+
+
+    .music-wheel.wheel-right
+    .song-right .song-art {
+        width: 145px;
+        height: 145px;
+    }
+
+
+    .music-wheel.wheel-right
+    .song-main {
+        transform:
+            translateX(-135px)
+            scale(0.58);
+    }
+
+
+    .music-wheel.wheel-right
+    .song-left {
+        transform:
+            translateX(-270px)
+            scale(0.45);
+    }
+
+
+    /* STARS */
+
+    .sky-container {
+        height: 470px;
+
+        border-radius: 28px;
+    }
+
+
+    .star {
+        width: 68px;
+
+        height: 68px;
+    }
+
+
+    /* TIMELINE */
+
+    .timeline-item {
+        padding-left: 55px;
+    }
+
+
+    /* FINAL */
 
     .final-card {
-        padding: 50px 22px;
+        padding:
+            60px
+            20px;
     }
 
 }
 
 
-/* =========================
+/* =========================================================
    SMALL PHONES
-========================= */
+========================================================= */
 
 @media (max-width: 450px) {
 
@@ -674,39 +2278,161 @@ button {
         padding: 20px;
     }
 
+
     .tiny-text {
-        font-size: 11px;
-        letter-spacing: 2px;
+        font-size: 10px;
+
+        letter-spacing: 2.5px;
     }
 
+
     .opening h1 {
-        font-size: 55px;
+        font-size: 58px;
     }
+
 
     .opening-subtitle {
         font-size: 15px;
     }
 
-    .open-button {
-        padding: 13px 23px;
-        font-size: 15px;
+
+    .section-title h2 {
+        font-size: 40px;
     }
 
-    .section {
-        width: 88%;
+
+    .music-wheel {
+        height: 205px;
     }
+
+
+    .song-main .song-art {
+        width: 130px;
+        height: 130px;
+    }
+
+
+    .song-left {
+        transform:
+            translateX(-105px)
+            scale(0.48);
+    }
+
+
+    .song-right {
+        transform:
+            translateX(105px)
+            scale(0.48);
+    }
+
+
+    .music-wheel.wheel-left
+    .song-main {
+        transform:
+            translateX(105px)
+            scale(0.48);
+    }
+
+
+    .music-wheel.wheel-right
+    .song-main {
+        transform:
+            translateX(-105px)
+            scale(0.48);
+    }
+
+
+    .music-controls {
+        gap: 12px;
+    }
+
+
+    .music-controls button {
+        width: 40px;
+        height: 40px;
+    }
+
+
+    .music-controls .play-button {
+        width: 52px;
+        height: 52px;
+    }
+
 
     .sky-container {
-        height: 400px;
-        border-radius: 25px;
+        height: 430px;
     }
 
-    .secret-box {
-        padding: 45px 20px;
+
+    .star {
+        width: 65px;
+        height: 65px;
     }
 
-    .secret-box h2 {
-        font-size: 34px;
+
+    .star-message {
+        width: 88%;
+
+        font-size: 12px;
+    }
+
+
+    .timeline::before {
+        left: 16px;
+    }
+
+
+    .timeline-item {
+        padding-left: 48px;
+    }
+
+
+    .timeline-dot {
+        left: 10px;
+    }
+
+
+    .final-card {
+        padding:
+            50px
+            18px;
+    }
+
+
+    .final-card p {
+        font-size: 14px;
+    }
+
+
+    .music-floating-button {
+        width: 48px;
+
+        height: 48px;
+
+        right: 15px;
+
+        bottom: 15px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        scroll-behavior: auto !important;
+
+        transition-duration: 0.01ms !important;
     }
 
 }
