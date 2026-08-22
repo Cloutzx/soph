@@ -16,10 +16,7 @@
 
     <title>for soph ♡</title>
 
-    <!-- =====================================================
-         FONTS
-    ====================================================== -->
-
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -28,17 +25,12 @@
         rel="stylesheet"
     >
 
-    <!-- =====================================================
-         CSS
-    ====================================================== -->
-
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 
 </head>
 
-
 <body>
-
 
     <!-- =====================================================
          BACKGROUND
@@ -433,20 +425,15 @@
             <div class="music-player">
 
 
-                <!-- =================================================
-                     SOUNDCLOUD PLAYER
-                ================================================== -->
+                <!-- SOUNDCloud -->
 
                 <iframe
                     id="soundcloud-player"
-                    width="100%"
-                    height="300"
+                    allow="autoplay; encrypted-media"
                     scrolling="no"
                     frameborder="no"
-                    allow="autoplay; encrypted-media"
-                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1178495929&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
-                >
-                </iframe>
+                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1178495929&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
+                ></iframe>
 
 
                 <!-- =================================================
@@ -478,8 +465,10 @@
                 <div class="music-wheel">
 
 
+                    <!-- I LOVE YOU -->
+
                     <button
-                        class="music-song active song-main"
+                        class="music-song song-main"
                         data-song="0"
                         type="button"
                         aria-label="I Love You"
@@ -491,6 +480,8 @@
 
                     </button>
 
+
+                    <!-- YOU'LL BE MINE TONIGHT -->
 
                     <button
                         class="music-song"
@@ -506,6 +497,8 @@
                     </button>
 
 
+                    <!-- MOONLIGHT ON THE RIVER -->
+
                     <button
                         class="music-song"
                         data-song="2"
@@ -518,7 +511,6 @@
                         </span>
 
                     </button>
-
 
                 </div>
 
@@ -866,20 +858,11 @@
     </button>
 
 
-    <!-- =====================================================
-         SOUNDCLOUD WIDGET API
-         
-         MUST LOAD BEFORE script.js
-    ====================================================== -->
-
+    <!-- SOUNDCloud Widget API -->
     <script src="https://w.soundcloud.com/player/api.js"></script>
 
-    <!-- =====================================================
-         MAIN JAVASCRIPT
-    ====================================================== -->
-
+    <!-- YOUR SCRIPT -->
     <script src="script.js"></script>
-
 
 </body>
 
