@@ -15,7 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (openButton) {
         openButton.addEventListener("click", () => {
 
-            opening.classList.add("opening-hidden");
+            if (opening) {
+                opening.classList.add("opening-hidden");
+            }
 
             setTimeout(() => {
                 if (main) {
@@ -31,8 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
        SECRET MESSAGE
     ===================================================== */
 
-    const secretButton = document.getElementById("secretButton");
-    const secretMessage = document.getElementById("secretMessage");
+    const secretButton =
+        document.getElementById("secretButton");
+
+    const secretMessage =
+        document.getElementById("secretMessage");
 
     if (secretButton && secretMessage) {
 
@@ -41,9 +46,14 @@ document.addEventListener("DOMContentLoaded", () => {
             secretMessage.classList.toggle("show");
 
             if (secretMessage.classList.contains("show")) {
+
                 secretButton.textContent = "♡";
+
             } else {
-                secretButton.textContent = "there's something here";
+
+                secretButton.textContent =
+                    "there's something here";
+
             }
 
         });
@@ -55,23 +65,29 @@ document.addEventListener("DOMContentLoaded", () => {
        HIDDEN STARS
     ===================================================== */
 
-    const stars = document.querySelectorAll(".star");
-    const starMessage = document.getElementById("starMessage");
+    const stars =
+        document.querySelectorAll(".star");
+
+    const starMessage =
+        document.getElementById("starMessage");
 
     stars.forEach((star) => {
 
         star.addEventListener("click", () => {
 
-            const message = star.dataset.message;
-
             if (!starMessage) return;
 
-            starMessage.textContent = message;
+            const message =
+                star.dataset.message || "";
 
             starMessage.classList.remove("show");
 
+            starMessage.textContent = message;
+
             requestAnimationFrame(() => {
+
                 starMessage.classList.add("show");
+
             });
 
         });
@@ -80,16 +96,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       MUSIC
+       MUSIC ELEMENTS
     ===================================================== */
 
-    const iframe = document.getElementById("soundcloud-player");
+    const iframe =
+        document.getElementById("soundcloud-player");
 
-    const playButton = document.getElementById("playButton");
-    const previousButton = document.getElementById("previousButton");
-    const nextButton = document.getElementById("nextButton");
+    const playButton =
+        document.getElementById("playButton");
 
-    const musicDisc = document.getElementById("musicDisc");
+    const previousButton =
+        document.getElementById("previousButton");
+
+    const nextButton =
+        document.getElementById("nextButton");
+
+    const musicDisc =
+        document.getElementById("musicDisc");
 
     const currentSongTitle =
         document.getElementById("currentSongTitle");
@@ -119,13 +142,21 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(".music-song");
 
 
-    if (!iframe) return;
+    if (!iframe) {
+
+        console.error(
+            "SoundCloud iframe was not found."
+        );
+
+        return;
+
+    }
 
 
     /* =====================================================
        SONG DATA
 
-       Put your REAL SoundCloud URLs here.
+       PUT YOUR REAL SOUNDCLOUD URLS HERE
     ===================================================== */
 
     const songs = [
@@ -133,7 +164,8 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             title: "I Love You",
             artist: "Fontaines D.C.",
-            url: "https://soundcloud.com/fontainesdublin/i-love-you"
+            url:
+                "https://soundcloud.com/fontainesdublin/i-love-you"
         },
 
         {
@@ -156,118 +188,16 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     let currentSong = 0;
+
     let isPlaying = false;
+
     let widgetReady = false;
-    let loadingSong = false;
-    let musicStarted = false;
-
-
-    /* =====================================================
-       SOUNDCloud WIDGET
-    ===================================================== */
 
     let widget = null;
 
+    let musicStarted = false;
 
-    function initializeSoundCloud() {
-
-        if (typeof SC === "undefined") {
-            console.error("SoundCloud Widget API failed to load.");
-            return;
-        }
-
-        widget = SC.Widget(iframe);
-
-        widget.bind(SC.Widget.Events.READY, () => {
-
-            widgetReady = true;
-
-            console.log("SoundCloud player ready.");
-
-            updateSongUI();
-
-        });
-
-
-        widget.bind(SC.Widget.Events.PLAY, () => {
-
-            isPlaying = true;
-
-            updatePlayButton();
-
-            if (musicDisc) {
-                musicDisc.classList.add("playing");
-            }
-
-        });
-
-
-        widget.bind(SC.Widget.Events.PAUSE, () => {
-
-            isPlaying = false;
-
-            updatePlayButton();
-
-            if (musicDisc) {
-                musicDisc.classList.remove("playing");
-            }
-
-        });
-
-
-        widget.bind(SC.Widget.Events.FINISH, () => {
-
-            isPlaying = false;
-
-            updatePlayButton();
-
-            if (musicDisc) {
-                musicDisc.classList.remove("playing");
-            }
-
-            nextSong(true);
-
-        });
-
-
-        widget.bind(
-            SC.Widget.Events.PLAY_PROGRESS,
-            (data) => {
-
-                if (!data) return;
-
-                const position =
-                    data.currentPosition || 0;
-
-                const relative =
-                    data.relativePosition || 0;
-
-                updateProgress(position, relative);
-
-            }
-        );
-
-
-        widget.bind(SC.Widget.Events.ERROR, (error) => {
-
-            console.warn(
-                "SoundCloud could not play this track:",
-                error
-            );
-
-            loadingSong = false;
-
-            isPlaying = false;
-
-            updatePlayButton();
-
-            if (musicDisc) {
-                musicDisc.classList.remove("playing");
-            }
-
-        });
-
-    }
+    let changingSong = false;
 
 
     /* =====================================================
@@ -276,8 +206,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function formatTime(milliseconds) {
 
-        if (!milliseconds || milliseconds < 0) {
+        if (
+            !milliseconds ||
+            milliseconds < 0
+        ) {
+
             return "0:00";
+
         }
 
         const totalSeconds =
@@ -299,20 +234,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       UPDATE PROGRESS
+       UPDATE PLAY BUTTON
     ===================================================== */
 
-    function updateProgress(position, relative) {
+    function updatePlayButton() {
 
-        if (currentTime) {
-            currentTime.textContent =
-                formatTime(position);
-        }
+        if (!playButton) return;
 
-        if (progressBar) {
+        if (isPlaying) {
 
-            progressBar.style.width =
-                `${Math.max(0, Math.min(1, relative)) * 100}%`;
+            playButton.textContent = "Ⅱ";
+
+            playButton.setAttribute(
+                "aria-label",
+                "Pause"
+            );
+
+        } else {
+
+            playButton.textContent = "▶";
+
+            playButton.setAttribute(
+                "aria-label",
+                "Play"
+            );
 
         }
 
@@ -320,19 +265,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       GET DURATION
+       UPDATE PROGRESS
+    ===================================================== */
+
+    function updateProgress(
+        position,
+        relative
+    ) {
+
+        if (currentTime) {
+
+            currentTime.textContent =
+                formatTime(position);
+
+        }
+
+        if (progressBar) {
+
+            const percentage =
+                Math.max(
+                    0,
+                    Math.min(
+                        1,
+                        relative || 0
+                    )
+                ) * 100;
+
+            progressBar.style.width =
+                percentage + "%";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       UPDATE DURATION
     ===================================================== */
 
     function updateDuration() {
 
         if (!widget || !duration) return;
 
-        widget.getDuration((milliseconds) => {
+        widget.getDuration(
+            (milliseconds) => {
 
-            duration.textContent =
-                formatTime(milliseconds);
+                duration.textContent =
+                    formatTime(milliseconds);
 
-        });
+            }
+        );
 
     }
 
@@ -343,60 +325,379 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateSongUI() {
 
-        const song = songs[currentSong];
+        const song =
+            songs[currentSong];
 
         if (!song) return;
 
+
         if (currentSongTitle) {
+
             currentSongTitle.textContent =
                 song.title;
+
         }
+
 
         if (currentSongArtist) {
+
             currentSongArtist.textContent =
                 song.artist;
+
         }
 
 
-        songButtons.forEach((button, index) => {
+        songButtons.forEach(
+            (button, index) => {
 
-            button.classList.toggle(
-                "active",
-                index === currentSong
-            );
+                button.classList.toggle(
+                    "active",
+                    index === currentSong
+                );
 
-        });
+            }
+        );
 
 
         if (currentTime) {
-            currentTime.textContent = "0:00";
+
+            currentTime.textContent =
+                "0:00";
+
         }
 
-        if (progressBar) {
-            progressBar.style.width = "0%";
-        }
 
         if (duration) {
-            duration.textContent = "0:00";
+
+            duration.textContent =
+                "0:00";
+
+        }
+
+
+        if (progressBar) {
+
+            progressBar.style.width =
+                "0%";
+
         }
 
     }
 
 
     /* =====================================================
-       PLAY BUTTON
+       SOUNDCloud WIDGET
     ===================================================== */
 
-    function updatePlayButton() {
+    function initializeSoundCloud() {
 
-        if (!playButton) return;
+        /*
+         * The SoundCloud API script MUST be loaded
+         * before this script in index.html.
+         */
 
-        playButton.textContent =
-            isPlaying ? "Ⅱ" : "▶";
+        if (typeof SC === "undefined") {
 
-        playButton.setAttribute(
-            "aria-label",
-            isPlaying ? "Pause" : "Play"
+            console.error(
+                "SoundCloud Widget API is missing."
+            );
+
+            console.error(
+                "Add this before script.js:"
+            );
+
+            console.error(
+                "https://w.soundcloud.com/player/api.js"
+            );
+
+            return;
+
+        }
+
+
+        widget =
+            SC.Widget(iframe);
+
+
+        /* =================================================
+           PLAYER READY
+        ================================================= */
+
+        widget.bind(
+            SC.Widget.Events.READY,
+            () => {
+
+                widgetReady = true;
+
+                console.log(
+                    "SoundCloud player ready."
+                );
+
+                updateSongUI();
+
+                updatePlayButton();
+
+            }
+        );
+
+
+        /* =================================================
+           PLAY
+        ================================================= */
+
+        widget.bind(
+            SC.Widget.Events.PLAY,
+            () => {
+
+                isPlaying = true;
+
+                changingSong = false;
+
+                updatePlayButton();
+
+
+                if (musicDisc) {
+
+                    musicDisc.classList.add(
+                        "playing"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =================================================
+           PAUSE
+        ================================================= */
+
+        widget.bind(
+            SC.Widget.Events.PAUSE,
+            () => {
+
+                isPlaying = false;
+
+                changingSong = false;
+
+                updatePlayButton();
+
+
+                if (musicDisc) {
+
+                    musicDisc.classList.remove(
+                        "playing"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =================================================
+           SONG FINISHED
+        ================================================= */
+
+        widget.bind(
+            SC.Widget.Events.FINISH,
+            () => {
+
+                isPlaying = false;
+
+                if (musicDisc) {
+
+                    musicDisc.classList.remove(
+                        "playing"
+                    );
+
+                }
+
+                updatePlayButton();
+
+                nextSong(true);
+
+            }
+        );
+
+
+        /* =================================================
+           PLAY PROGRESS
+        ================================================= */
+
+        widget.bind(
+            SC.Widget.Events.PLAY_PROGRESS,
+            (data) => {
+
+                if (!data) return;
+
+                updateProgress(
+                    data.currentPosition || 0,
+                    data.relativePosition || 0
+                );
+
+            }
+        );
+
+
+        /* =================================================
+           ERROR
+        ================================================= */
+
+        widget.bind(
+            SC.Widget.Events.ERROR,
+            (error) => {
+
+                console.error(
+                    "SoundCloud player error:",
+                    error
+                );
+
+                isPlaying = false;
+
+                changingSong = false;
+
+                updatePlayButton();
+
+
+                if (musicDisc) {
+
+                    musicDisc.classList.remove(
+                        "playing"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       LOAD SONG
+    ===================================================== */
+
+    function loadSong(
+        index,
+        autoplay = true
+    ) {
+
+        if (!widgetReady || !widget) {
+
+            console.warn(
+                "SoundCloud isn't ready yet."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            index < 0 ||
+            index >= songs.length
+        ) {
+
+            return;
+
+        }
+
+
+        const song =
+            songs[index];
+
+
+        if (!song || !song.url) {
+
+            console.error(
+                "Song URL is missing:",
+                index
+            );
+
+            return;
+
+        }
+
+
+        currentSong = index;
+
+        changingSong = true;
+
+        isPlaying = false;
+
+
+        updateSongUI();
+
+        updatePlayButton();
+
+
+        if (musicDisc) {
+
+            musicDisc.classList.remove(
+                "playing"
+            );
+
+        }
+
+
+        /*
+         * Load the new SoundCloud track
+         * inside the SAME iframe.
+         */
+
+        widget.load(
+            song.url,
+            {
+
+                auto_play: autoplay,
+
+                hide_related: true,
+
+                show_comments: false,
+
+                show_user: false,
+
+                show_reposts: false,
+
+                show_teaser: false,
+
+                visual: false,
+
+                show_artwork: false,
+
+                callback: () => {
+
+                    changingSong = false;
+
+                    updateSongUI();
+
+
+                    if (autoplay) {
+
+                        /*
+                         * Tiny delay makes switching
+                         * much more reliable.
+                         */
+
+                        setTimeout(() => {
+
+                            widget.play();
+
+                        }, 50);
+
+                    }
+
+
+                    setTimeout(() => {
+
+                        updateDuration();
+
+                    }, 500);
+
+                }
+
+            }
         );
 
     }
@@ -408,121 +709,63 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function playCurrentSong() {
 
-        if (!widgetReady || !widget) return;
+        if (!widgetReady || !widget) {
 
-        if (loadingSong) return;
+            return;
 
-        loadingSong = true;
-
-        widget.play();
-
-        setTimeout(() => {
-
-            loadingSong = false;
-
-        }, 300);
-
-    }
-
-
-    /* =====================================================
-       LOAD SONG
-
-       SoundCloud's Widget API supports loading a new
-       SoundCloud URL directly into the existing iframe.
-    ===================================================== */
-
-    function loadSong(index, autoplay = true) {
-
-        if (!widgetReady || !widget) return;
-
-        if (!songs[index]) return;
-
-        currentSong = index;
-
-        const song = songs[currentSong];
-
-        loadingSong = true;
-
-        isPlaying = false;
-
-        updateSongUI();
-        updatePlayButton();
-
-
-        if (musicDisc) {
-            musicDisc.classList.remove("playing");
         }
 
-
-        widget.load(song.url, {
-
-            auto_play: autoplay,
-
-            hide_related: true,
-
-            show_comments: false,
-
-            show_user: false,
-
-            show_reposts: false,
-
-            show_teaser: false,
-
-            visual: false,
-
-            show_artwork: false,
-
-            callback: () => {
-
-                loadingSong = false;
-
-                updateSongUI();
-
-                if (autoplay) {
-
-                    widget.play();
-
-                }
-
-                setTimeout(() => {
-
-                    updateDuration();
-
-                }, 400);
-
-            }
-
-        });
+        widget.play();
 
     }
 
 
     /* =====================================================
        SONG BUTTONS
-
-       Clicking the cover immediately switches songs.
     ===================================================== */
 
-    songButtons.forEach((button, index) => {
+    songButtons.forEach(
+        (button, index) => {
 
-        button.addEventListener("click", (event) => {
+            button.addEventListener(
+                "click",
+                (event) => {
 
-            event.preventDefault();
+                    event.preventDefault();
 
-            if (index === currentSong && isPlaying) {
 
-                widget.pause();
+                    /*
+                     * Clicking the currently playing
+                     * song pauses it.
+                     */
 
-                return;
+                    if (
+                        index === currentSong &&
+                        isPlaying
+                    ) {
 
-            }
+                        widget.pause();
 
-            loadSong(index, true);
+                        return;
 
-        });
+                    }
 
-    });
+
+                    /*
+                     * Clicking another song
+                     * immediately switches to it.
+                     */
+
+                    loadSong(
+                        index,
+                        true
+                    );
+
+                }
+            );
+
+        }
+    );
 
 
     /* =====================================================
@@ -531,56 +774,78 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (playButton) {
 
-        playButton.addEventListener("click", () => {
+        playButton.addEventListener(
+            "click",
+            () => {
 
-            if (!widgetReady || !widget) return;
+                if (!widgetReady || !widget) {
 
-            if (isPlaying) {
+                    return;
 
-                widget.pause();
+                }
 
-            } else {
 
-                playCurrentSong();
+                if (isPlaying) {
+
+                    widget.pause();
+
+                } else {
+
+                    playCurrentSong();
+
+                }
 
             }
-
-        });
+        );
 
     }
 
 
     /* =====================================================
-       NEXT
+       NEXT SONG
     ===================================================== */
 
-    function nextSong(autoplay = true) {
+    function nextSong(
+        autoplay = true
+    ) {
 
         let nextIndex =
             currentSong + 1;
 
-        if (nextIndex >= songs.length) {
+
+        if (
+            nextIndex >= songs.length
+        ) {
+
             nextIndex = 0;
+
         }
 
-        loadSong(nextIndex, autoplay);
+
+        loadSong(
+            nextIndex,
+            autoplay
+        );
 
     }
 
 
     if (nextButton) {
 
-        nextButton.addEventListener("click", () => {
+        nextButton.addEventListener(
+            "click",
+            () => {
 
-            nextSong(true);
+                nextSong(true);
 
-        });
+            }
+        );
 
     }
 
 
     /* =====================================================
-       PREVIOUS
+       PREVIOUS SONG
     ===================================================== */
 
     function previousSong() {
@@ -588,11 +853,19 @@ document.addEventListener("DOMContentLoaded", () => {
         let previousIndex =
             currentSong - 1;
 
+
         if (previousIndex < 0) {
-            previousIndex = songs.length - 1;
+
+            previousIndex =
+                songs.length - 1;
+
         }
 
-        loadSong(previousIndex, true);
+
+        loadSong(
+            previousIndex,
+            true
+        );
 
     }
 
@@ -608,36 +881,70 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       PROGRESS BAR SEEKING
+       PROGRESS BAR SEEK
     ===================================================== */
 
     if (progressTrack) {
 
-        progressTrack.addEventListener("click", (event) => {
+        progressTrack.addEventListener(
+            "click",
+            (event) => {
 
-            if (!widgetReady || !widget) return;
+                if (!widgetReady || !widget) {
 
-            const rect =
-                progressTrack.getBoundingClientRect();
+                    return;
 
-            const clickPosition =
-                event.clientX - rect.left;
+                }
 
-            const percentage =
-                clickPosition / rect.width;
 
-            widget.getDuration((milliseconds) => {
+                const rect =
+                    progressTrack
+                        .getBoundingClientRect();
 
-                if (!milliseconds) return;
 
-                const seekTo =
-                    milliseconds * percentage;
+                if (!rect.width) return;
 
-                widget.seekTo(seekTo);
 
-            });
+                const clickPosition =
+                    event.clientX -
+                    rect.left;
 
-        });
+
+                let percentage =
+                    clickPosition /
+                    rect.width;
+
+
+                percentage =
+                    Math.max(
+                        0,
+                        Math.min(
+                            1,
+                            percentage
+                        )
+                    );
+
+
+                widget.getDuration(
+                    (milliseconds) => {
+
+                        if (!milliseconds) {
+
+                            return;
+
+                        }
+
+
+                        widget.seekTo(
+                            milliseconds *
+                            percentage
+                        );
+
+                    }
+                );
+
+            }
+        );
 
     }
 
@@ -646,22 +953,28 @@ document.addEventListener("DOMContentLoaded", () => {
        FLOATING MUSIC BUTTON
     ===================================================== */
 
-    if (floatingMusicButton && musicSection) {
+    if (
+        floatingMusicButton &&
+        musicSection
+    ) {
 
-        floatingMusicButton.addEventListener("click", () => {
+        floatingMusicButton.addEventListener(
+            "click",
+            () => {
 
-            musicSection.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
-            });
+                musicSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
 
-        });
+            }
+        );
 
     }
 
 
     /* =====================================================
-       AUTO PLAY WHEN ENTERING MUSIC AREA
+       AUTO PLAY WHEN ENTERING MUSIC SECTION
     ===================================================== */
 
     if (musicSection) {
@@ -670,21 +983,28 @@ document.addEventListener("DOMContentLoaded", () => {
             new IntersectionObserver(
                 (entries) => {
 
-                    entries.forEach((entry) => {
+                    entries.forEach(
+                        (entry) => {
 
-                        if (
-                            entry.isIntersecting &&
-                            !musicStarted &&
-                            widgetReady
-                        ) {
+                            if (
+                                entry.isIntersecting &&
+                                !musicStarted &&
+                                widgetReady
+                            ) {
 
-                            musicStarted = true;
+                                musicStarted =
+                                    true;
 
-                            loadSong(currentSong, true);
+
+                                loadSong(
+                                    currentSong,
+                                    true
+                                );
+
+                            }
 
                         }
-
-                    });
+                    );
 
                 },
                 {
@@ -692,7 +1012,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             );
 
-        musicObserver.observe(musicSection);
+
+        musicObserver.observe(
+            musicSection
+        );
 
     }
 
@@ -701,46 +1024,76 @@ document.addEventListener("DOMContentLoaded", () => {
        KEYBOARD CONTROLS
     ===================================================== */
 
-    document.addEventListener("keydown", (event) => {
+    document.addEventListener(
+        "keydown",
+        (event) => {
 
-        if (!widgetReady || !widget) return;
+            if (
+                !widgetReady ||
+                !widget
+            ) {
 
-        if (event.code === "Space") {
+                return;
+
+            }
+
 
             const tag =
                 document.activeElement?.tagName;
 
+
+            /* SPACE = PLAY / PAUSE */
+
             if (
-                tag === "INPUT" ||
-                tag === "TEXTAREA" ||
-                tag === "BUTTON"
+                event.code === "Space" &&
+                tag !== "INPUT" &&
+                tag !== "TEXTAREA" &&
+                tag !== "BUTTON"
             ) {
-                return;
+
+                event.preventDefault();
+
+
+                if (isPlaying) {
+
+                    widget.pause();
+
+                } else {
+
+                    widget.play();
+
+                }
+
             }
 
-            event.preventDefault();
 
-            if (isPlaying) {
-                widget.pause();
-            } else {
-                widget.play();
+            /* RIGHT ARROW = NEXT */
+
+            if (
+                event.code === "ArrowRight"
+            ) {
+
+                nextSong(true);
+
+            }
+
+
+            /* LEFT ARROW = PREVIOUS */
+
+            if (
+                event.code === "ArrowLeft"
+            ) {
+
+                previousSong();
+
             }
 
         }
-
-        if (event.code === "ArrowRight") {
-            nextSong(true);
-        }
-
-        if (event.code === "ArrowLeft") {
-            previousSong();
-        }
-
-    });
+    );
 
 
     /* =====================================================
-       INITIALIZE
+       INITIALIZE MUSIC
     ===================================================== */
 
     initializeSoundCloud();
