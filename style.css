@@ -40,11 +40,6 @@ body {
         );
 }
 
-
-/* =========================================================
-   BASIC ELEMENTS
-========================================================= */
-
 button {
     font-family: inherit;
 }
@@ -61,7 +56,7 @@ button:focus-visible {
 
 
 /* =========================================================
-   FIXED BACKGROUND
+   BACKGROUND
 ========================================================= */
 
 .background {
@@ -369,9 +364,6 @@ button:focus-visible {
     font-weight: 400;
 
     line-height: 1.25;
-
-    text-shadow:
-        0 0 25px rgba(194, 151, 204, 0.08);
 }
 
 .section-title p {
@@ -408,16 +400,12 @@ button:focus-visible {
 
     from {
         opacity: 0;
-
-        transform:
-            translateY(25px);
+        transform: translateY(25px);
     }
 
     to {
         opacity: 1;
-
-        transform:
-            translateY(0);
+        transform: translateY(0);
     }
 }
 
@@ -443,9 +431,6 @@ button:focus-visible {
     font-weight: 400;
 
     line-height: 1.2;
-
-    text-shadow:
-        0 0 35px rgba(203, 158, 212, 0.12);
 }
 
 .hero p {
@@ -519,8 +504,7 @@ button:focus-visible {
             transparent
         );
 
-    transform:
-        translateX(-50%);
+    transform: translateX(-50%);
 }
 
 .timeline-item {
@@ -627,7 +611,7 @@ button:focus-visible {
 
 
 /* =========================================================
-   REASONS
+   MEMORIES
 ========================================================= */
 
 .reasons {
@@ -704,9 +688,6 @@ button:focus-visible {
     color: #bd96c5;
 
     font-size: 21px;
-
-    box-shadow:
-        0 0 25px rgba(168, 120, 180, 0.06);
 }
 
 .reason h3 {
@@ -728,17 +709,12 @@ button:focus-visible {
 
 
 /* =========================================================
-   MUSIC SECTION
+   MUSIC
 ========================================================= */
 
 .music-section {
     padding-top: 100px;
 }
-
-
-/* =========================================================
-   MUSIC PLAYER
-========================================================= */
 
 .music-player {
     position: relative;
@@ -747,7 +723,7 @@ button:focus-visible {
 
     margin: 0 auto;
 
-    padding: 40px 35px 30px;
+    padding: 45px 30px 35px;
 
     border: 1px solid rgba(218, 191, 223, 0.1);
 
@@ -756,12 +732,12 @@ button:focus-visible {
     background:
         linear-gradient(
             145deg,
-            rgba(255, 255, 255, 0.06),
+            rgba(255, 255, 255, 0.065),
             rgba(255, 255, 255, 0.025)
         );
 
     box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.22);
+        0 30px 80px rgba(0, 0, 0, 0.25);
 
     backdrop-filter: blur(20px);
 
@@ -770,21 +746,160 @@ button:focus-visible {
 
 
 /* =========================================================
-   SOUNDCLOUD IFRAME
+   HIDDEN SOUNDCLOUD
 ========================================================= */
 
 #soundcloud-player {
-    display: block;
+    position: absolute;
 
-    width: 100%;
+    width: 1px;
+    height: 1px;
 
-    height: 166px;
+    left: -9999px;
+    top: -9999px;
 
-    margin-bottom: 25px;
+    opacity: 0;
 
-    border-radius: 15px;
+    pointer-events: none;
+}
 
-    opacity: 0.95;
+
+/* =========================================================
+   VINYL AREA
+========================================================= */
+
+.music-disc-area {
+    position: relative;
+
+    height: 245px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 20px;
+}
+
+.music-disc {
+    position: relative;
+
+    width: 205px;
+    height: 205px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        repeating-radial-gradient(
+            circle,
+            #17131b 0px,
+            #17131b 3px,
+            #211b25 4px,
+            #17131b 6px
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 20px 55px rgba(0, 0, 0, 0.45),
+        0 0 35px rgba(182, 137, 194, 0.12);
+}
+
+.music-disc::before {
+    content: "";
+
+    position: absolute;
+
+    width: 75px;
+    height: 75px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #9c719f,
+            #c58ba7
+        );
+
+    box-shadow:
+        0 0 25px rgba(192, 140, 205, 0.25);
+}
+
+.music-disc::after {
+    content: "";
+
+    position: absolute;
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: #17131b;
+
+    z-index: 3;
+}
+
+.music-disc.spinning {
+    animation:
+        spinDisc 7s linear infinite;
+}
+
+@keyframes spinDisc {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+.disc-label {
+    position: absolute;
+
+    z-index: 2;
+
+    width: 63px;
+    height: 63px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: white;
+
+    font-size: 22px;
+
+    text-shadow:
+        0 0 12px rgba(255, 255, 255, 0.7);
+}
+
+.disc-shine {
+    position: absolute;
+
+    width: 205px;
+    height: 205px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent 35%,
+            rgba(255, 255, 255, 0.08) 45%,
+            transparent 55%
+        );
+
+    pointer-events: none;
 }
 
 
@@ -793,134 +908,93 @@ button:focus-visible {
 ========================================================= */
 
 .music-wheel {
-    min-height: 150px;
+    position: relative;
 
     display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 12px;
-
-    margin-bottom: 30px;
-
-    overflow: visible;
-}
-
-.music-song {
-    width: 120px;
-    min-height: 100px;
-
-    flex-shrink: 0;
-
-    display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
 
     gap: 8px;
 
-    padding: 10px;
+    min-height: 85px;
 
-    border: 1px solid rgba(218, 191, 223, 0.07);
-
-    border-radius: 20px;
-
-    background:
-        rgba(255, 255, 255, 0.035);
-
-    color: #8d808f;
-
-    cursor: pointer;
-
-    opacity: 0.55;
-
-    transform:
-        scale(0.86);
-
-    transition:
-        transform 0.35s ease,
-        opacity 0.35s ease,
-        background 0.35s ease,
-        box-shadow 0.35s ease;
+    margin-bottom: 15px;
 }
 
-.music-song:hover {
-    opacity: 0.9;
-
-    transform:
-        scale(0.91)
-        translateY(-3px);
-}
-
-.music-song.active,
-.music-song.song-main {
-    width: 165px;
-    min-height: 140px;
-
-    opacity: 1;
-
-    transform:
-        scale(1);
-
-    color: #eaddeb;
-
-    background:
-        rgba(255, 255, 255, 0.08);
-
-    border-color:
-        rgba(212, 170, 220, 0.12);
-
-    box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.2),
-        0 0 30px rgba(181, 137, 192, 0.07);
-}
-
-.song-art {
-    width: 45px;
-    height: 45px;
+.music-song {
+    width: 55px;
+    height: 55px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 13px;
+    padding: 0;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+
+    border-radius: 50%;
 
     background:
-        linear-gradient(
-            135deg,
-            #72537c,
-            #925f77
-        );
+        rgba(255, 255, 255, 0.04);
 
-    color: #f6eafa;
+    color: #9a8c9d;
 
-    font-size: 19px;
+    cursor: pointer;
 
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.15);
+    opacity: 0.5;
+
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease,
+        background 0.3s ease;
 }
 
-.music-song.active .song-art,
-.music-song.song-main .song-art {
-    width: 60px;
-    height: 60px;
+.music-song:hover {
+    opacity: 0.85;
 
-    border-radius: 17px;
+    transform:
+        scale(1.1);
+}
 
-    font-size: 25px;
+.music-song.active,
+.music-song.song-main {
+    width: 70px;
+    height: 70px;
+
+    opacity: 1;
+
+    background:
+        rgba(190, 145, 201, 0.15);
+
+    color: #eaddeb;
+
+    box-shadow:
+        0 0 25px rgba(185, 140, 197, 0.12);
+
+    transform:
+        scale(1.1);
 }
 
 .music-song span {
-    max-width: 145px;
+    display: none;
+}
 
-    overflow: hidden;
+.music-song .song-art {
+    width: 100%;
+    height: 100%;
 
-    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    white-space: nowrap;
+    border-radius: 50%;
 
-    font-size: 10px;
-    font-weight: 600;
+    background: transparent;
+
+    box-shadow: none;
+
+    font-size: 18px;
 }
 
 
@@ -929,6 +1003,8 @@ button:focus-visible {
 ========================================================= */
 
 .current-song {
+    position: relative;
+
     margin-bottom: 25px;
 
     text-align: center;
@@ -937,12 +1013,14 @@ button:focus-visible {
 .now-playing {
     margin-bottom: 8px;
 
-    color: #8e7994;
+    color: #9b81a3;
 
     font-size: 8px;
     font-weight: 700;
 
     letter-spacing: 0.22em;
+
+    text-transform: uppercase;
 }
 
 .current-song h3 {
@@ -951,12 +1029,14 @@ button:focus-visible {
     color: #eaddec;
 
     font-family: "Pacifico", cursive;
-    font-size: 25px;
+
+    font-size: 26px;
+
     font-weight: 400;
 }
 
 .current-song p {
-    color: #8d818f;
+    color: #8e818f;
 
     font-size: 11px;
 }
@@ -968,6 +1048,7 @@ button:focus-visible {
 
 .music-progress {
     display: flex;
+
     align-items: center;
 
     gap: 12px;
@@ -998,6 +1079,9 @@ button:focus-visible {
         rgba(255, 255, 255, 0.08);
 
     cursor: pointer;
+
+    transition:
+        height 0.2s ease;
 }
 
 .progress-track:hover {
@@ -1007,8 +1091,8 @@ button:focus-visible {
 .progress-bar {
     position: absolute;
 
-    top: 0;
     left: 0;
+    top: 0;
 
     width: 0%;
     height: 100%;
@@ -1024,9 +1108,6 @@ button:focus-visible {
 
     box-shadow:
         0 0 12px rgba(188, 135, 199, 0.3);
-
-    transition:
-        width 0.1s linear;
 }
 
 
@@ -1036,6 +1117,7 @@ button:focus-visible {
 
 .music-controls {
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -1043,40 +1125,35 @@ button:focus-visible {
 }
 
 .music-controls button {
-    width: 43px;
-    height: 43px;
+    width: 44px;
+    height: 44px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border: 1px solid rgba(218, 191, 223, 0.09);
+    border: 1px solid rgba(218, 191, 223, 0.1);
 
     border-radius: 50%;
 
     background:
         rgba(255, 255, 255, 0.05);
 
-    color: #cdb7d1;
-
-    font-size: 15px;
+    color: #ccb6d0;
 
     cursor: pointer;
 
     transition:
         transform 0.2s ease,
-        background 0.2s ease,
-        box-shadow 0.2s ease;
+        background 0.2s ease;
 }
 
 .music-controls button:hover {
-    transform: translateY(-3px);
+    transform:
+        translateY(-3px);
 
     background:
-        rgba(255, 255, 255, 0.09);
-
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.2);
+        rgba(255, 255, 255, 0.1);
 }
 
 .music-controls .play-button {
@@ -1098,12 +1175,6 @@ button:focus-visible {
 
     box-shadow:
         0 10px 30px rgba(154, 111, 164, 0.25);
-}
-
-.music-controls .play-button:hover {
-    transform:
-        translateY(-3px)
-        scale(1.04);
 }
 
 .music-hint {
@@ -1160,7 +1231,8 @@ button:focus-visible {
 }
 
 .music-floating-button:hover {
-    transform: translateY(-4px);
+    transform:
+        translateY(-4px);
 
     box-shadow:
         0 15px 35px rgba(0, 0, 0, 0.35);
@@ -1187,7 +1259,7 @@ button:focus-visible {
 
 
 /* =========================================================
-   STAR SKY
+   STARS / SKY
 ========================================================= */
 
 .sky-container {
@@ -1271,9 +1343,13 @@ button:focus-visible {
 
     color: rgba(255, 255, 255, 0.65);
 
-    font-family: "Pacifico", cursive;
+    font-family:
+        "Pacifico",
+        cursive;
 
     font-size: 20px;
+
+    pointer-events: none;
 }
 
 
@@ -1295,6 +1371,8 @@ button:focus-visible {
 
     box-shadow:
         0 0 8px white;
+
+    pointer-events: none;
 }
 
 
@@ -1305,10 +1383,10 @@ button:focus-visible {
 .star {
     position: absolute;
 
-    z-index: 5;
+    z-index: 50;
 
-    width: 82px;
-    height: 82px;
+    width: 90px !important;
+    height: 90px !important;
 
     display: flex;
     align-items: center;
@@ -1331,10 +1409,13 @@ button:focus-visible {
 
     -webkit-tap-highlight-color: transparent;
 
+    pointer-events: auto;
+
+    touch-action: manipulation;
+
     transition:
         transform 0.25s ease,
-        filter 0.25s ease,
-        background 0.25s ease;
+        filter 0.25s ease;
 }
 
 .star::before {
@@ -1352,6 +1433,8 @@ button:focus-visible {
 
     box-shadow:
         0 0 25px rgba(255, 225, 255, 0.35);
+
+    pointer-events: none;
 
     transition:
         transform 0.25s ease,
@@ -1372,6 +1455,8 @@ button:focus-visible {
     text-shadow:
         0 0 8px rgba(255, 232, 255, 0.8),
         0 0 20px rgba(221, 170, 231, 0.65);
+
+    pointer-events: none;
 
     animation:
         starTwinkle 2.5s ease-in-out infinite;
@@ -1438,16 +1523,12 @@ button:focus-visible {
     0%,
     100% {
         opacity: 0.65;
-
-        transform:
-            scale(0.9);
+        transform: scale(0.9);
     }
 
     50% {
         opacity: 1;
-
-        transform:
-            scale(1.12);
+        transform: scale(1.12);
     }
 }
 
@@ -1459,7 +1540,7 @@ button:focus-visible {
 .star-message {
     position: absolute;
 
-    z-index: 20;
+    z-index: 100;
 
     left: 50%;
     bottom: 25px;
@@ -1509,7 +1590,7 @@ button:focus-visible {
 
 
 /* =========================================================
-   SECRET MESSAGE
+   SECRET
 ========================================================= */
 
 .secret-box {
@@ -1551,7 +1632,9 @@ button:focus-visible {
     color: #e9ddec;
 
     font-family: "Pacifico", cursive;
+
     font-size: 30px;
+
     font-weight: 400;
 }
 
@@ -1586,7 +1669,8 @@ button:focus-visible {
 }
 
 .secret-button:hover {
-    transform: translateY(-2px);
+    transform:
+        translateY(-2px);
 
     background:
         rgba(189, 146, 198, 0.14);
@@ -1614,11 +1698,15 @@ button:focus-visible {
 }
 
 .secret-message.show {
-    max-height: 400px;
+    max-height: 500px;
 
     margin-top: 30px;
 
     opacity: 1;
+}
+
+.secret-message p {
+    margin: 0;
 }
 
 
@@ -1723,7 +1811,9 @@ button:focus-visible {
     color: #f5eaf6;
 
     font-family: "Pacifico", cursive;
+
     font-size: clamp(32px, 5vw, 50px);
+
     font-weight: 400;
 
     line-height: 1.3;
@@ -1738,7 +1828,8 @@ button:focus-visible {
 
     margin: 0 auto;
 
-    color: rgba(255, 255, 255, 0.62);
+    color:
+        rgba(255, 255, 255, 0.62);
 
     font-size: 13px;
 
@@ -1797,7 +1888,7 @@ button:focus-visible {
     }
 
 
-    /* TIMELINE */
+    /* Timeline */
 
     .timeline::before {
         left: 10px;
@@ -1823,53 +1914,51 @@ button:focus-visible {
     }
 
 
-    /* REASONS */
+    /* Memories */
 
     .reasons {
         grid-template-columns: 1fr;
     }
 
 
-    /* MUSIC */
+    /* Music */
 
     .music-player {
         padding:
-            30px
+            35px
             18px
-            25px;
+            28px;
+    }
+
+    .music-disc {
+        width: 185px;
+        height: 185px;
+    }
+
+    .disc-shine {
+        width: 185px;
+        height: 185px;
+    }
+
+    .music-disc-area {
+        height: 220px;
     }
 
     .music-wheel {
-        gap: 5px;
+        gap: 6px;
 
         overflow-x: auto;
 
         padding:
-            10px 5px 20px;
+            10px
+            5px
+            20px;
 
         scrollbar-width: none;
     }
 
     .music-wheel::-webkit-scrollbar {
         display: none;
-    }
-
-    .music-song {
-        width: 90px;
-        min-height: 90px;
-    }
-
-    .music-song.active,
-    .music-song.song-main {
-        width: 125px;
-        min-height: 120px;
-    }
-
-
-    /* STARS */
-
-    .sky-container {
-        height: 400px;
     }
 
 }
@@ -1883,6 +1972,8 @@ button:focus-visible {
     }
 
 
+    /* Opening */
+
     .opening {
         padding: 20px;
     }
@@ -1892,47 +1983,52 @@ button:focus-visible {
     }
 
 
+    /* Hero */
+
     .hero h2 {
         font-size: 40px;
     }
 
 
-    /* MUSIC */
+    /* Music */
 
-    #soundcloud-player {
-        height: 166px;
+    .music-disc {
+        width: 165px;
+        height: 165px;
+    }
+
+    .disc-shine {
+        width: 165px;
+        height: 165px;
+    }
+
+    .music-disc::before {
+        width: 65px;
+        height: 65px;
+    }
+
+    .disc-label {
+        width: 55px;
+        height: 55px;
+    }
+
+    .music-disc-area {
+        height: 200px;
     }
 
     .music-song {
-        width: 78px;
-        min-height: 78px;
-
-        border-radius: 16px;
+        width: 50px;
+        height: 50px;
     }
 
     .music-song.active,
     .music-song.song-main {
-        width: 105px;
-        min-height: 105px;
-    }
-
-    .song-art {
-        width: 34px;
-        height: 34px;
-
-        font-size: 15px;
-    }
-
-    .music-song.active .song-art,
-    .music-song.song-main .song-art {
-        width: 44px;
-        height: 44px;
-
-        font-size: 20px;
+        width: 62px;
+        height: 62px;
     }
 
 
-    /* STARS */
+    /* Stars */
 
     .sky-container {
         height: 350px;
@@ -1946,47 +2042,47 @@ button:focus-visible {
     }
 
     .star {
-        width: 78px;
-        height: 78px;
+        width: 82px !important;
+        height: 82px !important;
     }
 
     .star-one {
         top: 20%;
-        left: 8%;
+        left: 6%;
     }
 
     .star-two {
         top: 28%;
-        right: 5%;
+        right: 3%;
     }
 
     .star-three {
         top: 52%;
-        left: 2%;
+        left: 0%;
     }
 
     .star-four {
         bottom: 15%;
-        left: 34%;
+        left: 31%;
     }
 
     .star-five {
         top: 61%;
-        right: 2%;
+        right: 0%;
     }
 
     .star-six {
         top: 15%;
-        left: 45%;
+        left: 43%;
     }
 
     .star-seven {
         bottom: 13%;
-        right: 23%;
+        right: 20%;
     }
 
 
-    /* SECRET */
+    /* Secret */
 
     .secret-box {
         padding:
@@ -1995,7 +2091,7 @@ button:focus-visible {
     }
 
 
-    /* FINAL */
+    /* Final */
 
     .final-card {
         padding:
@@ -2004,7 +2100,7 @@ button:focus-visible {
     }
 
 
-    /* FLOATING BUTTON */
+    /* Floating music */
 
     .music-floating-button {
         right: 15px;
