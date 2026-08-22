@@ -1,409 +1,235 @@
-/* =========================================================
-   SOP ♡ — FULL RESPONSIVE STYLE
-========================================================= */
+/* =====================================================
+   RESET
+===================================================== */
 
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 html {
     scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
 }
 
 body {
     min-height: 100vh;
-    overflow-x: hidden;
-
-    color: #eee5f0;
-
-    font-family: "DM Sans", sans-serif;
 
     background:
         radial-gradient(
-            circle at 15% 10%,
-            rgba(157, 112, 170, 0.18),
-            transparent 30%
+            circle at 50% 0%,
+            rgba(128, 104, 180, 0.16),
+            transparent 38%
         ),
-        radial-gradient(
-            circle at 85% 35%,
-            rgba(192, 125, 151, 0.12),
-            transparent 30%
-        ),
-        linear-gradient(
-            135deg,
-            #17131b 0%,
-            #211a25 45%,
-            #17131b 100%
-        );
-}
+        #080712;
 
-button,
-a {
-    -webkit-tap-highlight-color: transparent;
+    color: #f7f3ff;
+
+    font-family:
+        "DM Sans",
+        Arial,
+        sans-serif;
+
+    overflow-x: hidden;
 }
 
 button {
     font-family: inherit;
-    touch-action: manipulation;
 }
 
 button:focus-visible {
-    outline: 2px solid #d5addd;
+    outline: 2px solid rgba(255, 255, 255, 0.8);
     outline-offset: 4px;
 }
 
-::selection {
-    background: #c49aca;
-    color: white;
-}
 
-
-/* =========================================================
+/* =====================================================
    BACKGROUND
-========================================================= */
+===================================================== */
 
 .background {
     position: fixed;
     inset: 0;
 
-    z-index: -10;
-
-    overflow: hidden;
+    width: 100%;
+    height: 100%;
 
     pointer-events: none;
 
+    overflow: hidden;
+
+    z-index: -2;
+
     background:
         radial-gradient(
-            circle at 15% 15%,
-            rgba(145, 100, 158, 0.16),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 85% 70%,
-            rgba(183, 108, 136, 0.12),
+            circle at 20% 20%,
+            rgba(120, 94, 170, 0.08),
             transparent 30%
         ),
-        #17131b;
+        radial-gradient(
+            circle at 80% 70%,
+            rgba(180, 130, 190, 0.07),
+            transparent 30%
+        );
 }
 
-.glow {
+.stars-background {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+}
+
+.bg-star {
     position: absolute;
 
-    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.25);
 
-    filter: blur(100px);
+    font-size: 15px;
 
-    opacity: 0.25;
+    animation:
+        twinkle 4s ease-in-out infinite;
 }
 
-.glow-one {
-    width: 420px;
-    height: 420px;
-
-    top: -180px;
-    left: -150px;
-
-    background: #8e579b;
+.star-1 {
+    top: 8%;
+    left: 12%;
 }
 
-.glow-two {
-    width: 450px;
-    height: 450px;
-
-    right: -180px;
-    top: 35%;
-
-    background: #a95c7c;
+.star-2 {
+    top: 18%;
+    left: 76%;
+    animation-delay: 1s;
 }
 
-.glow-three {
-    width: 400px;
-    height: 400px;
+.star-3 {
+    top: 32%;
+    left: 25%;
+    animation-delay: 2s;
+}
 
-    bottom: -200px;
-    left: 30%;
+.star-4 {
+    top: 42%;
+    left: 88%;
+    animation-delay: 0.5s;
+}
 
-    background: #694c87;
+.star-5 {
+    top: 56%;
+    left: 9%;
+    animation-delay: 1.5s;
+}
+
+.star-6 {
+    top: 68%;
+    left: 73%;
+    animation-delay: 2.5s;
+}
+
+.star-7 {
+    top: 78%;
+    left: 35%;
+    animation-delay: 0.8s;
+}
+
+.star-8 {
+    top: 89%;
+    left: 82%;
+    animation-delay: 2s;
+}
+
+.star-9 {
+    top: 13%;
+    left: 47%;
+    animation-delay: 3s;
+}
+
+.star-10 {
+    top: 49%;
+    left: 53%;
+    animation-delay: 1.2s;
+}
+
+.star-11 {
+    top: 72%;
+    left: 18%;
+    animation-delay: 2.8s;
+}
+
+.star-12 {
+    top: 92%;
+    left: 57%;
+    animation-delay: 1.8s;
+}
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0.18;
+        transform: scale(0.85);
+    }
+
+    50% {
+        opacity: 0.65;
+        transform: scale(1.15);
+    }
 }
 
 
-/* =========================================================
+/* =====================================================
    OPENING
-========================================================= */
+===================================================== */
 
 .opening {
     position: fixed;
     inset: 0;
 
-    z-index: 1000;
+    min-height: 100svh;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    padding: 25px;
-
     text-align: center;
+
+    padding: 30px;
 
     background:
         radial-gradient(
-            circle at 50% 45%,
-            rgba(112, 76, 122, 0.25),
-            transparent 35%
+            circle at center,
+            rgba(106, 83, 145, 0.2),
+            transparent 45%
         ),
-        linear-gradient(
-            135deg,
-            #17131b,
-            #211823,
-            #17131b
-        );
+        #080712;
+
+    z-index: 100;
 
     transition:
-        opacity 0.9s ease,
-        visibility 0.9s ease,
-        transform 0.9s ease;
+        opacity 0.8s ease,
+        visibility 0.8s ease;
 }
 
 .opening-hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-
-    transform: scale(1.04);
 }
 
 .opening-content {
-    width: min(650px, 100%);
+    width: min(90%, 650px);
 
     animation:
-        openingFloat 5s ease-in-out infinite;
+        openingFade 1.2s ease both;
 }
 
-@keyframes openingFloat {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
-}
-
-.tiny-text {
-    margin-bottom: 17px;
-
-    color: #bda8c2;
-
-    font-size: 11px;
-    font-weight: 700;
-
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-}
-
-.opening h1 {
-    margin-bottom: 20px;
-
-    color: #f6eaf8;
-
-    font-family: "Pacifico", cursive;
-    font-size: clamp(55px, 14vw, 115px);
-    font-weight: 400;
-
-    line-height: 1;
-
-    text-shadow:
-        0 0 35px rgba(208, 162, 219, 0.25);
-}
-
-.opening-subtitle {
-    max-width: 500px;
-
-    margin: 0 auto 30px;
-
-    color: #aaa0ad;
-
-    font-size: 14px;
-    line-height: 1.9;
-}
-
-.open-button {
-    min-height: 48px;
-
-    border: 1px solid rgba(229, 204, 235, 0.15);
-
-    border-radius: 100px;
-
-    padding: 14px 30px;
-
-    color: #f6eaf8;
-
-    background:
-        rgba(255, 255, 255, 0.07);
-
-    box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.2),
-        inset 0 1px rgba(255, 255, 255, 0.08);
-
-    cursor: pointer;
-
-    font-size: 13px;
-    font-weight: 600;
-
-    backdrop-filter: blur(15px);
-}
-
-.opening-note {
-    margin-top: 14px;
-
-    color: #746b77;
-
-    font-size: 10px;
-}
-
-.scroll-hint {
-    position: absolute;
-
-    bottom: 25px;
-
-    color: #8f8194;
-
-    font-size: 18px;
-
-    animation:
-        bounce 2s ease-in-out infinite;
-}
-
-@keyframes bounce {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(8px);
-    }
-}
-
-
-/* =========================================================
-   MAIN
-========================================================= */
-
-#main {
-    position: relative;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition:
-        opacity 1s ease,
-        visibility 1s ease;
-}
-
-#main.main-visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-
-/* =========================================================
-   SECTIONS
-========================================================= */
-
-.section {
-    position: relative;
-
-    width: min(
-        1050px,
-        calc(100% - 40px)
-    );
-
-    margin: 0 auto;
-
-    padding: 120px 0;
-}
-
-.section-title {
-    max-width: 700px;
-
-    margin: 0 auto 75px;
-
-    text-align: center;
-}
-
-.section-title > span {
-    display: block;
-
-    margin-bottom: 13px;
-
-    color: #a88cae;
-
-    font-size: 10px;
-    font-weight: 700;
-
-    letter-spacing: 0.22em;
-
-    text-transform: uppercase;
-}
-
-.section-title h2 {
-    margin-bottom: 18px;
-
-    color: #eee3f1;
-
-    font-family: "Pacifico", cursive;
-    font-size: clamp(34px, 5vw, 52px);
-    font-weight: 400;
-
-    line-height: 1.25;
-}
-
-.section-title p {
-    color: #918792;
-
-    font-size: 13px;
-
-    line-height: 1.9;
-}
-
-
-/* =========================================================
-   HERO
-========================================================= */
-
-.hero {
-    min-height: 100vh;
-
-    min-height: 100svh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding-top: 80px;
-
-    text-align: center;
-}
-
-.hero-content {
-    max-width: 720px;
-
-    animation:
-        heroAppear 1.2s ease both;
-}
-
-@keyframes heroAppear {
+@keyframes openingFade {
 
     from {
         opacity: 0;
-        transform: translateY(25px);
+        transform: translateY(18px);
     }
 
     to {
@@ -412,381 +238,573 @@ button:focus-visible {
     }
 }
 
+.small-label {
+    margin-bottom: 20px;
+
+    color: rgba(255, 255, 255, 0.55);
+
+    font-size: 12px;
+
+    letter-spacing: 0.25em;
+
+    text-transform: uppercase;
+}
+
+.opening h1 {
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(44px, 8vw, 82px);
+
+    line-height: 0.98;
+
+    font-weight: 500;
+
+    letter-spacing: -0.04em;
+}
+
+.opening h1 em {
+    font-weight: 400;
+}
+
+.opening-text {
+    margin-top: 25px;
+
+    color: rgba(255, 255, 255, 0.58);
+
+    font-size: 15px;
+}
+
+.open-button {
+    margin-top: 35px;
+
+    padding: 13px 25px;
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.open-button:hover {
+    transform: translateY(-3px);
+
+    background: rgba(255, 255, 255, 0.11);
+
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main {
+    opacity: 0;
+
+    transition:
+        opacity 1s ease;
+}
+
+.main.main-visible {
+    opacity: 1;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero {
+    min-height: 100svh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 80px 25px;
+}
+
+.hero-content {
+    width: min(90%, 850px);
+}
+
 .eyebrow {
-    margin-bottom: 18px;
+    margin-bottom: 25px;
 
-    color: #a98aae;
+    color: rgba(255, 255, 255, 0.45);
 
-    font-size: 10px;
-    font-weight: 700;
+    font-size: 12px;
 
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
 
     text-transform: uppercase;
 }
 
 .hero h2 {
-    margin-bottom: 25px;
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
 
-    color: #f1e7f3;
+    font-size:
+        clamp(55px, 10vw, 110px);
 
-    font-family: "Pacifico", cursive;
-    font-size: clamp(42px, 7vw, 76px);
+    line-height: 0.95;
+
+    font-weight: 500;
+
+    letter-spacing: -0.055em;
+}
+
+.hero h2 em {
     font-weight: 400;
-
-    line-height: 1.2;
 }
 
-.hero p {
-    max-width: 550px;
+.hero-subtitle {
+    margin-top: 30px;
 
-    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.55);
 
-    color: #9a909d;
-
-    font-size: 14px;
-
-    line-height: 1.9;
+    font-size: 16px;
 }
 
-.hero-heart {
-    margin-top: 35px;
+.scroll-hint {
+    margin-top: 90px;
 
-    color: #c399cb;
+    display: flex;
 
-    font-size: 35px;
+    flex-direction: column;
 
-    text-shadow:
-        0 0 25px rgba(201, 150, 211, 0.35);
+    align-items: center;
+
+    gap: 10px;
+
+    color: rgba(255, 255, 255, 0.35);
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.18em;
+}
+
+.scroll-arrow {
+    font-size: 20px;
 
     animation:
-        heartPulse 2.5s ease-in-out infinite;
+        scrollBounce 1.8s ease-in-out infinite;
 }
 
-@keyframes heartPulse {
+@keyframes scrollBounce {
 
     0%,
     100% {
-        transform: scale(1);
+        transform: translateY(0);
     }
 
     50% {
-        transform: scale(1.12);
+        transform: translateY(6px);
     }
 }
 
 
-/* =========================================================
-   TIMELINE
-========================================================= */
+/* =====================================================
+   STORY SECTIONS
+===================================================== */
 
-.timeline {
-    position: relative;
+.story-section {
+    width: 100%;
 
-    width: min(780px, 100%);
+    min-height: 80vh;
 
-    margin: 0 auto;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 100px 25px;
 }
 
-.timeline::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    bottom: 0;
-
-    left: 50%;
-
-    width: 1px;
-
+.story-section.alternate {
     background:
         linear-gradient(
-            to bottom,
+            180deg,
             transparent,
-            rgba(186, 151, 194, 0.5),
+            rgba(255, 255, 255, 0.018),
             transparent
         );
-
-    transform:
-        translateX(-50%);
 }
 
-.timeline-item {
-    position: relative;
+.story-card {
+    width: min(90%, 700px);
 
-    width: calc(50% - 45px);
+    padding: 60px 0;
 
-    margin-bottom: 80px;
-
-    padding: 27px;
-
-    border: 1px solid rgba(218, 191, 223, 0.08);
-
-    border-radius: 22px;
-
-    background:
-        rgba(255, 255, 255, 0.035);
-
-    box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.14);
-
-    backdrop-filter: blur(14px);
+    text-align: center;
 }
 
-.timeline-item:nth-child(odd) {
-    margin-right: auto;
+.story-number {
+    display: block;
+
+    margin-bottom: 20px;
+
+    color: rgba(255, 255, 255, 0.25);
+
+    font-size: 12px;
+
+    letter-spacing: 0.2em;
 }
 
-.timeline-item:nth-child(even) {
-    margin-left: auto;
-}
+.story-label {
+    margin-bottom: 15px;
 
-.timeline-dot {
-    position: absolute;
+    color: rgba(255, 255, 255, 0.45);
 
-    top: 30px;
+    font-size: 11px;
 
-    width: 11px;
-    height: 11px;
-
-    border: 3px solid #1c1720;
-
-    border-radius: 50%;
-
-    background: #bd96c5;
-
-    box-shadow:
-        0 0 0 5px rgba(189, 150, 197, 0.12),
-        0 0 20px rgba(189, 150, 197, 0.35);
-}
-
-.timeline-item:nth-child(odd) .timeline-dot {
-    right: -51px;
-}
-
-.timeline-item:nth-child(even) .timeline-dot {
-    left: -51px;
-}
-
-.timeline-date {
-    margin-bottom: 8px;
-
-    color: #9d82a5;
-
-    font-size: 9px;
-    font-weight: 700;
-
-    letter-spacing: 0.17em;
+    letter-spacing: 0.2em;
 
     text-transform: uppercase;
 }
 
-.timeline-item h3 {
-    margin-bottom: 13px;
+.story-card h3 {
+    margin-bottom: 30px;
 
-    color: #e8dce9;
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
 
-    font-family: "Pacifico", cursive;
+    font-size:
+        clamp(34px, 6vw, 58px);
+
+    line-height: 1.05;
+
+    font-weight: 500;
+
+    letter-spacing: -0.035em;
+}
+
+.story-card p:not(.story-label):not(.soft-line) {
+    max-width: 620px;
+
+    margin: 0 auto 20px;
+
+    color: rgba(255, 255, 255, 0.63);
+
+    font-size: 16px;
+
+    line-height: 1.9;
+}
+
+.soft-line {
+    margin-top: 30px;
+
+    color: rgba(255, 255, 255, 0.85);
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
 
     font-size: 22px;
 
-    font-weight: 400;
-}
-
-.timeline-item p {
-    color: #958b98;
-
-    font-size: 12px;
-
-    line-height: 1.9;
+    font-style: italic;
 }
 
 
-/* =========================================================
-   MEMORY CARDS
-========================================================= */
+/* =====================================================
+   STARS SECTION
+===================================================== */
 
-.reasons {
-    display: grid;
+.stars-section {
+    min-height: 85vh;
 
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 20px;
-}
-
-.reason {
-    position: relative;
-
-    min-height: 290px;
-
-    padding: 32px;
-
-    border: 1px solid rgba(218, 191, 223, 0.08);
-
-    border-radius: 24px;
-
-    background:
-        rgba(255, 255, 255, 0.035);
-
-    box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.13);
-
-    backdrop-filter: blur(14px);
-}
-
-.reason-number {
-    position: absolute;
-
-    top: 25px;
-    right: 27px;
-
-    color: #64566a;
-
-    font-size: 9px;
-    font-weight: 700;
-}
-
-.reason-icon {
-    width: 50px;
-    height: 50px;
+    padding: 120px 20px;
 
     display: flex;
+
+    flex-direction: column;
+
     align-items: center;
     justify-content: center;
 
-    margin-bottom: 25px;
-
-    border: 1px solid rgba(207, 166, 215, 0.08);
-
-    border-radius: 16px;
-
-    background:
-        rgba(186, 140, 197, 0.1);
-
-    color: #bd96c5;
-
-    font-size: 21px;
+    text-align: center;
 }
 
-.reason h3 {
-    margin-bottom: 12px;
-
-    color: #e6dae8;
-
-    font-size: 16px;
-    font-weight: 600;
+.section-heading {
+    margin-bottom: 50px;
 }
 
-.reason p {
-    color: #918692;
+.section-heading h3 {
+    margin-bottom: 15px;
 
-    font-size: 12px;
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
 
-    line-height: 1.9;
+    font-size:
+        clamp(38px, 6vw, 62px);
+
+    font-weight: 500;
+}
+
+.section-heading p:last-child {
+    color: rgba(255, 255, 255, 0.48);
+
+    font-size: 14px;
 }
 
 
-/* =========================================================
-   MUSIC PLAYER
-========================================================= */
+/* =====================================================
+   STAR FIELD
+===================================================== */
 
-.music-section {
-    padding-top: 100px;
-}
-
-.music-player {
+.star-field {
     position: relative;
 
-    width: min(
-        760px,
-        100%
-    );
+    width: min(92vw, 800px);
+
+    height: 430px;
 
     margin: 0 auto;
-
-    padding: 45px 30px 35px;
-
-    border: 1px solid rgba(218, 191, 223, 0.1);
-
-    border-radius: 32px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255, 255, 255, 0.065),
-            rgba(255, 255, 255, 0.025)
-        );
-
-    box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.25);
-
-    backdrop-filter: blur(20px);
-
-    overflow: hidden;
 }
 
-
-/* Hidden SoundCloud iframe */
-
-#soundcloud-player {
+.star {
     position: absolute;
 
-    width: 1px;
-    height: 1px;
+    width: 58px;
+    height: 58px;
 
-    left: -9999px;
-    top: -9999px;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    color: rgba(255, 255, 255, 0.75);
+
+    cursor: pointer;
+
+    font-size: 25px;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.star::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -12px;
+
+    border-radius: 50%;
+}
+
+.star:hover,
+.star:active {
+    transform: scale(1.2);
+
+    background: rgba(255, 255, 255, 0.08);
+
+    color: white;
+
+    box-shadow:
+        0 0 30px rgba(255, 255, 255, 0.12);
+}
+
+.star-one {
+    top: 8%;
+    left: 12%;
+}
+
+.star-two {
+    top: 25%;
+    left: 47%;
+}
+
+.star-three {
+    top: 5%;
+    right: 12%;
+}
+
+.star-four {
+    top: 52%;
+    left: 25%;
+}
+
+.star-five {
+    top: 67%;
+    right: 23%;
+}
+
+.star-six {
+    top: 38%;
+    right: 2%;
+}
+
+.star-seven {
+    bottom: 4%;
+    left: 48%;
+}
+
+.star-eight {
+    bottom: 15%;
+    left: 5%;
+}
+
+.star-message {
+    min-height: 25px;
+
+    max-width: 500px;
+
+    margin: 20px auto 0;
+
+    padding: 0 20px;
+
+    color: rgba(255, 255, 255, 0.75);
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 17px;
+
+    font-style: italic;
 
     opacity: 0;
 
-    pointer-events: none;
+    transform: translateY(8px);
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+}
+
+.star-message.show {
+    opacity: 1;
+
+    transform: translateY(0);
 }
 
 
-/* =========================================================
-   VINYL
-========================================================= */
+/* =====================================================
+   MUSIC SECTION
+===================================================== */
 
-.music-disc-area {
-    position: relative;
+.music-section {
+    width: 100%;
 
-    height: 245px;
+    min-height: 100vh;
+
+    padding: 120px 20px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    margin-bottom: 20px;
+    text-align: center;
+
+    overflow-x: hidden;
+}
+
+.music-player {
+    width: min(100%, 600px);
+
+    margin: 0 auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   RECORD
+===================================================== */
+
+.music-disc-area {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 30px;
 }
 
 .music-disc {
     position: relative;
 
-    width: 205px;
-    height: 205px;
+    width: 230px;
+    height: 230px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex: 0 0 230px;
 
     border-radius: 50%;
 
     background:
         repeating-radial-gradient(
             circle,
-            #17131b 0px,
-            #17131b 3px,
-            #211b25 4px,
-            #17131b 6px
+            #16141e 0px,
+            #16141e 3px,
+            #111018 4px,
+            #111018 7px
         );
 
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border:
+        1px solid rgba(255, 255, 255, 0.12);
 
     box-shadow:
-        0 20px 55px rgba(0, 0, 0, 0.45),
-        0 0 35px rgba(182, 137, 194, 0.12);
+        0 25px 70px rgba(0, 0, 0, 0.45),
+        inset 0 0 30px rgba(255, 255, 255, 0.025);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .music-disc::before {
@@ -794,20 +812,12 @@ button:focus-visible {
 
     position: absolute;
 
-    width: 75px;
-    height: 75px;
+    inset: 15px;
 
     border-radius: 50%;
 
-    background:
-        linear-gradient(
-            135deg,
-            #9c719f,
-            #c58ba7
-        );
-
-    box-shadow:
-        0 0 25px rgba(192, 140, 205, 0.25);
+    border:
+        1px solid rgba(255, 255, 255, 0.06);
 }
 
 .music-disc::after {
@@ -820,18 +830,59 @@ button:focus-visible {
 
     border-radius: 50%;
 
-    background: #17131b;
+    background: #080712;
 
-    z-index: 3;
+    border:
+        1px solid rgba(255, 255, 255, 0.2);
+}
+
+.disc-lines {
+    position: absolute;
+
+    inset: 30px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.05);
+}
+
+.disc-center {
+    position: relative;
+
+    z-index: 2;
+
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #806d9d,
+            #4e4163
+        );
+
+    color: white;
+
+    font-size: 22px;
+
+    box-shadow:
+        0 0 25px rgba(120, 95, 150, 0.2);
 }
 
 .music-disc.spinning {
     animation:
-        spinDisc 7s linear infinite;
+        discSpin 5s linear infinite;
 }
 
-@keyframes spinDisc {
-
+@keyframes discSpin {
     from {
         transform: rotate(0deg);
     }
@@ -841,190 +892,75 @@ button:focus-visible {
     }
 }
 
-.disc-label {
-    position: absolute;
 
-    z-index: 2;
+/* =====================================================
+   CURRENT SONG
+===================================================== */
 
-    width: 63px;
-    height: 63px;
+.current-song {
+    width: 100%;
+
+    margin: 5px auto 0;
 
     display: flex;
+
+    flex-direction: column;
+
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
+    text-align: center;
+}
+
+.current-song-title {
+    width: 100%;
 
     color: white;
 
-    font-size: 22px;
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
 
-    text-shadow:
-        0 0 12px rgba(255, 255, 255, 0.7);
-}
+    font-size: 27px;
 
-.disc-shine {
-    position: absolute;
-
-    width: 205px;
-    height: 205px;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            120deg,
-            transparent 35%,
-            rgba(255, 255, 255, 0.08) 45%,
-            transparent 55%
-        );
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   SONG WHEEL
-========================================================= */
-
-.music-wheel {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 8px;
-
-    min-height: 85px;
-
-    margin-bottom: 15px;
-}
-
-.music-song {
-    flex: 0 0 auto;
-
-    width: 55px;
-    height: 55px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0;
-
-    border: 1px solid rgba(255, 255, 255, 0.07);
-
-    border-radius: 50%;
-
-    background:
-        rgba(255, 255, 255, 0.04);
-
-    color: #9a8c9d;
-
-    cursor: pointer;
-
-    opacity: 0.5;
-
-    touch-action: manipulation;
-}
-
-.music-song.active,
-.music-song.song-main {
-    width: 70px;
-    height: 70px;
-
-    opacity: 1;
-
-    background:
-        rgba(190, 145, 201, 0.15);
-
-    color: #eaddeb;
-
-    box-shadow:
-        0 0 25px rgba(185, 140, 197, 0.12);
-
-    transform: scale(1.1);
-}
-
-.music-song .song-art {
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    font-size: 18px;
-}
-
-
-/* =========================================================
-   CURRENT SONG
-========================================================= */
-
-.current-song {
-    margin-bottom: 25px;
+    font-weight: 500;
 
     text-align: center;
 }
 
-.now-playing {
-    margin-bottom: 8px;
+.current-song-artist {
+    width: 100%;
 
-    color: #9b81a3;
+    margin-top: 5px;
 
-    font-size: 8px;
-    font-weight: 700;
+    color: rgba(255, 255, 255, 0.42);
 
-    letter-spacing: 0.22em;
+    font-size: 13px;
 
-    text-transform: uppercase;
-}
-
-.current-song h3 {
-    margin-bottom: 5px;
-
-    color: #eaddec;
-
-    font-family: "Pacifico", cursive;
-
-    font-size: 26px;
-
-    font-weight: 400;
-}
-
-.current-song p {
-    color: #8e818f;
-
-    font-size: 11px;
+    text-align: center;
 }
 
 
-/* =========================================================
+/* =====================================================
    PROGRESS
-========================================================= */
+===================================================== */
 
 .music-progress {
+    width: min(90%, 500px);
+
+    margin: 25px auto 20px;
+
     display: flex;
 
     align-items: center;
+    justify-content: center;
 
-    gap: 12px;
+    gap: 10px;
 
-    margin-bottom: 25px;
-}
+    color: rgba(255, 255, 255, 0.4);
 
-.music-progress span {
-    min-width: 34px;
-
-    color: #8d808f;
-
-    font-size: 9px;
-
-    text-align: center;
+    font-size: 11px;
 }
 
 .progress-track {
@@ -1032,1294 +968,940 @@ button:focus-visible {
 
     flex: 1;
 
-    height: 7px;
+    height: 5px;
 
-    border-radius: 10px;
+    min-width: 0;
 
-    background:
-        rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.1);
 
     cursor: pointer;
 
-    touch-action: manipulation;
+    --progress: 0%;
 }
 
 .progress-bar {
     position: absolute;
 
-    left: 0;
     top: 0;
+    left: 0;
 
     width: 0%;
     height: 100%;
 
     border-radius: inherit;
 
-    background:
-        linear-gradient(
-            90deg,
-            #a982b0,
-            #c78fa7
-        );
+    background: rgba(255, 255, 255, 0.8);
 
-    box-shadow:
-        0 0 12px rgba(188, 135, 199, 0.3);
+    transition:
+        width 0.12s linear;
 }
 
 
-/* =========================================================
+/* =====================================================
    CONTROLS
-========================================================= */
+===================================================== */
 
 .music-controls {
+    width: 100%;
+
+    margin: 10px auto 25px;
+
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    gap: 15px;
-}
-
-.music-controls button {
-    width: 50px;
-    height: 50px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid rgba(218, 191, 223, 0.1);
-
-    border-radius: 50%;
-
-    background:
-        rgba(255, 255, 255, 0.05);
-
-    color: #ccb6d0;
-
-    cursor: pointer;
-
-    touch-action: manipulation;
-}
-
-.music-controls .play-button {
-    width: 62px;
-    height: 62px;
-
-    border: none;
-
-    background:
-        linear-gradient(
-            135deg,
-            #a77db0,
-            #c28ba4
-        );
-
-    color: white;
-
-    font-size: 16px;
-
-    box-shadow:
-        0 10px 30px rgba(154, 111, 164, 0.25);
-}
-
-.music-hint {
-    margin-top: 20px;
-
-    color: #6f6472;
-
-    font-size: 9px;
+    gap: 12px;
 
     text-align: center;
 }
 
+.music-control {
+    min-width: 72px;
 
-/* =========================================================
-   FLOATING MUSIC BUTTON
-========================================================= */
+    padding: 10px 15px;
 
-.music-floating-button {
-    position: fixed;
+    border:
+        1px solid rgba(255, 255, 255, 0.12);
 
-    right: 25px;
-    bottom: 25px;
+    border-radius: 999px;
 
-    z-index: 100;
+    background: rgba(255, 255, 255, 0.045);
 
-    width: 52px;
-    height: 52px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid rgba(218, 191, 223, 0.12);
-
-    border-radius: 50%;
-
-    background:
-        rgba(35, 27, 39, 0.9);
-
-    color: #d5bad9;
-
-    font-size: 18px;
+    color: rgba(255, 255, 255, 0.75);
 
     cursor: pointer;
 
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.25);
+    font-size: 12px;
 
-    backdrop-filter: blur(15px);
-
-    touch-action: manipulation;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        color 0.2s ease;
 }
 
-.music-floating-button.playing {
-    animation:
-        musicPulse 1.8s ease-in-out infinite;
-}
-
-@keyframes musicPulse {
-
-    0%,
-    100% {
-        box-shadow:
-            0 10px 30px rgba(0, 0, 0, 0.25);
-    }
-
-    50% {
-        box-shadow:
-            0 10px 35px rgba(170, 120, 185, 0.35);
-    }
-}
-
-
-/* =========================================================
-   STARRY SKY
-========================================================= */
-
-.sky-container {
-    position: relative;
-
-    width: min(
-        900px,
-        100%
-    );
-
-    height: 480px;
-
-    margin: 0 auto;
-
-    border: 1px solid rgba(218, 191, 223, 0.08);
-
-    border-radius: 32px;
-
-    overflow: hidden;
-
-    background:
-        radial-gradient(
-            circle at 50% 50%,
-            rgba(123, 82, 139, 0.2),
-            transparent 45%
-        ),
-        linear-gradient(
-            135deg,
-            #16121c,
-            #28202d,
-            #17131d
-        );
-
-    box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.3);
-}
-
-.sky-title {
-    position: absolute;
-
-    top: 28px;
-    left: 32px;
-
-    z-index: 3;
-
-    color:
-        rgba(255, 255, 255, 0.65);
-
-    font-family:
-        "Pacifico",
-        cursive;
-
-    font-size: 20px;
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   CLICKABLE STARS
-========================================================= */
-
-.star {
-    position: absolute;
-
-    z-index: 50;
-
-    width: 90px !important;
-    height: 90px !important;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0;
-
-    border: 0;
-
-    border-radius: 50%;
-
-    background:
-        rgba(255, 255, 255, 0.001);
+.music-control:hover {
+    background: rgba(255, 255, 255, 0.1);
 
     color: white;
 
+    transform: translateY(-2px);
+}
+
+.play-button {
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 15px;
+}
+
+
+/* =====================================================
+   SONG LIST
+===================================================== */
+
+.music-wheel {
+    width: 100%;
+
+    margin: 15px auto 0;
+
+    padding: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    text-align: center;
+
+    position: static;
+}
+
+.music-song {
+    width: min(90%, 360px);
+
+    min-height: 44px;
+
+    margin: 0 auto;
+
+    padding: 11px 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    color: rgba(255, 255, 255, 0.45);
+
     cursor: pointer;
 
-    appearance: none;
+    font-size: 13px;
 
-    pointer-events: auto;
+    text-align: center;
 
-    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
 }
 
-.star::before {
-    content: "";
+.music-song:hover {
+    color: rgba(255, 255, 255, 0.85);
 
-    position: absolute;
+    background: rgba(255, 255, 255, 0.055);
 
-    width: 30px;
-    height: 30px;
+    border-color:
+        rgba(255, 255, 255, 0.16);
 
-    border-radius: 50%;
-
-    background:
-        rgba(255, 239, 255, 0.08);
-
-    box-shadow:
-        0 0 25px rgba(255, 225, 255, 0.35);
-
-    pointer-events: none;
+    transform: translateY(-1px);
 }
 
-.star span {
-    position: relative;
-
-    z-index: 2;
-
-    color: #fff7ff;
-
-    font-size: 25px;
-
-    text-shadow:
-        0 0 8px rgba(255, 232, 255, 0.8),
-        0 0 20px rgba(221, 170, 231, 0.65);
-
-    pointer-events: none;
-
-    animation:
-        starTwinkle 2.5s ease-in-out infinite;
-}
-
-@keyframes starTwinkle {
-
-    0%,
-    100% {
-        opacity: 0.65;
-        transform: scale(0.9);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1.12);
-    }
-}
-
-.star-one {
-    top: 19%;
-    left: 21%;
-}
-
-.star-two {
-    top: 27%;
-    right: 19%;
-}
-
-.star-three {
-    top: 52%;
-    left: 10%;
-}
-
-.star-four {
-    bottom: 17%;
-    left: 38%;
-}
-
-.star-five {
-    top: 61%;
-    right: 10%;
-}
-
-.star-six {
-    top: 16%;
-    left: 50%;
-}
-
-.star-seven {
-    bottom: 16%;
-    right: 32%;
-}
-
-
-/* =========================================================
-   STAR MESSAGE
-========================================================= */
-
-.star-message {
-    position: absolute;
-
-    z-index: 100;
-
-    left: 50%;
-    bottom: 25px;
-
-    width:
-        min(
-            620px,
-            calc(100% - 40px)
-        );
-
-    padding: 14px 20px;
-
-    border: 1px solid rgba(255, 255, 255, 0.12);
-
-    border-radius: 100px;
+.music-song.active,
+.music-song.song-main {
+    color: white;
 
     background:
         rgba(255, 255, 255, 0.08);
 
-    color:
-        rgba(255, 255, 255, 0.9);
+    border-color:
+        rgba(255, 255, 255, 0.2);
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.15);
+}
+
+.music-hint {
+    width: 100%;
+
+    margin: 18px auto 0;
+
+    color: rgba(255, 255, 255, 0.3);
 
     font-size: 11px;
 
     text-align: center;
-
-    backdrop-filter: blur(12px);
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    transform:
-        translateX(-50%)
-        translateY(12px);
-
-    transition:
-        opacity 0.35s ease,
-        transform 0.35s ease;
-}
-
-.star-message.show {
-    opacity: 1;
-
-    transform:
-        translateX(-50%)
-        translateY(0);
 }
 
 
-/* =========================================================
+/* =====================================================
+   HIDDEN SOUNDCLOUD
+===================================================== */
+
+#soundcloud-player {
+    position: absolute !important;
+
+    width: 1px !important;
+    height: 1px !important;
+
+    opacity: 0 !important;
+
+    pointer-events: none !important;
+
+    border: 0 !important;
+}
+
+
+/* =====================================================
    SECRET
-========================================================= */
+===================================================== */
 
-.secret-box {
-    width:
-        min(
-            680px,
-            100%
-        );
+.secret-section {
+    min-height: 60vh;
 
-    margin: 0 auto;
+    padding: 100px 20px;
 
-    padding: 55px 45px;
+    display: flex;
 
-    border: 1px solid rgba(218, 191, 223, 0.08);
+    flex-direction: column;
 
-    border-radius: 30px;
-
-    background:
-        rgba(255, 255, 255, 0.035);
-
-    box-shadow:
-        0 25px 65px rgba(0, 0, 0, 0.16);
+    align-items: center;
+    justify-content: center;
 
     text-align: center;
-
-    backdrop-filter: blur(15px);
-}
-
-.secret-sparkle {
-    margin-bottom: 15px;
-
-    color: #c099c8;
-
-    font-size: 25px;
-}
-
-.secret-box h2 {
-    margin-bottom: 12px;
-
-    color: #e9ddec;
-
-    font-family: "Pacifico", cursive;
-
-    font-size: 30px;
-
-    font-weight: 400;
-}
-
-.secret-box > p {
-    margin-bottom: 25px;
-
-    color: #918691;
-
-    font-size: 12px;
 }
 
 .secret-button {
-    min-height: 44px;
+    padding: 14px 24px;
 
-    border: 1px solid rgba(218, 191, 223, 0.1);
+    border:
+        1px solid rgba(255, 255, 255, 0.13);
 
-    border-radius: 100px;
+    border-radius: 999px;
 
-    padding: 12px 22px;
+    background: rgba(255, 255, 255, 0.035);
 
-    background:
-        rgba(189, 146, 198, 0.09);
-
-    color: #c4a9c8;
-
-    font-size: 11px;
-    font-weight: 600;
+    color: rgba(255, 255, 255, 0.62);
 
     cursor: pointer;
 
-    touch-action: manipulation;
+    font-size: 13px;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.secret-button:hover {
+    background: rgba(255, 255, 255, 0.08);
+
+    color: white;
+
+    transform: translateY(-2px);
 }
 
 .secret-message {
-    max-height: 0;
-
-    margin-top: 0;
-
-    overflow: hidden;
-
-    color: #958996;
-
-    font-size: 12px;
-
-    line-height: 1.9;
-
-    opacity: 0;
-
-    transition:
-        max-height 0.7s ease,
-        margin 0.7s ease,
-        opacity 0.5s ease;
-}
-
-.secret-message.show {
-    max-height: 500px;
+    width: min(90%, 600px);
 
     margin-top: 30px;
 
-    opacity: 1;
-}
+    color: rgba(255, 255, 255, 0.72);
 
-
-/* =========================================================
-   FINAL
-========================================================= */
-
-.final {
-    padding-bottom: 150px;
-}
-
-.final-card {
-    position: relative;
-
-    width:
-        min(
-            780px,
-            100%
-        );
-
-    margin: 0 auto;
-
-    padding: 80px 45px;
-
-    border:
-        1px solid
-        rgba(224, 193, 230, 0.1);
-
-    border-radius: 35px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #34283a,
-            #241c29
-        );
-
-    text-align: center;
-
-    box-shadow:
-        0 35px 90px rgba(0, 0, 0, 0.3);
-
-    overflow: hidden;
-}
-
-.final-card h2 {
-    position: relative;
-
-    z-index: 1;
-
-    max-width: 650px;
-
-    margin: 0 auto 25px;
-
-    color: #f5eaf6;
-
-    font-family: "Pacifico", cursive;
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
 
     font-size:
-        clamp(
-            32px,
-            5vw,
-            50px
-        );
+        clamp(20px, 4vw, 30px);
 
-    font-weight: 400;
+    font-style: italic;
 
-    line-height: 1.3;
+    line-height: 1.5;
+
+    opacity: 0;
+
+    transform:
+        translateY(12px)
+        scale(0.98);
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
 }
 
-.final-card > p {
-    position: relative;
+.secret-message.show {
+    opacity: 1;
 
-    z-index: 1;
+    transform:
+        translateY(0)
+        scale(1);
 
-    max-width: 570px;
-
-    margin: 0 auto;
-
-    color:
-        rgba(255, 255, 255, 0.62);
-
-    font-size: 13px;
-
-    line-height: 1.9;
+    pointer-events: auto;
 }
 
-.heart {
-    position: relative;
 
-    z-index: 1;
+/* =====================================================
+   FINAL STORY
+===================================================== */
 
-    margin: 30px 0 20px;
+.final-story {
+    min-height: 90vh;
+}
 
-    color: #d7a9d8;
+
+/* =====================================================
+   ENDING
+===================================================== */
+
+.ending {
+    min-height: 70vh;
+
+    padding: 120px 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.ending-heart {
+    margin-bottom: 25px;
+
+    color: rgba(255, 255, 255, 0.85);
 
     font-size: 35px;
 
     animation:
-        heartPulse 2.5s ease-in-out infinite;
+        heartFloat 3s ease-in-out infinite;
 }
 
-.final-signature {
-    color:
-        rgba(255, 255, 255, 0.45) !important;
+@keyframes heartFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+.ending-text {
+    color: rgba(255, 255, 255, 0.5);
+
+    font-size: 14px;
+
+    letter-spacing: 0.08em;
+}
+
+.ending h4 {
+    margin-top: 25px;
 
     font-family:
-        "Pacifico",
-        cursive !important;
+        "Playfair Display",
+        Georgia,
+        serif;
 
-    font-size:
-        14px !important;
+    font-size: 32px;
+
+    font-weight: 400;
+
+    font-style: italic;
+}
+
+.ending-small {
+    margin-top: 12px;
+
+    color: rgba(255, 255, 255, 0.28);
+
+    font-size: 11px;
+
+    letter-spacing: 0.2em;
+
+    text-transform: uppercase;
 }
 
 
-/* =========================================================
-   TABLET
-========================================================= */
+/* =====================================================
+   FLOATING MUSIC BUTTON
+===================================================== */
 
-@media (max-width: 800px) {
+.floating-music-button {
+    position: fixed;
 
-    .section {
-        width:
-            calc(100% - 32px);
+    right: 22px;
+    bottom: 22px;
 
-        padding:
-            90px 0;
-    }
+    z-index: 50;
 
-    .section-title {
-        margin-bottom: 55px;
-    }
+    width: 48px;
+    height: 48px;
 
+    display: flex;
 
-    /* Timeline */
+    align-items: center;
+    justify-content: center;
 
-    .timeline::before {
-        left: 10px;
-    }
+    border:
+        1px solid rgba(255, 255, 255, 0.13);
 
-    .timeline-item {
-        width:
-            calc(100% - 35px);
+    border-radius: 50%;
 
-        margin-left:
-            35px !important;
+    background:
+        rgba(13, 11, 22, 0.85);
 
-        margin-right:
-            0 !important;
+    color: rgba(255, 255, 255, 0.7);
 
-        margin-bottom: 55px;
+    cursor: pointer;
 
-        padding: 24px;
-    }
+    font-size: 18px;
 
-    .timeline-item:nth-child(odd) .timeline-dot,
-    .timeline-item:nth-child(even) .timeline-dot {
-        left: -31px;
-        right: auto;
-    }
+    backdrop-filter: blur(12px);
 
+    -webkit-backdrop-filter: blur(12px);
 
-    /* Memory cards */
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.3);
 
-    .reasons {
-        grid-template-columns: 1fr;
-    }
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease;
+}
 
+.floating-music-button:hover {
+    transform: translateY(-3px);
 
-    /* Music */
+    background:
+        rgba(255, 255, 255, 0.1);
 
-    .music-player {
-        padding:
-            35px 20px 30px;
-    }
+    color: white;
+}
 
-    .music-disc {
-        width: 185px;
-        height: 185px;
-    }
+.floating-music-button.playing {
+    color: white;
 
-    .disc-shine {
-        width: 185px;
-        height: 185px;
-    }
-
-    .music-disc-area {
-        height: 220px;
-    }
-
-    .music-wheel {
-        justify-content:
-            flex-start;
-
-        overflow-x: auto;
-
-        padding:
-            10px
-            10px
-            20px;
-
-        scrollbar-width: none;
-
-        -webkit-overflow-scrolling:
-            touch;
-    }
-
-    .music-wheel::-webkit-scrollbar {
-        display: none;
-    }
-
-
-    /* Stars */
-
-    .sky-container {
-        height: 430px;
-    }
-
+    box-shadow:
+        0 0 25px rgba(160, 130, 190, 0.25);
 }
 
 
-/* =========================================================
-   PHONE
-========================================================= */
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media (max-width: 600px) {
 
     body {
+        overflow-x: hidden;
+    }
+
+
+    .opening {
+        padding: 25px 18px;
+    }
+
+
+    .opening h1 {
+        font-size:
+            clamp(42px, 14vw, 64px);
+    }
+
+
+    .hero {
+        padding:
+            80px 18px;
+    }
+
+
+    .hero h2 {
+        font-size:
+            clamp(50px, 15vw, 80px);
+    }
+
+
+    .hero-subtitle {
         font-size: 14px;
     }
 
 
-    /* -----------------------------------------
-       SECTION
-    ----------------------------------------- */
-
-    .section {
-        width:
-            calc(100% - 24px);
+    .story-section {
+        min-height: auto;
 
         padding:
-            75px 0;
-    }
-
-    .section-title {
-        margin-bottom: 45px;
-    }
-
-    .section-title h2 {
-        font-size: 35px;
-    }
-
-    .section-title p {
-        padding: 0 10px;
-
-        font-size: 12px;
+            90px 18px;
     }
 
 
-    /* -----------------------------------------
-       OPENING
-    ----------------------------------------- */
+    .story-card {
+        width: 100%;
 
-    .opening {
-        padding:
-            20px;
+        padding: 40px 5px;
     }
 
-    .opening h1 {
+
+    .story-card h3 {
         font-size:
-            clamp(
-                55px,
-                20vw,
-                85px
-            );
+            clamp(34px, 10vw, 48px);
     }
 
-    .opening-subtitle {
-        max-width: 340px;
 
-        font-size: 12px;
+    .story-card p:not(.story-label):not(.soft-line) {
+        font-size: 15px;
 
         line-height: 1.8;
     }
 
-    .open-button {
-        min-height: 52px;
 
-        padding:
-            15px 28px;
-
-        font-size: 13px;
-    }
-
-
-    /* -----------------------------------------
-       HERO
-    ----------------------------------------- */
-
-    .hero {
-        min-height:
-            100svh;
-
-        padding:
-            70px 15px;
-    }
-
-    .hero h2 {
-        font-size:
-            clamp(
-                38px,
-                13vw,
-                58px
-            );
-    }
-
-    .hero p {
-        max-width: 330px;
-
-        font-size: 12px;
-    }
-
-    .hero-heart {
-        font-size: 30px;
-    }
-
-
-    /* -----------------------------------------
-       TIMELINE
-    ----------------------------------------- */
-
-    .timeline::before {
-        left: 8px;
-    }
-
-    .timeline-item {
-        width:
-            calc(100% - 30px);
-
-        margin-left:
-            30px !important;
-
-        padding:
-            21px;
-    }
-
-    .timeline-item:nth-child(odd) .timeline-dot,
-    .timeline-item:nth-child(even) .timeline-dot {
-        left: -27px;
-    }
-
-    .timeline-item h3 {
-        font-size: 20px;
-    }
-
-    .timeline-item p {
-        font-size: 11px;
-    }
-
-
-    /* -----------------------------------------
-       MEMORY
-    ----------------------------------------- */
-
-    .reason {
-        min-height: auto;
-
-        padding: 26px;
-
-        border-radius: 20px;
-    }
-
-
-    /* -----------------------------------------
-       MUSIC
-    ----------------------------------------- */
-
-    .music-section {
-        padding-top: 65px;
-    }
-
-    .music-player {
-        padding:
-            28px
-            12px
-            25px;
-
-        border-radius: 26px;
-    }
-
-    .music-disc-area {
-        height: 205px;
-
-        margin-bottom: 5px;
-    }
-
-    .music-disc {
-        width: 170px;
-        height: 170px;
-    }
-
-    .music-disc::before {
-        width: 65px;
-        height: 65px;
-    }
-
-    .disc-shine {
-        width: 170px;
-        height: 170px;
-    }
-
-    .disc-label {
-        width: 55px;
-        height: 55px;
-
-        font-size: 19px;
-    }
-
-
-    /* Song wheel */
-
-    .music-wheel {
-        min-height: 82px;
-
-        justify-content:
-            flex-start;
-
-        gap: 9px;
-
-        padding:
-            8px
-            15px
-            15px;
-    }
-
-    .music-song {
-        width: 52px;
-        height: 52px;
-    }
-
-    .music-song.active,
-    .music-song.song-main {
-        width: 66px;
-        height: 66px;
-
-        transform:
-            scale(1.02);
-    }
-
-
-    /* Current song */
-
-    .current-song {
-        padding:
-            0 10px;
-    }
-
-    .current-song h3 {
-        font-size: 23px;
-
-        white-space: nowrap;
-
-        overflow: hidden;
-
-        text-overflow: ellipsis;
-    }
-
-    .current-song p {
-        font-size: 10px;
-    }
-
-
-    /* Progress */
-
-    .music-progress {
-        gap: 7px;
-
-        padding:
-            0 7px;
-    }
-
-    .music-progress span {
-        min-width: 32px;
-
-        font-size: 8px;
-    }
-
-    .progress-track {
-        height: 8px;
-    }
-
-
-    /* Controls */
-
-    .music-controls {
-        gap: 12px;
-    }
-
-    .music-controls button {
-        width: 52px;
-        height: 52px;
-    }
-
-    .music-controls .play-button {
-        width: 64px;
-        height: 64px;
-    }
-
-    .music-hint {
-        padding:
-            0 20px;
-
-        line-height: 1.6;
-    }
-
-
-    /* -----------------------------------------
-       FLOATING MUSIC
-    ----------------------------------------- */
-
-    .music-floating-button {
-        right: 14px;
-        bottom: 14px;
-
-        width: 48px;
-        height: 48px;
-
-        font-size: 16px;
-    }
-
-
-    /* -----------------------------------------
+    /* ---------------------------------------------
        STARS
-    ----------------------------------------- */
+    --------------------------------------------- */
 
-    .sky-container {
-        height:
-            min(
-                420px,
-                115vw
-            );
+    .stars-section {
+        min-height: 80vh;
 
-        min-height: 350px;
-
-        border-radius: 25px;
+        padding:
+            90px 15px;
     }
 
-    .sky-title {
-        top: 20px;
-        left: 20px;
 
-        font-size: 16px;
+    .star-field {
+        width: 100%;
+
+        height: 390px;
     }
 
-    /*
-       BIG invisible hitboxes.
-       This makes the stars much easier
-       to tap with a finger.
-    */
 
     .star {
-        width: 78px !important;
-        height: 78px !important;
+        width: 64px;
+        height: 64px;
+
+        font-size: 25px;
     }
 
-    .star span {
-        font-size: 23px;
-    }
 
     .star-one {
-        top: 18%;
-        left: 5%;
+        top: 8%;
+        left: 7%;
     }
+
 
     .star-two {
-        top: 25%;
-        right: 2%;
+        top: 24%;
+        left: 43%;
     }
+
 
     .star-three {
-        top: 51%;
-        left: 1%;
+        top: 5%;
+        right: 7%;
     }
+
 
     .star-four {
-        bottom: 13%;
-        left: 30%;
+        top: 51%;
+        left: 17%;
     }
+
 
     .star-five {
-        top: 59%;
-        right: 1%;
+        top: 65%;
+        right: 16%;
     }
 
+
     .star-six {
-        top: 13%;
+        top: 39%;
+        right: 0;
+    }
+
+
+    .star-seven {
+        bottom: 2%;
         left: 42%;
     }
 
-    .star-seven {
-        bottom: 12%;
-        right: 20%;
+
+    .star-eight {
+        bottom: 13%;
+        left: 2%;
     }
 
-    .star-message {
-        bottom: 18px;
 
-        width:
-            calc(100% - 28px);
+    /* ---------------------------------------------
+       MUSIC
+    --------------------------------------------- */
+
+    .music-section {
+        width: 100%;
+
+        min-height: 100svh;
 
         padding:
-            13px 15px;
+            90px 15px;
 
-        border-radius: 18px;
+        margin: 0;
 
-        font-size: 10px;
+        display: flex;
 
-        line-height: 1.5;
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        overflow-x: hidden;
     }
 
 
-    /* -----------------------------------------
-       SECRET
-    ----------------------------------------- */
+    .music-player {
+        width: 100%;
 
-    .secret-box {
-        padding:
-            42px 22px;
+        max-width: 100%;
 
-        border-radius: 25px;
-    }
-
-    .secret-box h2 {
-        font-size: 27px;
-    }
-
-    .secret-box > p {
-        font-size: 11px;
-
-        line-height: 1.8;
-    }
-
-    .secret-button {
-        min-height: 48px;
+        margin: 0 auto;
 
         padding:
-            13px 24px;
+            0 5px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
     }
 
-    .secret-message {
-        font-size: 11px;
-
-        line-height: 1.9;
-    }
-
-
-    /* -----------------------------------------
-       FINAL
-    ----------------------------------------- */
-
-    .final {
-        padding-bottom:
-            100px;
-    }
-
-    .final-card {
-        padding:
-            60px 22px;
-
-        border-radius: 28px;
-    }
-
-    .final-card h2 {
-        font-size:
-            clamp(
-                30px,
-                10vw,
-                43px
-            );
-    }
-
-    .final-card > p {
-        font-size: 11px;
-    }
-
-    .heart {
-        font-size: 30px;
-    }
-
-}
-
-
-/* =========================================================
-   SMALL PHONE
-========================================================= */
-
-@media (max-width: 380px) {
-
-    .section {
-        width:
-            calc(100% - 18px);
-    }
-
-    .opening h1 {
-        font-size: 52px;
-    }
-
-    .hero h2 {
-        font-size: 37px;
-    }
-
-    .music-disc {
-        width: 150px;
-        height: 150px;
-    }
-
-    .disc-shine {
-        width: 150px;
-        height: 150px;
-    }
 
     .music-disc-area {
-        height: 185px;
+        width: 100%;
+
+        margin:
+            0 auto 28px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
     }
 
-    .music-song {
-        width: 48px;
-        height: 48px;
+
+    .music-disc {
+        width: 190px;
+        height: 190px;
+
+        flex-basis: 190px;
+
+        margin:
+            0 auto;
     }
 
-    .music-song.active,
-    .music-song.song-main {
+
+    .disc-center {
         width: 60px;
         height: 60px;
     }
 
-    .music-controls {
+
+    .current-song {
+        width: 100%;
+
+        margin:
+            0 auto;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+    }
+
+
+    .current-song-title {
+        width: 100%;
+
+        font-size: 23px;
+
+        text-align: center;
+    }
+
+
+    .current-song-artist {
+        width: 100%;
+
+        text-align: center;
+    }
+
+
+    .music-progress {
+        width: 92%;
+
+        max-width: 420px;
+
+        margin:
+            22px auto 18px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
         gap: 8px;
     }
 
-    .music-controls button {
+
+    .progress-track {
+        flex: 1;
+
+        min-width: 0;
+
+        height: 5px;
+    }
+
+
+    .music-controls {
+        width: 100%;
+
+        margin:
+            8px auto 24px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 10px;
+
+        text-align: center;
+    }
+
+
+    .music-control {
+        min-width: 68px;
+
+        padding:
+            10px 12px;
+
+        font-size: 11px;
+    }
+
+
+    .play-button {
         width: 48px;
+        min-width: 48px;
+
         height: 48px;
     }
 
-    .music-controls .play-button {
-        width: 58px;
-        height: 58px;
+
+    /*
+       This is the important mobile centering fix.
+    */
+
+    .music-wheel {
+        width: 100% !important;
+
+        margin:
+            12px auto 0 !important;
+
+        padding: 0 !important;
+
+        display: flex !important;
+
+        flex-direction: column !important;
+
+        align-items: center !important;
+
+        justify-content: center !important;
+
+        gap: 10px !important;
+
+        position: static !important;
+
+        left: auto !important;
+        right: auto !important;
+
+        transform: none !important;
+
+        text-align: center !important;
     }
 
-    .sky-container {
-        min-height: 330px;
+
+    .music-song {
+        width: 90% !important;
+
+        max-width: 350px !important;
+
+        min-height: 46px;
+
+        margin:
+            0 auto !important;
+
+        display: flex !important;
+
+        align-items: center !important;
+
+        justify-content: center !important;
+
+        text-align: center !important;
+
+        position: static !important;
+
+        left: auto !important;
+        right: auto !important;
+
+        transform: none !important;
     }
 
-    .star {
-        width: 72px !important;
-        height: 72px !important;
+
+    .music-song:hover {
+        transform:
+            none !important;
     }
 
+
+    .music-song:active {
+        transform:
+            scale(0.98) !important;
+    }
+
+
+    .music-hint {
+        width: 100%;
+
+        margin:
+            17px auto 0;
+
+        text-align: center;
+    }
+
+
+    /* ---------------------------------------------
+       SECRET
+    --------------------------------------------- */
+
+    .secret-section {
+        min-height: 55vh;
+
+        padding:
+            90px 18px;
+    }
+
+
+    .secret-message {
+        width: 95%;
+
+        font-size: 21px;
+    }
+
+
+    /* ---------------------------------------------
+       ENDING
+    --------------------------------------------- */
+
+    .ending {
+        min-height: 65vh;
+
+        padding:
+            100px 18px;
+    }
+
+
+    .ending h4 {
+        font-size: 28px;
+    }
+
+
+    /* ---------------------------------------------
+       FLOATING MUSIC
+    --------------------------------------------- */
+
+    .floating-music-button {
+        right: 15px;
+        bottom: 15px;
+
+        width: 46px;
+        height: 46px;
+    }
 }
 
 
-/* =========================================================
-   REDUCE MOTION
-========================================================= */
+/* =====================================================
+   VERY SMALL PHONES
+===================================================== */
 
-@media (prefers-reduced-motion: reduce) {
+@media (max-width: 380px) {
 
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
+    .music-disc {
+        width: 170px;
+        height: 170px;
 
-        scroll-behavior: auto !important;
-
-        transition-duration: 0.01ms !important;
+        flex-basis: 170px;
     }
 
+
+    .music-control {
+        min-width: 62px;
+
+        padding:
+            9px 9px;
+    }
+
+
+    .music-song {
+        width: 94% !important;
+    }
+
+
+    .star-field {
+        height: 360px;
+    }
 }
